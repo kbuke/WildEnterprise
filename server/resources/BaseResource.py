@@ -29,7 +29,7 @@ class BaseResource(Resource):
         return make_response(record.to_dict(), 200)
     
     # Create New Instance for Model
-    def post(self):
+    def post_instance(self):
         data = request.get_json()
 
         if not data:
@@ -53,7 +53,7 @@ class BaseResource(Resource):
             return {"error": [str(e)]}, 400
     
     # Patch Current Instance in Model
-    def patch(self, id):
+    def patch_instance(self, id):
         record = self.model.query.filter(self.model.id == id).first()
         data = request.get_json()
 
