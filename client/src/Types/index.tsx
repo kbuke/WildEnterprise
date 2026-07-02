@@ -1,3 +1,8 @@
+export type SectionHeadingType = {
+    heading: string,
+    textWhite: boolean
+}
+
 export type SiteType = {
     name: string,
     slug: string,
