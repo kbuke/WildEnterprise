@@ -25,9 +25,9 @@ class SiteModel(db.Model, SerializerMixin):
     # Need to link up with Blog Posts that mention each site
     # Need to show animals that live on land
 
-    @validates("title")
+    @validates("name")
     def validate_title_slug(self, key, value):
-        self.slug = validate_slug(value) # make slug more SEO friendly
+        self.slug = validate_slug(value) # make slug more SEO
         return value
         
 
