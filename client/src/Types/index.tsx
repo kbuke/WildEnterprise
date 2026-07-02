@@ -1,9 +1,15 @@
+export type ParamsType = {
+    slug: string,
+    id: string
+}
+
 export type SectionHeadingType = {
     heading: string,
     textWhite: boolean
 }
 
 export type SiteType = {
+    id: number
     name: string,
     slug: string,
     location: string,

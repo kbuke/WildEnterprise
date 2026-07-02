@@ -1,8 +1,15 @@
 import { MapPinIcon } from "@heroicons/react/24/outline"
 import { SectionHeading } from "../../../Components.tsx/SectionHeadings"
 import { useFetchSites } from "../../../Hooks/useFetchSites"
+import { useEffect, useState } from "react"
+import { useFetchSpecificSite } from "../../../Hooks/useFetchSpecificSite"
+import { Link } from "react-router-dom"
 
 export function Sites(){
+    const [selectedPark, setSelectedPark] = useState<number>()
+
+    console.log(selectedPark)
+
     const {
         sites,
         isError,
@@ -27,6 +34,7 @@ export function Sites(){
                     return(
                         <div
                             className="grid grid-cols-[2fr_3fr] gap-2 mt-4"
+                            key={site.id}
                         >
                             <img 
                                 src = {site.head_img}
@@ -63,11 +71,14 @@ export function Sites(){
                                     {site.intro}
                                 </p>
                                 
-                                <button
-                                    className="rounded bg-green-600/80 cursor-pointer mt-4 uppercase w-60 h-20 text-xl tracking-[6px] hover:-translate-y-2 duration-200 self-center"
+                                <Link
+                                    className="flex items-center justify-center rounded bg-green-600/80 cursor-pointer mt-4 uppercase w-60 h-20 text-xl tracking-[6px] hover:-translate-y-2 duration-200 self-center"
+                                    to={`/sites/${site.slug}/${site.id}`}
                                 >
-                                    Learn More
-                                </button>
+                                    <p>
+                                        Learn More
+                                    </p>
+                                </Link>
                             </div>
                         </div>
                     )
