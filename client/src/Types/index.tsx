@@ -8,6 +8,14 @@ export type SectionHeadingType = {
     textWhite: boolean
 }
 
+export type SiteInfoType = {
+    name: string
+    info: string,
+    img1: string,
+    img2: string,
+    img3: string
+}
+
 export type SiteType = {
     id: number
     name: string,

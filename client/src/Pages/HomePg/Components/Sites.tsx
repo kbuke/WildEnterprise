@@ -17,7 +17,6 @@ export function Sites(){
         isLoading
     } = useFetchSites()
 
-    console.log(sites)
     return(
         <section
             className="bg-black/80 text-white"

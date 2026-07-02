@@ -13,7 +13,7 @@ async function getSpecificSite(id:number): Promise<SiteType> {
 
 export function useFetchSpecificSite(id:number){
     const {
-        data = {},
+        data,
         error,
         isError,
         isLoading
