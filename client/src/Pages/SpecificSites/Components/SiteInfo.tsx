@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { SiteInfoType } from "../../../Types";
+import { SiteVideo } from "./SiteVideo";
 
 
 export function SiteInfo({
@@ -12,52 +13,63 @@ export function SiteInfo({
 
     const [highlightedImg, setHighlightedImg] = useState(img1) 
 
+    const siteVideo: string | null = null
+
     return(
         <section
-            className="grid grid-cols-2 mb-4 py-10"
+            className="mb-4 py-10"
         >
             <div
-                className="p-4"
+                className="grid grid-cols-2 "
             >
-                <h1
-                    className="uppercase text-7xl mb-2"
+                <div
+                    className="p-4"
                 >
-                    About {name}
-                </h1>
+                    <h1
+                        className="uppercase text-7xl mb-2"
+                    >
+                        About {name}
+                    </h1>
 
-                <h2
-                    className="text-xl tracking-[2px]"
+                    <h2
+                        className="text-xl tracking-[2px]"
+                    >
+                        {info}
+                    </h2>
+                </div>
+
+                <div
+                    className="p-4 relative mb-100"
                 >
-                    {info}
-                </h2>
+                    <img 
+                        // className="siteMainImg z-10 right-40 top-10"
+                        className={`siteMainImg z-20 right-40 top-10 ${highlightedImg === img1 && "z-30 scale-110"}`}
+                        src={img1}
+                        onMouseEnter={() => setHighlightedImg(img1)}
+                    />
+
+                    <img 
+                        // className="siteMainImg z-8 right-10"
+                        className={`siteMainImg z-10 top-20 ${highlightedImg === img2 && "z-30 scale-110"}`}
+                        src={img2}
+                        onMouseEnter={() => setHighlightedImg(img2)}
+                        onMouseLeave={() => setHighlightedImg(img1)}
+                    />
+
+                    <img 
+                        // className="siteMainImg z-8 top-20"
+                        className={`siteMainImg z-10 right-10 ${highlightedImg === img3 && "z-30 scale-110"}`}
+                        src={img3}
+                        onMouseEnter={() => setHighlightedImg(img3)}
+                        onMouseLeave={() => setHighlightedImg(img1)}
+                    />
+                </div>
             </div>
 
-            <div
-                className="p-4 relative mb-100"
-            >
-                <img 
-                    // className="siteMainImg z-10 right-40 top-10"
-                    className={`siteMainImg z-20 right-40 top-10 ${highlightedImg === img1 && "z-30 scale-110"}`}
-                    src={img1}
-                    onMouseEnter={() => setHighlightedImg(img1)}
-                />
-
-                <img 
-                    // className="siteMainImg z-8 right-10"
-                    className={`siteMainImg z-10 top-20 ${highlightedImg === img2 && "z-30 scale-110"}`}
-                    src={img2}
-                    onMouseEnter={() => setHighlightedImg(img2)}
-                    onMouseLeave={() => setHighlightedImg(img1)}
-                />
-
-                <img 
-                    // className="siteMainImg z-8 top-20"
-                    className={`siteMainImg z-10 right-10 ${highlightedImg === img3 && "z-30 scale-110"}`}
-                    src={img3}
-                    onMouseEnter={() => setHighlightedImg(img3)}
-                    onMouseLeave={() => setHighlightedImg(img1)}
-                />
-            </div>
+            <SiteVideo 
+                name={name}
+                siteVideo={siteVideo}
+            />
         </section>
     )
 }
