@@ -6,9 +6,9 @@ class SitesList(BaseResource):
     model = SiteModel
 
     field_map = {
-        "ame": "name",
-        "location": "siteLocation",
-        "intro": "siteIntro",
+        "name": "name",
+        "location": "location",
+        "intro": "intro",
         "headImg": "head_img",
         "info": "info",
         "primaryImg1": "primary_img_1",

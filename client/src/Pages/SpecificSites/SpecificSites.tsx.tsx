@@ -3,6 +3,7 @@ import type { ParamsType } from "../../Types"
 import { useFetchSpecificSite } from "../../Hooks/useFetchSpecificSite"
 import { ArrowDownCircleIcon, MapPinIcon } from "@heroicons/react/24/outline"
 import { SiteInfo } from "./Components/SiteInfo"
+import { SiteAnimals } from "./Components/SiteAnimals"
 
 export function SpecificSites(){
     const { id } = useParams<ParamsType>()
@@ -19,6 +20,8 @@ export function SpecificSites(){
     if(isLoading) return <p>Loading...</p>
     if(isError) return <p>Error: {error?.toString()}</p>
     if(!site) return <p>Site not found</p>
+
+    console.log(site)
 
     return(
         <section
@@ -80,6 +83,11 @@ export function SpecificSites(){
                 img1={site?.primary_img_1}
                 img2={site?.primary_img_2}
                 img3={site?.primary_img_3}
+            />
+
+            <SiteAnimals 
+                name={site.name}
+                animals={site.animals}
             />
         </section>
     )

@@ -7,6 +7,10 @@
 } */
 
 @layer components {
+    .siteHeadings{
+        @apply uppercase text-7xl mb-2;
+    }
+
     .siteMainImg{
         @apply rounded cursor-pointer w-140 hover:z-12 absolute 
         transition-transform duration-300 ease-in-out;

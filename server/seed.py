@@ -1,5 +1,6 @@
 from models.SiteModel import SiteModel
 from models.AnimalModel import AnimalModel
+from models.SiteAnimalsModel import SiteAnimalsModel
 
 from app import app 
 from config import db 
@@ -31,6 +32,24 @@ ANIMALS = [
         "name": "South African Lion",
         "img": "https://plus.unsplash.com/premium_photo-1664304310991-b43610000fc2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         "info": "The South African lion (Panthera leo melanochaita) is one of the largest and most iconic apex predators in Africa. Adult males weigh up to 225 kg and are easily recognized by their massive, dark manes. They are a keystone species for local ecosystems and a major driver of the country's ecotourism"
+    },
+
+    {
+        "name": "White Rhino",
+        "img": "https://plus.unsplash.com/premium_photo-1664304381042-c161828efeb1?q=80&w=2054&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "info": "The white rhinoceros, also known as the white rhino or square-lipped rhinoceros, is the largest extant species of rhinoceros and the most social of all rhino species, characterized by its wide mouth adapted for grazing."
+    },
+
+    {
+        "name": "African Wild Dog",
+        "img": "https://images.unsplash.com/photo-1713888478501-1caea7b9cda4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "info": "The African wild dog, also called painted dog and Cape hunting dog, is a wild canine native to sub-Saharan Africa."
+    },
+
+    {
+        "name": "African Leopard",
+        "img": "https://plus.unsplash.com/premium_photo-1661952443167-05d723e6bb3a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "info": "The African leopard is the nominate subspecies of the leopard, native to Africa. It is widely distributed in most of sub-Saharan Africa, but the historical range has been fragmented in the course of habitat conversion. Leopards have also been recorded in North Africa as well."
     }
 ]
 
@@ -40,7 +59,34 @@ def seed_animals():
     db.session.commit()
     print(f"Seeded {len(animals)} animals")
 
-# -----------------------------  -----------------------------
+# ----------------------------- Seed Site Animals -----------------------------
+SITE_ANIMALS = [
+    {
+        "animal_id": 1,
+        "site_id": 1
+    },
+
+    {
+        "animal_id": 2,
+        "site_id": 1
+    },
+
+    {
+        "animal_id": 3,
+        "site_id": 1
+    },
+
+    {
+        "animal_id": 4,
+        "site_id": 1
+    }
+]
+
+def seed_site_animals():
+    site_animals = [SiteAnimalsModel(**data) for data in SITE_ANIMALS]
+    db.session.add_all(site_animals)
+    db.session.commit()
+    print(f"Seeded {len(site_animals)} site animals")
 
 # -----------------------------  -----------------------------
 
@@ -58,3 +104,4 @@ if __name__ == "__main__":
         db.create_all()
         seed_sites()
         seed_animals()
+        seed_site_animals()

@@ -26,7 +26,7 @@ export function SiteInfo({
                     className="p-4"
                 >
                     <h1
-                        className="uppercase text-7xl mb-2"
+                        className="siteHeadings"
                     >
                         About {name}
                     </h1>

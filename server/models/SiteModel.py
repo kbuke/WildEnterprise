@@ -3,6 +3,8 @@ from sqlalchemy_serializer import SerializerMixin
 
 from validators.validate_slug import validate_slug
 
+from helpers.many_to_many import many_to_many
+
 from config import db 
 
 class SiteModel(db.Model, SerializerMixin):
@@ -24,6 +26,7 @@ class SiteModel(db.Model, SerializerMixin):
     # Need to link up with Site Activities (if they have any)
     # Need to link up with Blog Posts that mention each site
     # Need to show animals that live on land
+    animals = many_to_many("AnimalModel", "sites", "site_animals")
 
     @validates("name")
     def validate_title_slug(self, key, value):
