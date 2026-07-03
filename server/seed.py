@@ -1,4 +1,5 @@
 from models.SiteModel import SiteModel
+from models.AnimalModel import AnimalModel
 
 from app import app 
 from config import db 
@@ -24,7 +25,20 @@ def seed_sites():
     db.session.commit()
     print(f"Seeded {len(sites)} sites")
 
-# -----------------------------  -----------------------------
+# ----------------------------- Seed Animals -----------------------------
+ANIMALS = [
+    {
+        "name": "South African Lion",
+        "img": "https://plus.unsplash.com/premium_photo-1664304310991-b43610000fc2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "info": "The South African lion (Panthera leo melanochaita) is one of the largest and most iconic apex predators in Africa. Adult males weigh up to 225 kg and are easily recognized by their massive, dark manes. They are a keystone species for local ecosystems and a major driver of the country's ecotourism"
+    }
+]
+
+def seed_animals():
+    animals = [AnimalModel(**data) for data in ANIMALS]
+    db.session.add_all(animals)
+    db.session.commit()
+    print(f"Seeded {len(animals)} animals")
 
 # -----------------------------  -----------------------------
 
@@ -43,3 +57,4 @@ if __name__ == "__main__":
         db.drop_all()
         db.create_all()
         seed_sites()
+        seed_animals()
