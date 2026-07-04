@@ -11,7 +11,8 @@ export const router = createBrowserRouter([
         element: <App />,
         children: [
             {index: true, element: <HomePg />},
-            {path: "sites/:slug/:id", element: <SpecificSites />}
+            {path: "sites/:slug/:id", element: <SpecificSites />},
+            {path: "blogs/:slug/:id", element: <SpecificBlog />}
         ]
     }
 ])

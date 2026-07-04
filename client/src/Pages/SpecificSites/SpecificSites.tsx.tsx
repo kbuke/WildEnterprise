@@ -28,13 +28,6 @@ export function SpecificSites(){
         <section
             className="flex flex-col"
         >
-            {isLoading &&
-                <p>Loading...</p>
-            }
-
-            {isError &&
-                <p>Error: {error?.toString()}</p>
-            }
             <div
                 style={{
                     backgroundImage: `url(${site?.head_img})`,

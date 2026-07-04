@@ -22,7 +22,8 @@ export type BlogType = {
     status?: "Draft" | "Published",
     published_at: string,
     updated_at: string,
-    edited_at: string
+    edited_at: string,
+    sites: SiteType[]
 }
 
 export type ParamsType = {

@@ -1,6 +1,7 @@
 import { CalendarIcon, EyeIcon } from "@heroicons/react/24/outline";
 import type { BlogType } from "../../../Types";
 import { formatDate } from "../../../Utils/formatDate";
+import { Link } from "react-router-dom";
 
 type SiteBlogType = {
     name: string
@@ -30,6 +31,7 @@ export function SiteBlogs({
                     console.log(blog)
                     const {
                         cover_photo,
+                        slug,
                         id,
                         title,
                         views,
@@ -43,8 +45,9 @@ export function SiteBlogs({
                             key={id}
                             className="bg-white text-black cursor-pointer rounded h-120 w-100 overflow-y-hidden"
                         >
-                            <div
+                            <Link
                                 className="flex flex-col"
+                                to={`/blogs/${slug}/${id}`}
                             >
                                 <img 
                                     src={cover_photo}
@@ -81,7 +84,7 @@ export function SiteBlogs({
                                         {newDate}
                                     </p>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     )
                 })}
