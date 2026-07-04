@@ -25,8 +25,14 @@ class SiteModel(db.Model, SerializerMixin):
     # Need to link up with Site Hotels (if they have any)
     # Need to link up with Site Activities (if they have any)
     # Need to link up with Blog Posts that mention each site
+    blogs = many_to_many("BlogModel", "sites", "site_blogs")
     # Need to show animals that live on land
     animals = many_to_many("AnimalModel", "sites", "site_animals")
+
+    serialize_rules = (
+        "-animals.sites",
+        "-blogs.sites",
+    )
 
     @validates("name")
     def validate_title_slug(self, key, value):

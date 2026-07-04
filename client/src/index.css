@@ -7,6 +7,18 @@
 } */
 
 @layer components {
+    .animalClassificationDiv{
+        @apply flex items-center gap-4
+    }
+
+    .animalClassifcationIcon{
+        @apply h-10
+    }
+
+    .animalClassificationText{
+        @apply text-xl uppercase tracking-[4px];
+    }
+
     .siteHeadings{
         @apply uppercase text-7xl mb-2;
     }

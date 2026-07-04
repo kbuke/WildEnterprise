@@ -4,6 +4,7 @@ import { useFetchSpecificSite } from "../../Hooks/useFetchSpecificSite"
 import { ArrowDownCircleIcon, MapPinIcon } from "@heroicons/react/24/outline"
 import { SiteInfo } from "./Components/SiteInfo"
 import { SiteAnimals } from "./Components/SiteAnimals"
+import { SiteBlogs } from "./Components/SiteBlogs"
 
 export function SpecificSites(){
     const { id } = useParams<ParamsType>()
@@ -88,6 +89,11 @@ export function SpecificSites(){
             <SiteAnimals 
                 name={site.name}
                 animals={site.animals}
+            />
+
+            <SiteBlogs 
+                name={site.name}
+                blogs={site.blogs}
             />
         </section>
     )

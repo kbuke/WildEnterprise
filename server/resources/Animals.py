@@ -7,7 +7,9 @@ class AnimalList(BaseResource):
     field_map = {
         "name": "name",
         "img": "img",
-        "info": "info"
+        "info": "info",
+        "endangeredLevel": "endangered_level",
+        "animalType": "animal_type"
     }
 
     def get(self):
@@ -22,7 +24,9 @@ class SpecificAnimal(BaseResource):
     field_map = {
         "name": "name",
         "img": "img",
-        "info": "info"
+        "info": "info",
+        "endangeredLevel": "endangered_level",
+        "animalType": "animal_type"
     }
 
     def get(self, id):

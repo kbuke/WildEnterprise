@@ -1,6 +1,8 @@
 import { useState } from "react";
 import type { SiteInfoType } from "../../../Types";
 import { SiteVideo } from "./SiteVideo";
+import { PopUp } from "../../../Components.tsx/PopUp";
+import { EnlargedImg } from "./EnlargedImg";
 
 
 export function SiteInfo({
@@ -12,6 +14,7 @@ export function SiteInfo({
 }: SiteInfoType){
 
     const [highlightedImg, setHighlightedImg] = useState(img1) 
+    const [selectedImg, setSelectedImg] = useState<string>()
 
     const siteVideo: string | null = null
 
@@ -19,6 +22,15 @@ export function SiteInfo({
         <section
             className="mb-4 py-10"
         >
+            {selectedImg &&
+                <PopUp>
+                    <EnlargedImg 
+                        img={selectedImg}
+                        onCancel={() => setSelectedImg(undefined)}
+                    />
+                </PopUp>
+            }
+
             <div
                 className="grid grid-cols-2 "
             >
@@ -46,6 +58,7 @@ export function SiteInfo({
                         className={`siteMainImg z-20 right-40 top-10 ${highlightedImg === img1 && "z-30 scale-110"}`}
                         src={img1}
                         onMouseEnter={() => setHighlightedImg(img1)}
+                        onClick={() => setSelectedImg(img1)}
                     />
 
                     <img 
@@ -54,6 +67,7 @@ export function SiteInfo({
                         src={img2}
                         onMouseEnter={() => setHighlightedImg(img2)}
                         onMouseLeave={() => setHighlightedImg(img1)}
+                        onClick={() => setSelectedImg(img2)}
                     />
 
                     <img 
@@ -62,6 +76,7 @@ export function SiteInfo({
                         src={img3}
                         onMouseEnter={() => setHighlightedImg(img3)}
                         onMouseLeave={() => setHighlightedImg(img1)}
+                        onClick={() => setSelectedImg(img3)}
                     />
                 </div>
             </div>
