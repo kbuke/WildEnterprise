@@ -1,0 +1,64 @@
+from models.BaseNameImgInfoModel import BaseNameImgInfomodel
+
+from config import db 
+
+from sqlalchemy.orm import validates
+
+from functions.check_string import check_string
+from functions.check_unique import check_unique
+from functions.check_valid_value import check_valid_value
+
+from relational_functions.one_to_many import one_to_many_back_populates
+
+class ParkModel(BaseNameImgInfomodel):
+    __tablename__ = "parks"
+
+    location = db.Column(db.String, nullable = False)
+
+    # Should put coordinates up here for helping people find 
+    # Need to link the Park up to events and activity models 
+
+    #=============================================================================================
+    # RELATIONS
+    #=============================================================================================
+    images = one_to_many_back_populates(
+        "ParkImgModel",
+        "park"
+    )
+
+    events = one_to_many_back_populates(
+        "EventModel",
+        "park"
+    )
+
+    #=============================================================================================
+    # VALIDATORS
+    #=============================================================================================
+    @validates("name")
+    def validate_park_name(self, key, value):
+        check_string(value)
+        return check_unique(ParkModel, key, value)
+
+    @validates("location")
+    def validate_park_location(self, key, value):
+        check_string(value)
+        return check_valid_value(
+            [
+                "Eastern Cape",
+                "Free State",
+                "Gauteng",
+                "KwaZulu-Natal",
+                "Limpopo",
+                "Mpumalanga",
+                "North West",
+                "Western Cape"
+            ],
+            value
+        )
+
+    #=============================================================================================
+    # SERIALIZE RULES
+    #=============================================================================================
+    serialize_rules = (
+        "-images.park",
+    )
