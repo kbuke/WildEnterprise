@@ -31,6 +31,11 @@ class ParkModel(BaseNameImgInfomodel):
         "park"
     )
 
+    activities = one_to_many_back_populates(
+        "BaseActivityModel",
+        "park"
+    )
+
     #=============================================================================================
     # VALIDATORS
     #=============================================================================================
@@ -61,4 +66,6 @@ class ParkModel(BaseNameImgInfomodel):
     #=============================================================================================
     serialize_rules = (
         "-images.park",
+        "-events.park",
+        "-activities.park",
     )

@@ -4,6 +4,8 @@ from config import db
 from models.ParkModels import ParkModel
 from models.ParkImgModel import ParkImgModel
 from models.EventModel import EventModel
+from models.ActivityModels.BaseActivityModel import BaseActivityModel
+from models.ActivityModels.WalkingTrailModel import WalkingTrailModel
 
 from datetime import date, time
 
@@ -65,6 +67,7 @@ EVENTS = [
         "info": "Run through Dartmoor",
         "start_date": date(2027, 10, 24),
         "multi_day_event": True,
+        "end_date": date(2027, 10, 25),
         "start_time": time(9, 0),
         "end_time": time(16, 0),
         "no_of_tickets": 20,
@@ -81,6 +84,63 @@ def seed_events():
     print(f"Seeded {len(events)} Events")
 
 #========================================================================
+# ACTIVITIES 
+#========================================================================
+ACTIVITIES = [
+    {
+        "name": "Fishing",
+        "img": "Later",
+        "info": "Coming soon as well, I promise",
+        "all_year_round": True,
+        "free_with_stay": False,
+        "discount_with_stay": True,
+        "stay_discount": 0.4,
+        "price": 230.00,
+        "park_id": 1
+    },
+
+    {
+        "name": "Cycling",
+        "img": "Later",
+        "info": "Coming soon as well, I promise",
+        "all_year_round": False,
+        "available_months": [1, 2, 3, 4, 11, 12],
+        "free_with_stay": True,
+        "price": 230.00,
+        "park_id": 1
+    },
+]
+
+def seed_activities():
+    activities = [BaseActivityModel(**data) for data in ACTIVITIES]
+    db.session.add_all(activities)
+    db.session.commit()
+    print(f"Seeded {len(activities)} Activities")
+
+#========================================================================
+# SEED WALKS
+#========================================================================
+WALKS = [
+    {
+        "name": "Route-1",
+        "img": "Later",
+        "info": "Coming soon as well, I promise",
+        "all_year_round": True,
+        "free_with_stay": True,
+        "price": 230.00,
+        "park_id": 1,
+        "map": "It's also coming",
+        "code_of_conduct": "It will be here soon"
+    }
+]
+
+def seed_walks():
+    walks = [WalkingTrailModel(**data) for data in WALKS]
+    db.session.add_all(walks)
+    db.session.commit()
+    print(f"Seeded {len(walks)} Walks")
+
+#========================================================================
 # SEED MODELS
 #========================================================================
 if __name__ == "__main__":
@@ -90,3 +150,5 @@ if __name__ == "__main__":
         seed_parks()
         seed_park_images()
         seed_events()
+        seed_activities()
+        seed_walks()

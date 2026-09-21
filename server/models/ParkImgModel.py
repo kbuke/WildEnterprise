@@ -40,4 +40,5 @@ class ParkImgModel(db.Model, SerializerMixin):
     serialize_rules = (
         "-park.images",
         "-park.events",
+        "-park.activities",
     )
