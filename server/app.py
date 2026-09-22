@@ -7,6 +7,7 @@ from resources.Activities.Activities import AllActivities, SpecificActivity
 from resources.Activities.Walks import AllWalks, SpecificWalk
 from resources.Logins.AdminLogin import AdminLogin, AdminCheckSession, AdminLogout
 from resources.Hotels.Hotels import AllHotels, SpecificHotel
+from resources.Logins.HotelLogin import HotelLogin, HotelLogout, HotelCheckSession
 
 api.add_resource(AllParks, "/parks")
 api.add_resource(SpecificPark, "/parks/<int:id>")
@@ -25,6 +26,10 @@ api.add_resource(SpecificWalk, "/activities/walks/<int:id>")
 api.add_resource(AdminLogin, "/admin/login")
 api.add_resource(AdminLogout, "/admin/logout")
 api.add_resource(AdminCheckSession, "/admin/checksession")
+
+api.add_resource(HotelLogin, "/hotel/login")
+api.add_resource(HotelLogout, "/hotel/logout")
+api.add_resource(HotelCheckSession, "/hotel/checksession")
 
 api.add_resource(AllHotels, "/hotels")
 api.add_resource(SpecificHotel, "/hotels/<int:id>")
