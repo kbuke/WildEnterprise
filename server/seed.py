@@ -7,6 +7,7 @@ from models.EventModel import EventModel
 from models.ActivityModels.BaseActivityModel import BaseActivityModel
 from models.ActivityModels.WalkingTrailModel import WalkingTrailModel
 from models.HotelModels.HotelModel import HotelModel
+from models.HotelModels.RoomModel import RoomModel
 
 from datetime import date, time
 
@@ -152,6 +153,15 @@ HOTELS = [
         "email": "test@gmail.com",
         "password_hash": "tester123",
         "park_id": 1
+    },
+
+    {
+        "name": "Newer Hotel",
+        "img": "nerwer mate",
+        "info": "It's coming soon",
+        "email": "tester@gmail.com",
+        "password_hash": "tester123",
+        "park_id": 1
     }
 ]
 
@@ -160,6 +170,27 @@ def seed_hotels():
     db.session.add_all(hotels)
     db.session.commit()
     print(f"Seeded {len(hotels)} Hotels")
+
+#========================================================================
+# SEED ROOMS 
+#========================================================================
+ROOMS = [
+    {
+        "name": "Single Room",
+        "img": "img",
+        "no_of_rooms": 6,
+        "max_people": 1,
+        "base_price": 220.80,
+        "hotel_id": 1
+    }
+]
+
+def seed_rooms():
+    rooms = [RoomModel(**data) for data in ROOMS]
+    db.session.add_all(rooms)
+    db.session.commit()
+    print(f"Seeded {len(rooms)} Rooms")
+
 #========================================================================
 # SEED MODELS
 #========================================================================
@@ -173,3 +204,4 @@ if __name__ == "__main__":
         seed_activities()
         seed_walks()
         seed_hotels()
+        seed_rooms()

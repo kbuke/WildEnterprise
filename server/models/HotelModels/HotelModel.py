@@ -30,6 +30,12 @@ class HotelModel(BaseNameImgInfomodel):
         delete_orphan=False
     )
 
+    rooms = one_to_many_back_populates(
+        "RoomModel",
+        "hotel",
+        True
+    )
+
     #========================================================================
     # SERIALIZE RULES
     #========================================================================
