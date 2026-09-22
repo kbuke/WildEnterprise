@@ -11,9 +11,12 @@ from datetime import date, time
 
 from functions.check_int import check_int
 from functions.check_event_dates import check_event_dates
+from functions.check_event_dates import check_event_dates
 
 class EventModel(BaseNameImgInfomodel):
     __tablename__ = "events"
+
+    id = db.Column(db.Integer, primary_key = True)
 
     #========================================================================
     # DATE ATTRIBUTES 
@@ -60,6 +63,8 @@ class EventModel(BaseNameImgInfomodel):
     serialize_rules = (
         "-park.events",
         "-park.images",
+        "-park.hotels",
+        "-park.activities",
     )
 
 

@@ -3,6 +3,8 @@ from resources.BaseResource import BaseResource
 
 from flask import request
 
+from decorators.require_admin_login import require_admin_login
+
 class BaseEvents(BaseResource):
     model = EventModel
 
@@ -23,6 +25,7 @@ class AllEvents(BaseEvents):
     def get(self):
         return self.get_all()
 
+    @require_admin_login
     def post(self):
         data = request.get_json()
 

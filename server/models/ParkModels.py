@@ -13,6 +13,8 @@ from relational_functions.one_to_many import one_to_many_back_populates
 class ParkModel(BaseNameImgInfomodel):
     __tablename__ = "parks"
 
+    id = db.Column(db.Integer, primary_key = True)
+
     location = db.Column(db.String, nullable = False)
 
     # Should put coordinates up here for helping people find 
@@ -33,6 +35,11 @@ class ParkModel(BaseNameImgInfomodel):
 
     activities = one_to_many_back_populates(
         "BaseActivityModel",
+        "park"
+    )
+
+    hotels = one_to_many_back_populates(
+        "HotelModel",
         "park"
     )
 
@@ -68,4 +75,5 @@ class ParkModel(BaseNameImgInfomodel):
         "-images.park",
         "-events.park",
         "-activities.park",
+        "-hotels.park",
     )

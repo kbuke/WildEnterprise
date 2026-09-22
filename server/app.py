@@ -6,6 +6,7 @@ from resources.Events import AllEvents, SpecificEvent
 from resources.Activities.Activities import AllActivities, SpecificActivity
 from resources.Activities.Walks import AllWalks, SpecificWalk
 from resources.Logins.AdminLogin import AdminLogin, AdminCheckSession, AdminLogout
+from resources.Hotels.Hotels import AllHotels, SpecificHotel
 
 api.add_resource(AllParks, "/parks")
 api.add_resource(SpecificPark, "/parks/<int:id>")
@@ -24,6 +25,9 @@ api.add_resource(SpecificWalk, "/activities/walks/<int:id>")
 api.add_resource(AdminLogin, "/admin/login")
 api.add_resource(AdminLogout, "/admin/logout")
 api.add_resource(AdminCheckSession, "/admin/checksession")
+
+api.add_resource(AllHotels, "/hotels")
+api.add_resource(SpecificHotel, "/hotels/<int:id>")
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
