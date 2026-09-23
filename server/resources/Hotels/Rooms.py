@@ -5,6 +5,7 @@ from models.HotelModels.RoomModel import RoomModel
 from decorators.require_hotel_login import require_hotel_login
 
 from functions.check_hotel_id_session import check_hotel_id_session
+from functions.check_instance_exists import check_instance_exists
 
 from flask import request
 
@@ -39,7 +40,7 @@ class SpecificRoom(BaseRooms):
 
     @require_hotel_login
     def patch(self, id):
-        specific_room = RoomModel.query.filter(RoomModel.id == id).first()
+        specific_room = check_instance_exists(RoomModel, id)
         hotel_id = specific_room.hotel_id
         logged_hotel = check_hotel_id_session(hotel_id)
         if logged_hotel:
@@ -48,7 +49,7 @@ class SpecificRoom(BaseRooms):
 
     @require_hotel_login
     def delete(self, id):
-        specific_room = RoomModel.query.filter(RoomModel.id == id).first()
+        specific_room = check_instance_exists(RoomModel, id)
         hotel_id = specific_room.hotel_id
         logged_hotel = check_hotel_id_session(hotel_id)
         if logged_hotel:

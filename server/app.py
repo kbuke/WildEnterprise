@@ -9,6 +9,8 @@ from resources.Logins.AdminLogin import AdminLogin, AdminCheckSession, AdminLogo
 from resources.Hotels.Hotels import AllHotels, SpecificHotel
 from resources.Logins.HotelLogin import HotelLogin, HotelLogout, HotelCheckSession
 from resources.Hotels.Rooms import AllRooms, SpecificRoom
+from resources.Hotels.RoomRates import AllRoomRates, SpecificRoomRate
+from resources.Hotels.Discounts import AllDiscounts, SpecificDiscount
 
 api.add_resource(AllParks, "/parks")
 api.add_resource(SpecificPark, "/parks/<int:id>")
@@ -36,6 +38,10 @@ api.add_resource(AllHotels, "/hotels")
 api.add_resource(SpecificHotel, "/hotels/<int:id>")
 api.add_resource(AllRooms, "/hotels/rooms")
 api.add_resource(SpecificRoom, "/hotels/rooms/<int:id>")
+api.add_resource(AllRoomRates, "/hotels/roomrates")
+api.add_resource(SpecificRoomRate, "/hotels/roomrates/<int:id>")
+api.add_resource(AllDiscounts, "/hotels/discounts")
+api.add_resource(SpecificDiscount, "/hotels/discounts/<int:id>")
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)

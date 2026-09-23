@@ -26,12 +26,22 @@ class RoomModel(db.Model, SerializerMixin):
     hotel_id = one_to_many_fk("hotels")
     hotel = one_to_many_back_populates("HotelModel", "rooms", delete_orphan=False)
 
+    room_rates = one_to_many_back_populates("RoomRateModel", "room", delete_orphan=True)
+
+    discounts = one_to_many_back_populates("DiscountModel", "room", delete_orphan=True)
+
     #========================================================================
     # SERIALIZE RULES 
     #========================================================================
     serialize_rules = (
         "-hotel.rooms",
         "-hotel.park",
+
+        "-room_rates.hotel",
+        "-room_rates.room",
+
+        "-discounts.room",
+        "-discounts.hotel",
     )
 
     #======================================================================== 

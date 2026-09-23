@@ -36,6 +36,18 @@ class HotelModel(BaseNameImgInfomodel):
         True
     )
 
+    room_rates = one_to_many_back_populates(
+        "RoomRateModel",
+        "hotel",
+        delete_orphan=True
+    )
+
+    discounts = one_to_many_back_populates(
+        "DiscountModel",
+        "hotel",
+        delete_orphan=True
+    )
+
     #========================================================================
     # SERIALIZE RULES
     #========================================================================
@@ -44,6 +56,15 @@ class HotelModel(BaseNameImgInfomodel):
         "-park.images",
         "-park.events",
         "-park.activities",
+
+        "-rooms.hotel",
+        "-rooms.room_rates",
+
+        "-room_rates.hotel",
+        "-room_rates.room",
+
+        "-discounts.hotel",
+        "-discounts.room",
     )
     #========================================================================
     # PASSWORD HASH
