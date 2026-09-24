@@ -1,6 +1,6 @@
 from datetime import datetime
 from config import db
-from models.HotelModels.RoomHoldModel import RoomHoldModel
+from models.HotelModels.WildEnterpriseHotels.RoomHoldModel import RoomHoldModel
 
 def get_held_quantity(room_id, arrival_date, departure_date, exclude_session_token=None):
     query = (

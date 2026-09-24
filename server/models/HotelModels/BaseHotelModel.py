@@ -1,23 +1,26 @@
-from models.BaseNameImgInfoModel import BaseNameImgInfomodel
-
-from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
-
 from sqlalchemy.orm import validates
+from sqlalchemy_serializer import SerializerMixin
 
 from config import db, bcrypt
 
-from functions.check_validate_slug import validate_slug, make_slug_default
+from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
+
+from functions.check_validate_slug import validate_slug
 from functions.check_valid_email import check_validate_email
 
-from serialize_rules import PARK_RULES, ROOM_RULES, DISCOUNT_RULES
+from models.BaseNameImgInfoModel import BaseNameImgInfomodel
 
-class HotelModel(BaseNameImgInfomodel):
-    __tablename__ = "hotels"
+from serialize_rules import PARK_RULES
 
-    id = db.Column(db.Integer, primary_key = True)
+from functions.check_validate_slug import validate_slug, make_slug_default
+
+class BaseHotelModel(BaseNameImgInfomodel):
+    __abstract__ = True
+
     slug = db.Column(db.String, nullable = False, unique = True, default = make_slug_default("name"))
-    email = db.Column(db.String, nullable = False, unique = True)
+    email = db.Column(db.String, nullable = False)
     _password_hash = db.Column("password_hash", db.String, nullable = False)
+
 
     #========================================================================
     # RELATIONS
@@ -26,54 +29,18 @@ class HotelModel(BaseNameImgInfomodel):
         "parks"
     )
 
-    park = one_to_many_back_populates(
-        "ParkModel",
-        "hotels",
-        delete_orphan=False
-    )
-
-    rooms = one_to_many_back_populates(
-        "RoomModel",
-        "hotel",
-        True
-    )
-
-    room_rates = one_to_many_back_populates(
-        "RoomRateModel",
-        "hotel",
-        delete_orphan=True
-    )
-
-    discounts = one_to_many_back_populates(
-        "DiscountModel",
-        "hotel",
-        delete_orphan=True
-    )
-
-    lead_times = one_to_many_back_populates(
-        "LeadTimeRuleModel", 
-        "hotel", 
-        delete_orphan=True
-    )
-
-    bookings = one_to_many_back_populates(
-        "BookingModel",
-        "hotel",
-        delete_orphan=True
-    )
+    # park = one_to_many_back_populates(
+    #     "ParkModel",
+    #     "hotels",
+    #     delete_orphan=False
+    # )
 
     #========================================================================
     # SERIALIZE RULES
     #========================================================================
-    serialize_rules = (
-        PARK_RULES + ROOM_RULES + DISCOUNT_RULES
-
-        # "-room_rates.hotel",
-        # "-room_rates.room",
-
-        # "-lead_times.hotel",
-        # "-lead_times.room",
-    )
+    # serialize_rules = (
+    #     PARK_RULES 
+    # )
     #========================================================================
     # PASSWORD HASH
     #========================================================================
@@ -98,4 +65,3 @@ class HotelModel(BaseNameImgInfomodel):
     @validates("email")
     def validate_hotel_email(self, key, value):
         return check_validate_email(value)
-    

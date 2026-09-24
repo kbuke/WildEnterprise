@@ -9,7 +9,7 @@ from serialize_rules import ROOM_RULES
 
 from functions.check_instance_exists import check_instance_exists
 
-from models.HotelModels.RoomModel import RoomModel
+from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 
 class RoomHoldModel(db.Model, SerializerMixin):
     __tablename__ = "room_holds"

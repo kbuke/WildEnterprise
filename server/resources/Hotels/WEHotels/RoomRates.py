@@ -1,6 +1,6 @@
 from resources.BaseResource import BaseResource
 
-from models.HotelModels.RoomRateModel import RoomRateModel
+from models.HotelModels.WildEnterpriseHotels.RoomRateModel import RoomRateModel
 
 from decorators.require_hotel_login import require_hotel_login
 

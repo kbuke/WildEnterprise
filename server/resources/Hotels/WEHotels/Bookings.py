@@ -6,10 +6,10 @@ from config import db
 
 from resources.BaseResource import BaseResource
 
-from models.HotelModels.RoomModel import RoomModel
-from models.HotelModels.BookingModel import BookingModel
-from models.HotelModels.RoomBookingModel import RoomBookingModel
-from models.HotelModels.RoomHoldModel import RoomHoldModel
+from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
+from models.HotelModels.WildEnterpriseHotels.BookingModel import BookingModel
+from models.HotelModels.WildEnterpriseHotels.RoomBookingModel import RoomBookingModel
+from models.HotelModels.WildEnterpriseHotels.RoomHoldModel import RoomHoldModel
 
 from hotel_booking_functions.get_available_rooms import get_available_rooms
 from hotel_booking_functions.price_room_stay import price_room_stay

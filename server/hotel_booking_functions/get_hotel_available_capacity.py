@@ -1,4 +1,4 @@
-from models.HotelModels.RoomModel import RoomModel
+from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 from hotel_booking_functions.get_available_rooms import get_available_rooms
 
 def get_hotel_available_capacity(

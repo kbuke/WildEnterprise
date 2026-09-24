@@ -14,9 +14,9 @@ from config import db
 from sqlalchemy.orm import validates
 from sqlalchemy_serializer import SerializerMixin
 
-from serialize_rules import HOTEL_RULES, ROOM_BOOKING_RULES, ACTIVITY_BOOKING_RULES
+from serialize_rules import HOTEL_RULES, ROOM_BOOKING_RULES, ACTIVITY_BOOKING_RULES, WE_HOTEL_RULES, HOTEL_ACTIVITY_RULES
 
-from models.HotelModels.HotelModel import HotelModel
+from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
 
 class BookingModel(db.Model, SerializerMixin):
     __tablename__ = "bookings"
@@ -35,18 +35,18 @@ class BookingModel(db.Model, SerializerMixin):
     #========================================================================
     # RELATIONS 
     #========================================================================
-    hotel_id = one_to_many_fk("hotels")
-    hotel = one_to_many_back_populates("HotelModel", "bookings", False)
+    hotel_id = one_to_many_fk("wildenterprise_hotels")
+    hotel = one_to_many_back_populates("WEHotelModel", "hotel_bookings", False)
 
-    room_bookings = one_to_many_back_populates("RoomBookingModel", "booking", delete_orphan=True)
+    room_bookings = one_to_many_back_populates("RoomBookingModel", "hotel_booking", delete_orphan=True)
 
-    hotel_activities = one_to_many_back_populates("ActivityBookingModel", "booking", delete_orphan=True)
+    hotel_activities = one_to_many_back_populates("ActivityBookingModel", "hotel_booking", delete_orphan=True)
 
     #========================================================================
     # SERIALIZE RULES 
     #========================================================================
     serialize_rules = (
-        HOTEL_RULES + ROOM_BOOKING_RULES + ACTIVITY_BOOKING_RULES
+        HOTEL_RULES + ROOM_BOOKING_RULES + HOTEL_ACTIVITY_RULES + WE_HOTEL_RULES
     )
     #========================================================================
     # VALIDATIONS 
@@ -57,7 +57,7 @@ class BookingModel(db.Model, SerializerMixin):
 
     @validates("hotel_id")
     def validate_hotel(self, key, value):
-        return check_instance_exists(HotelModel, value)
+        return check_instance_exists(WEHotelModel, value)
 
     @validates("guests")
     def validate_guests(self, key, value):

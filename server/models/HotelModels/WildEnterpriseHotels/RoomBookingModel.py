@@ -5,7 +5,7 @@ from sqlalchemy.orm import validates
 
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
 
-from serialize_rules import ROOM_RULES, BOOKING_RULES
+from serialize_rules import ROOM_RULES, HOTEL_BOOKING_RULES
 
 class RoomBookingModel(db.Model, SerializerMixin):
     __tablename__ = "room_bookings"
@@ -22,13 +22,13 @@ class RoomBookingModel(db.Model, SerializerMixin):
     room = one_to_many_back_populates("RoomModel", "room_bookings", False)
 
     booking_id = one_to_many_fk("bookings")
-    booking = one_to_many_back_populates("BookingModel", "room_bookings", False)
+    hotel_booking = one_to_many_back_populates("BookingModel", "room_bookings", False)
 
     #========================================================================
     # SERIALIZE_RULES
     #======================================================================== 
     serialize_rules = (
-        ROOM_RULES + BOOKING_RULES
+        ROOM_RULES + HOTEL_BOOKING_RULES
     )
     
     #========================================================================

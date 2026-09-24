@@ -1,6 +1,6 @@
 from flask import request
 from resources.BaseResource import BaseResource
-from models.HotelModels.DiscountModel import DiscountModel
+from models.HotelModels.WildEnterpriseHotels.DiscountModel import DiscountModel
 
 from decorators.require_hotel_login import require_hotel_login
 

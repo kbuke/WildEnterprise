@@ -3,8 +3,8 @@ from datetime import timedelta
 from sqlalchemy import or_, and_
 
 from config import db
-from models.HotelModels.RoomRateModel import RoomRateModel
-from models.HotelModels.DiscountModel import DiscountModel
+from models.HotelModels.WildEnterpriseHotels.RoomRateModel import RoomRateModel
+from models.HotelModels.WildEnterpriseHotels.DiscountModel import DiscountModel
 
 
 def _nightly_rate(room, night):

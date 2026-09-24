@@ -5,8 +5,8 @@ from flask_restful import Resource
 
 from config import db 
 
-from models.HotelModels.RoomModel import RoomModel
-from models.HotelModels.RoomHoldModel import RoomHoldModel
+from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
+from models.HotelModels.WildEnterpriseHotels.RoomHoldModel import RoomHoldModel
 
 from hotel_booking_functions.get_available_rooms import get_available_rooms
 

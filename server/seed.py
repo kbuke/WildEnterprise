@@ -8,8 +8,8 @@ from models.EventModel import EventModel
 from models.ActivityModels.BaseActivityModel import BaseActivityModel
 from models.ActivityModels.ActivityBookingModel import ActivityBookingModel
 from models.ActivityModels.WalkingTrailModel import WalkingTrailModel
-from models.HotelModels.HotelModel import HotelModel
-from models.HotelModels.RoomModel import RoomModel
+from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
+from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 
 from datetime import date, time
 
@@ -170,7 +170,7 @@ HOTELS = [
 ]
 
 def seed_hotels():
-    hotels = [HotelModel(**data) for data in HOTELS]
+    hotels = [WEHotelModel(**data) for data in HOTELS]
     db.session.add_all(hotels)
     db.session.commit()
     print(f"Seeded {len(hotels)} Hotels")

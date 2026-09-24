@@ -41,7 +41,12 @@ class ParkModel(BaseNameImgInfomodel):
     )
 
     hotels = one_to_many_back_populates(
-        "HotelModel",
+        "WEHotelModel",
+        "park"
+    )
+
+    partner_hotels = one_to_many_back_populates( 
+        "PartnerHotelModel", 
         "park"
     )
 

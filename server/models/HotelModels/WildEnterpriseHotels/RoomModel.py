@@ -8,9 +8,9 @@ from relational_functions.one_to_many import one_to_many_back_populates, one_to_
 from functions.check_int import check_int
 from functions.check_instance_exists import check_instance_exists
 
-from models.HotelModels.HotelModel import HotelModel
+from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
 
-from serialize_rules import HOTEL_RULES, DISCOUNT_RULES, LEAD_TIME_RULES, ROOM_BOOKING_RULES, ROOM_HOLD_RULES
+from serialize_rules import HOTEL_RULES, DISCOUNT_RULES, LEAD_TIME_RULES, ROOM_BOOKING_RULES, ROOM_HOLD_RULES, WE_HOTEL_RULES
 
 class RoomModel(db.Model, SerializerMixin):
     __tablename__ = "rooms"
@@ -25,8 +25,8 @@ class RoomModel(db.Model, SerializerMixin):
     #========================================================================
     # RELATIONS 
     #========================================================================
-    hotel_id = one_to_many_fk("hotels")
-    hotel = one_to_many_back_populates("HotelModel", "rooms", delete_orphan=False)
+    hotel_id = one_to_many_fk("wildenterprise_hotels")
+    hotel = one_to_many_back_populates("WEHotelModel", "rooms", delete_orphan=False)
 
     room_rates = one_to_many_back_populates("RoomRateModel", "room", delete_orphan=True)
 
@@ -42,9 +42,7 @@ class RoomModel(db.Model, SerializerMixin):
     # SERIALIZE RULES 
     #========================================================================
     serialize_rules = (
-        HOTEL_RULES + DISCOUNT_RULES + LEAD_TIME_RULES + ROOM_BOOKING_RULES + ROOM_HOLD_RULES
-        # "-room_rates.hotel",
-        # "-room_rates.room",
+        HOTEL_RULES + DISCOUNT_RULES + LEAD_TIME_RULES + ROOM_BOOKING_RULES + ROOM_HOLD_RULES + WE_HOTEL_RULES
     )
 
     #======================================================================== 
@@ -57,4 +55,4 @@ class RoomModel(db.Model, SerializerMixin):
     @validates("hotel_id")
     def validate_hotel_exists(self, key, value):
         check_int(value)
-        return check_instance_exists(HotelModel, value)
+        return check_instance_exists(WEHotelModel, value)

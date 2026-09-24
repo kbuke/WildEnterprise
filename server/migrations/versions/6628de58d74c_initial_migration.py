@@ -1,8 +1,8 @@
 """initial migration
 
-Revision ID: 28784858753b
+Revision ID: 6628de58d74c
 Revises: 
-Create Date: 2026-09-24 09:55:30.956121
+Create Date: 2026-09-24 14:40:14.356616
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '28784858753b'
+revision = '6628de58d74c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -59,7 +59,14 @@ def upgrade():
     sa.ForeignKeyConstraint(['park_id'], ['parks.id'], name=op.f('fk_events_park_id_parks')),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('hotels',
+    op.create_table('park_image',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('img', sa.String(), nullable=False),
+    sa.Column('park_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['park_id'], ['parks.id'], name=op.f('fk_park_image_park_id_parks')),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('partner_hotels',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('slug', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
@@ -68,17 +75,22 @@ def upgrade():
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('img', sa.String(), nullable=False),
     sa.Column('info', sa.String(), nullable=False),
-    sa.ForeignKeyConstraint(['park_id'], ['parks.id'], name=op.f('fk_hotels_park_id_parks')),
+    sa.ForeignKeyConstraint(['park_id'], ['parks.id'], name=op.f('fk_partner_hotels_park_id_parks')),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email'),
     sa.UniqueConstraint('slug')
     )
-    op.create_table('park_image',
+    op.create_table('wildenterprise_hotels',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('slug', sa.String(), nullable=False),
+    sa.Column('email', sa.String(), nullable=False),
+    sa.Column('password_hash', sa.String(), nullable=False),
+    sa.Column('park_id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(), nullable=False),
     sa.Column('img', sa.String(), nullable=False),
-    sa.Column('park_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['park_id'], ['parks.id'], name=op.f('fk_park_image_park_id_parks')),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('info', sa.String(), nullable=False),
+    sa.ForeignKeyConstraint(['park_id'], ['parks.id'], name=op.f('fk_wildenterprise_hotels_park_id_parks')),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('slug')
     )
     op.create_table('bookings',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -91,7 +103,7 @@ def upgrade():
     sa.Column('date_of_deposit_charge', sa.Date(), nullable=False),
     sa.Column('date_of_remainder_charge', sa.Date(), nullable=False),
     sa.Column('hotel_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['hotel_id'], ['hotels.id'], name=op.f('fk_bookings_hotel_id_hotels')),
+    sa.ForeignKeyConstraint(['hotel_id'], ['wildenterprise_hotels.id'], name=op.f('fk_bookings_hotel_id_wildenterprise_hotels')),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('booking_ref')
     )
@@ -103,7 +115,7 @@ def upgrade():
     sa.Column('max_people', sa.Integer(), nullable=False),
     sa.Column('base_price', sa.Float(), nullable=False),
     sa.Column('hotel_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['hotel_id'], ['hotels.id'], name=op.f('fk_rooms_hotel_id_hotels')),
+    sa.ForeignKeyConstraint(['hotel_id'], ['wildenterprise_hotels.id'], name=op.f('fk_rooms_hotel_id_wildenterprise_hotels')),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('img')
     )
@@ -141,7 +153,7 @@ def upgrade():
     sa.Column('is_hotel_wide_discount', sa.Boolean(), nullable=True),
     sa.Column('hotel_id', sa.Integer(), nullable=True),
     sa.Column('room_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['hotel_id'], ['hotels.id'], name=op.f('fk_discounts_hotel_id_hotels')),
+    sa.ForeignKeyConstraint(['hotel_id'], ['wildenterprise_hotels.id'], name=op.f('fk_discounts_hotel_id_wildenterprise_hotels')),
     sa.ForeignKeyConstraint(['room_id'], ['rooms.id'], name=op.f('fk_discounts_room_id_rooms')),
     sa.PrimaryKeyConstraint('id')
     )
@@ -153,7 +165,7 @@ def upgrade():
     sa.Column('label', sa.String(), nullable=False),
     sa.Column('hotel_id', sa.Integer(), nullable=True),
     sa.Column('room_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['hotel_id'], ['hotels.id'], name=op.f('fk_lead_time_rules_hotel_id_hotels')),
+    sa.ForeignKeyConstraint(['hotel_id'], ['wildenterprise_hotels.id'], name=op.f('fk_lead_time_rules_hotel_id_wildenterprise_hotels')),
     sa.ForeignKeyConstraint(['room_id'], ['rooms.id'], name=op.f('fk_lead_time_rules_room_id_rooms')),
     sa.PrimaryKeyConstraint('id')
     )
@@ -189,7 +201,7 @@ def upgrade():
     sa.Column('priority', sa.Integer(), nullable=False),
     sa.Column('hotel_id', sa.Integer(), nullable=True),
     sa.Column('room_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['hotel_id'], ['hotels.id'], name=op.f('fk_room_rates_hotel_id_hotels')),
+    sa.ForeignKeyConstraint(['hotel_id'], ['wildenterprise_hotels.id'], name=op.f('fk_room_rates_hotel_id_wildenterprise_hotels')),
     sa.ForeignKeyConstraint(['room_id'], ['rooms.id'], name=op.f('fk_room_rates_room_id_rooms')),
     sa.PrimaryKeyConstraint('id')
     )
@@ -207,8 +219,9 @@ def downgrade():
     op.drop_table('walking_trail_model')
     op.drop_table('rooms')
     op.drop_table('bookings')
+    op.drop_table('wildenterprise_hotels')
+    op.drop_table('partner_hotels')
     op.drop_table('park_image')
-    op.drop_table('hotels')
     op.drop_table('events')
     op.drop_table('activities')
     op.drop_table('parks')

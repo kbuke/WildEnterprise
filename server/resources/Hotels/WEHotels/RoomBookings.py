@@ -1,5 +1,6 @@
 from resources.BaseResource import BaseResource
-from models.HotelModels.RoomBookingModel import RoomBookingModel
+
+from models.HotelModels.WildEnterpriseHotels.RoomBookingModel import RoomBookingModel
 
 class BaseRoomBooking(BaseResource):
     model = RoomBookingModel

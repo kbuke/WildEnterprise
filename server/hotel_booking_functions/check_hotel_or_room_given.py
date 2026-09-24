@@ -1,5 +1,5 @@
-from models.HotelModels.HotelModel import HotelModel
-from models.HotelModels.RoomModel import RoomModel
+from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
+from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 
 from functions.check_instance_exists import check_instance_exists
 
@@ -14,7 +14,7 @@ def check_hotel_or_room_given(
         raise ValueError("This must apply to either a room, or a hotel entirely.")
 
     if hotel_id:
-        return check_instance_exists(HotelModel, hotel_id)
+        return check_instance_exists(WEHotelModel, hotel_id)
 
     if room_id:
         return check_instance_exists(RoomModel, room_id)

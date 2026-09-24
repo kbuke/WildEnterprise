@@ -2,7 +2,8 @@ from flask import request
 from flask_restful import Resource
 from datetime import date
 
-from models.HotelModels.RoomModel import RoomModel
+# from models.HotelModels.RoomModel import RoomModel
+from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 
 from hotel_booking_functions.get_available_rooms import get_available_rooms
 from hotel_booking_functions.get_held_quantity import get_held_quantity

@@ -1,7 +1,7 @@
 from config import db
 
-from models.HotelModels.RoomBookingModel import RoomBookingModel
-from models.HotelModels.BookingModel import BookingModel
+from models.HotelModels.WildEnterpriseHotels.RoomBookingModel import RoomBookingModel
+from models.HotelModels.WildEnterpriseHotels.BookingModel import BookingModel
 
 def get_booked_quantity(
     room_id,

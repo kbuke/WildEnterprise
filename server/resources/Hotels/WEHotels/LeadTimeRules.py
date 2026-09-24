@@ -1,11 +1,10 @@
 from resources.BaseResource import BaseResource
-from models.HotelModels.LeadTimeModel import LeadTimeRuleModel
 
 from decorators.require_hotel_login import require_hotel_login
 
 from hotel_booking_functions.check_hotel_owner import post_hotel_info, patch_delete_hotel_info
 
-from models.HotelModels.LeadTimeModel import LeadTimeRuleModel
+from models.HotelModels.WildEnterpriseHotels.LeadTimeModel import LeadTimeRuleModel
 
 class BaseLeadTimeRule(BaseResource):
     model = LeadTimeRuleModel

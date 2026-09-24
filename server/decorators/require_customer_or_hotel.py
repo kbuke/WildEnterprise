@@ -1,7 +1,7 @@
 from functools import wraps
 from flask import request, session
 from functions.check_instance_exists import check_instance_exists
-from models.HotelModels.BookingModel import BookingModel
+from models.HotelModels.WildEnterpriseHotels.BookingModel import BookingModel
 
 def require_customer_or_hotel(f):
     @wraps(f)

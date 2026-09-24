@@ -6,8 +6,8 @@ from sqlalchemy_serializer import SerializerMixin
 from functions.check_instance_exists import check_instance_exists
 from functions.check_event_dates import check_event_dates
 
-from models.HotelModels.HotelModel import HotelModel
-from models.HotelModels.RoomModel import RoomModel
+from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
+from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
 
@@ -36,8 +36,8 @@ class DiscountModel(db.Model, SerializerMixin):
     # RELATIONS 
     #========================================================================
     is_hotel_wide_discount = db.Column(db.Boolean, nullable = True)
-    hotel_id = one_to_many_fk("hotels", True)
-    hotel = one_to_many_back_populates("HotelModel", "discounts", delete_orphan=False)
+    hotel_id = one_to_many_fk("wildenterprise_hotels", True)
+    hotel = one_to_many_back_populates("WEHotelModel", "discounts", delete_orphan=False)
 
     room_id = one_to_many_fk("rooms", True)
     room = one_to_many_back_populates("RoomModel", "discounts", delete_orphan=False)
@@ -71,7 +71,7 @@ class DiscountModel(db.Model, SerializerMixin):
                 raise ValueError("If this is a hotel wide discount, please state which hotel")
             elif self.is_hotel_wide_discount == False and value:
                 raise ValueError("This is a room-specific discount, not for an entire hotel")
-            return check_instance_exists(HotelModel, value)
+            return check_instance_exists(WEHotelModel, value)
         else:
             if self.is_hotel_wide_discount == True and value:
                 raise ValueError("This is a hotel-wide discount, not room-specific")

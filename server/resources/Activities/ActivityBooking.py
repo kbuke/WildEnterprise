@@ -6,7 +6,7 @@ from config import db
 
 from models.ActivityModels.ActivityBookingModel import ActivityBookingModel
 from models.ActivityModels.BaseActivityModel import BaseActivityModel
-from models.HotelModels.BookingModel import BookingModel
+from models.HotelModels.WildEnterpriseHotels.BookingModel import BookingModel
 
 from resources.BaseResource import BaseResource
 

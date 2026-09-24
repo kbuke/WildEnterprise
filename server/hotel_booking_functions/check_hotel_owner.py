@@ -3,7 +3,7 @@ from flask import request
 from functions.check_hotel_id_session import check_hotel_id_session
 from functions.check_instance_exists import check_instance_exists
 
-from models.HotelModels.RoomModel import RoomModel
+from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 
 def post_hotel_info():
     data = request.get_json()

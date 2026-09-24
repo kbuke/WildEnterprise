@@ -1,4 +1,4 @@
-from models.HotelModels.RoomModel import RoomModel
+from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 
 from hotel_booking_functions.get_booked_quantity import get_booked_quantity
 from hotel_booking_functions.get_held_quantity import get_held_quantity
