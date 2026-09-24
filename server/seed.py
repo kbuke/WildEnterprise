@@ -1,10 +1,12 @@
 from app import app 
 from config import db 
+import models
 
 from models.ParkModels import ParkModel
 from models.ParkImgModel import ParkImgModel
 from models.EventModel import EventModel
 from models.ActivityModels.BaseActivityModel import BaseActivityModel
+from models.ActivityModels.ActivityBookingModel import ActivityBookingModel
 from models.ActivityModels.WalkingTrailModel import WalkingTrailModel
 from models.HotelModels.HotelModel import HotelModel
 from models.HotelModels.RoomModel import RoomModel
@@ -108,6 +110,7 @@ ACTIVITIES = [
         "all_year_round": False,
         "available_months": [1, 2, 3, 4, 11, 12],
         "free_with_stay": True,
+        "discount_with_stay": False, 
         "price": 230.00,
         "park_id": 1
     },
@@ -129,6 +132,7 @@ WALKS = [
         "info": "Coming soon as well, I promise",
         "all_year_round": True,
         "free_with_stay": True,
+        "discount_with_stay": False,
         "price": 230.00,
         "park_id": 1,
         "map": "It's also coming",

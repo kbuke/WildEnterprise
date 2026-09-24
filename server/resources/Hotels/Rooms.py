@@ -49,7 +49,7 @@ class SpecificRoom(BaseRooms):
 
     @require_hotel_login
     def delete(self, id):
-        specific_room = check_instance_exists(RoomModel, id)
+        specific_room = check_instance_exists(RoomModel, id, return_instance=True)
         hotel_id = specific_room.hotel_id
         logged_hotel = check_hotel_id_session(hotel_id)
         if logged_hotel:

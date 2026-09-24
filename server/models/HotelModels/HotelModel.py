@@ -9,6 +9,8 @@ from config import db, bcrypt
 from functions.check_validate_slug import validate_slug, make_slug_default
 from functions.check_valid_email import check_validate_email
 
+from serialize_rules import PARK_RULES, ROOM_RULES, DISCOUNT_RULES
+
 class HotelModel(BaseNameImgInfomodel):
     __tablename__ = "hotels"
 
@@ -48,23 +50,29 @@ class HotelModel(BaseNameImgInfomodel):
         delete_orphan=True
     )
 
+    lead_times = one_to_many_back_populates(
+        "LeadTimeRuleModel", 
+        "hotel", 
+        delete_orphan=True
+    )
+
+    bookings = one_to_many_back_populates(
+        "BookingModel",
+        "hotel",
+        delete_orphan=True
+    )
+
     #========================================================================
     # SERIALIZE RULES
     #========================================================================
     serialize_rules = (
-        "-park.hotels",
-        "-park.images",
-        "-park.events",
-        "-park.activities",
+        PARK_RULES + ROOM_RULES + DISCOUNT_RULES
 
-        "-rooms.hotel",
-        "-rooms.room_rates",
+        # "-room_rates.hotel",
+        # "-room_rates.room",
 
-        "-room_rates.hotel",
-        "-room_rates.room",
-
-        "-discounts.hotel",
-        "-discounts.room",
+        # "-lead_times.hotel",
+        # "-lead_times.room",
     )
     #========================================================================
     # PASSWORD HASH

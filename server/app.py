@@ -11,6 +11,12 @@ from resources.Logins.HotelLogin import HotelLogin, HotelLogout, HotelCheckSessi
 from resources.Hotels.Rooms import AllRooms, SpecificRoom
 from resources.Hotels.RoomRates import AllRoomRates, SpecificRoomRate
 from resources.Hotels.Discounts import AllDiscounts, SpecificDiscount
+from resources.Hotels.LeadTimeRules import AllLeadTimeRules, SpecificLeadTimeRule
+from resources.Hotels.RoomBookings import AllRoomBookings, SpecificRoomBooking
+from resources.Hotels.RoomHold import CreateHold
+from resources.Hotels.Availability import SearchAvailability
+from resources.Hotels.Bookings import AllBookings, SpecificBooking
+from resources.Activities.ActivityBooking import AllActivityBookings
 
 api.add_resource(AllParks, "/parks")
 api.add_resource(SpecificPark, "/parks/<int:id>")
@@ -25,6 +31,7 @@ api.add_resource(AllActivities, "/activities")
 api.add_resource(SpecificActivity, "/activities/<int:id>")
 api.add_resource(AllWalks, "/activities/walks")
 api.add_resource(SpecificWalk, "/activities/walks/<int:id>")
+api.add_resource(AllActivityBookings, "/activities/bookings")
 
 api.add_resource(AdminLogin, "/admin/login")
 api.add_resource(AdminLogout, "/admin/logout")
@@ -42,6 +49,14 @@ api.add_resource(AllRoomRates, "/hotels/roomrates")
 api.add_resource(SpecificRoomRate, "/hotels/roomrates/<int:id>")
 api.add_resource(AllDiscounts, "/hotels/discounts")
 api.add_resource(SpecificDiscount, "/hotels/discounts/<int:id>")
+api.add_resource(AllLeadTimeRules, "/hotels/leadtimes")
+api.add_resource(SpecificLeadTimeRule, "/hotels/leadtimes/<int:id>")
+api.add_resource(AllRoomBookings, "/hotels/roombookings")
+api.add_resource(SpecificRoomBooking, "/hotels/roombookings/<int:id>")
+api.add_resource(CreateHold, "/hotels/holds")
+api.add_resource(SearchAvailability, "/hotels/availability")
+api.add_resource(AllBookings, "/hotels/bookings")
+api.add_resource(SpecificBooking, "/hotels/bookings/<int:id>")
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)

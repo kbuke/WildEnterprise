@@ -12,6 +12,8 @@ from models.HotelModels.HotelModel import HotelModel
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 
+from serialize_rules import HOTEL_RULES, ROOM_RULES
+
 class RoomRateModel(db.Model, SerializerMixin):
     """
     This is for setting increases or decreases on a hotel or certain room over a period of dates 
@@ -41,22 +43,12 @@ class RoomRateModel(db.Model, SerializerMixin):
     # SERIALIZE RULES 
     #========================================================================
     serialize_rules = (
-        "-hotel.room_rates",
-        "-hotel.rooms",
-        "-hotel.park",
-
-        "-room.room_rates",
-        "-room.hotel",
+        HOTEL_RULES + ROOM_RULES
     )
 
     #========================================================================
     # VALIDATIONS 
     #========================================================================
-    # @validates("end_date")
-    # def validate_end_date(self, key, value):
-    #     _, end_date = check_hotel_dates(self.start_date, value)
-    #     return end_date 
-
     @validates("hotel_id", "room_id")
     def validate_hotel(self, key, value):
         if key == "hotel_id":

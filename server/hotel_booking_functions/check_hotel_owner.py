@@ -14,10 +14,6 @@ def post_hotel_info():
         return check_hotel_id_session(hotel_id)
 
     return check_hotel_id_session(data["hotelId"])
-  
-    # elif not data.get("roomId") and data.get("hotelId"):
-    #     hotel_id = data["hotelId"]
-    #     return check_hotel_id_session(hotel_id)
 
 def patch_delete_hotel_info(model, id):
     specific_instance = check_instance_exists(model, id, True)

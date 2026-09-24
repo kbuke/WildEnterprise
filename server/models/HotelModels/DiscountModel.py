@@ -11,6 +11,8 @@ from models.HotelModels.RoomModel import RoomModel
 
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
 
+from serialize_rules import HOTEL_RULES, ROOM_RULES
+
 # Need to set up priority list, if we add a discount to a room in a hotel, that already has a discount on the whole property, we need to ensure this is accounted for 
 
 class DiscountModel(db.Model, SerializerMixin):
@@ -44,12 +46,7 @@ class DiscountModel(db.Model, SerializerMixin):
     # SERIALIZE RULES 
     #========================================================================
     serialize_rules = (
-        "-hotel.park",
-        "-hotel.rooms",
-        "-hotel.room_rates",
-
-        "-room.hotel",
-        "-room.room_rates",
+        HOTEL_RULES + ROOM_RULES
     )
 
     #========================================================================

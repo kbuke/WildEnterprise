@@ -19,6 +19,14 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['SECRET_KEY'] = os.getenv("APP_SECRET_KEY")
 
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = os.environ.get("GMAIL_ADDRESS")
+app.config["MAIL_PASSWORD"] = os.environ.get("GMAIL_APP_PASSWORD")
+app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("GMAIL_ADDRESS")
+mail = Mail(app)
+
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s"
 })

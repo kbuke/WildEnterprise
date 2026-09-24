@@ -10,6 +10,8 @@ from functions.check_instance_exists import check_instance_exists
 
 from models.HotelModels.HotelModel import HotelModel
 
+from serialize_rules import HOTEL_RULES, DISCOUNT_RULES, LEAD_TIME_RULES, ROOM_BOOKING_RULES, ROOM_HOLD_RULES
+
 class RoomModel(db.Model, SerializerMixin):
     __tablename__ = "rooms"
 
@@ -30,18 +32,19 @@ class RoomModel(db.Model, SerializerMixin):
 
     discounts = one_to_many_back_populates("DiscountModel", "room", delete_orphan=True)
 
+    lead_times = one_to_many_back_populates("LeadTimeRuleModel", "room", delete_orphan=True)
+
+    room_bookings = one_to_many_back_populates("RoomBookingModel", "room", delete_orphan=True)
+
+    holds = one_to_many_back_populates("RoomHoldModel", "room", delete_orphan=True)
+
     #========================================================================
     # SERIALIZE RULES 
     #========================================================================
     serialize_rules = (
-        "-hotel.rooms",
-        "-hotel.park",
-
-        "-room_rates.hotel",
-        "-room_rates.room",
-
-        "-discounts.room",
-        "-discounts.hotel",
+        HOTEL_RULES + DISCOUNT_RULES + LEAD_TIME_RULES + ROOM_BOOKING_RULES + ROOM_HOLD_RULES
+        # "-room_rates.hotel",
+        # "-room_rates.room",
     )
 
     #======================================================================== 

@@ -20,7 +20,7 @@ class BaseDiscounts(BaseResource):
         "discountOnBooking": "discount_based_on_booking",
         "bookingStart": "booking_start_date",
         "bookingEnd": "booking_end_date",
-        "stayStart": "start_start_date",
+        "stayStart": "stay_start_date",
         "stayEnd": "stay_end_date",
         "isHotelDiscount": "is_hotel_wide_discount",
         "hotelId": "hotel_id",
