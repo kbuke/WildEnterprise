@@ -8,8 +8,8 @@ def send_guest_ammendment(booking):
         body = (
             f"Hi {booking.name}, \n\n"
             f"Your booking is confirmed. \n"
-            f"Arrival: {booking.arrival_date} \n"
-            f"Departure: {booking.departure_date} \n"
+            f"Arrival: {booking.arrival} \n"
+            f"Departure: {booking.departure} \n"
         )
     )
     mail.send(msg)
@@ -24,8 +24,8 @@ def send_hotel_ammendment(booking):
                 f"New guest booking received. \n"
                 f"Guest: {booking.name}\n"
                 f"Reference: {booking.booking_ref}\n"
-                f"Arrival: {booking.arrival_date}\n"
-                f"Departure: {booking.departure_date}"
+                f"Arrival: {booking.arrival}\n"
+                f"Departure: {booking.departure}"
             )
         )
         mail.send(msg)

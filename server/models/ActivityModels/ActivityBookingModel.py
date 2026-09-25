@@ -8,7 +8,7 @@ import uuid
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
 
 from models.ActivityModels.BaseActivityModel import BaseActivityModel
-from models.HotelModels.WildEnterpriseHotels.BookingModel import BookingModel
+from models.HotelModels.WildEnterpriseHotels.BookingModel import WEHotelBookingModel
 
 from functions.check_instance_exists import check_instance_exists
 
@@ -30,14 +30,26 @@ class ActivityBookingModel(db.Model, SerializerMixin):
     activity_id = one_to_many_fk("activities") 
     activity = one_to_many_back_populates("BaseActivityModel", "activity_bookings", delete_orphan=False)
 
-    hotel_booking_id = one_to_many_fk("bookings", is_null=True)
-    hotel_booking = one_to_many_back_populates("BookingModel", "hotel_activities", delete_orphan=False)
+    hotel_booking_id = one_to_many_fk("we_hotel_booking", is_null=True)
+    hotel_booking = one_to_many_back_populates("WEHotelBookingModel", "activities", delete_orphan=False)
+
+    partner_hotel_booking_id = one_to_many_fk("partner_hotel_booking", is_null=True)
+    partner_hotel_booking = one_to_many_back_populates("PartnerHotelBookingModel", "activities", delete_orphan=False)
 
     #========================================================================
     # SERIALIZE RULES 
     #========================================================================
     serialize_rules = (
-        ACTIVITY_RULES + HOTEL_BOOKING_RULES 
+        # ACTIVITY_RULES + HOTEL_BOOKING_RULES 
+        "-activity.activity_bookings",
+        "-activity.park",
+
+        "-hotel_booking.hotel",
+        "-hotel_booking.room_bookings",
+        "-hotel_booking.activities",
+
+        "-partner_hotel_booking.activities",
+        "-partner_hotel_booking.partner_hotel",
     )
 
     #========================================================================

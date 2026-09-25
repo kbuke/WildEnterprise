@@ -7,11 +7,12 @@ def check_valid_date(selected_date):
 
     if not isinstance(selected_date, date):
         try:
-            selected_date == datetime.strptime(
+            selected_date = datetime.strptime(
                 selected_date,
                 "%Y-%m-%d"
             ).date()
         except TypeError:
             raise TypeError("Value must be of type date")
+
 
     return selected_date

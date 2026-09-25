@@ -79,5 +79,21 @@ class ParkModel(BaseNameImgInfomodel):
     # SERIALIZE RULES
     #=============================================================================================
     serialize_rules = (
-        EVENT_RULES + ACTIVITY_RULES + HOTEL_RULES + PARK_IMG_RULES
+        # EVENT_RULES + ACTIVITY_RULES + HOTEL_RULES + PARK_IMG_RULES
+        "-images.park",
+
+        "-events.park",
+
+        "-activities.park",
+        "-activities.activity_bookings",
+
+        "-hotel.park",
+        "-hotel.rooms",
+        "-hotel.room_rates",
+        "-hotel.discounts",
+        "-hotel.lead_times",
+        "-hotel.hotel_bookings",
+
+        "-partner_hotels.park",
+        "-partner_hotels.partner_hotel_bookings",
     )

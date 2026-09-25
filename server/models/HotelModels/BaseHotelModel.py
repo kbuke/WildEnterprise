@@ -21,7 +21,6 @@ class BaseHotelModel(BaseNameImgInfomodel):
     email = db.Column(db.String, nullable = False)
     _password_hash = db.Column("password_hash", db.String, nullable = False)
 
-
     #========================================================================
     # RELATIONS
     #========================================================================
@@ -29,18 +28,6 @@ class BaseHotelModel(BaseNameImgInfomodel):
         "parks"
     )
 
-    # park = one_to_many_back_populates(
-    #     "ParkModel",
-    #     "hotels",
-    #     delete_orphan=False
-    # )
-
-    #========================================================================
-    # SERIALIZE RULES
-    #========================================================================
-    # serialize_rules = (
-    #     PARK_RULES 
-    # )
     #========================================================================
     # PASSWORD HASH
     #========================================================================

@@ -68,6 +68,16 @@ ROOM_HOLD_RULES = serialize_header(
     "holds",
     "room"
 )
+
+PARTNER_HOTEL_RULES = serialize_header(
+    "partner_hotel",
+    "partner_hotel_bookings"
+)
+
+PARTNER_HOTEL_BOOKINGS_RULES = serialize_header(
+    "partner_hotel_bookings",
+    "partner_hotel"
+)
 # ======================================================================
 
 PARK_RULES = serialize_header(

@@ -17,6 +17,10 @@ from resources.Hotels.WEHotels.RoomHold import CreateHold
 from resources.Hotels.WEHotels.Availability import SearchAvailability
 from resources.Hotels.WEHotels.Bookings import AllBookings, SpecificBooking
 from resources.Activities.ActivityBooking import AllActivityBookings
+from resources.Hotels.PartnerHotels.PartnerHotels import ChangePartnerHotelCredentials, AllPartnerHotels, SpecificPartnerHotel
+from resources.Hotels.WEHotels.Hotels import ChangeWileEnterpriseCredentials
+from resources.Logins.PartnerHotelLogin import PartnerHotelLogin, PartnerHotelLogout, PartnerHotelCheckSession
+from resources.Hotels.PartnerHotels.PartnerHotelBookings import AllPartnerHotelBookings
 
 api.add_resource(AllParks, "/parks")
 api.add_resource(SpecificPark, "/parks/<int:id>")
@@ -40,6 +44,16 @@ api.add_resource(AdminCheckSession, "/admin/checksession")
 api.add_resource(HotelLogin, "/hotels/login")
 api.add_resource(HotelLogout, "/hotels/logout")
 api.add_resource(HotelCheckSession, "/hotels/checksession")
+api.add_resource(ChangeWileEnterpriseCredentials, "/hotels/changecredentials/<int:id>")
+
+api.add_resource(PartnerHotelLogin, "/hotels/partner/login")
+api.add_resource(PartnerHotelLogout, "/hotels/partner/logout")
+api.add_resource(PartnerHotelCheckSession, "/hotels/partner/checksession")
+api.add_resource(ChangePartnerHotelCredentials, "/hotels/partner/changecredentials/<int:id>")
+
+api.add_resource(AllPartnerHotels, "/hotels/partner")
+
+api.add_resource(AllPartnerHotelBookings, "/hotels/partner/bookings")
 
 api.add_resource(AllWildEnterpriseHotels, "/hotels/wildenterprise")
 api.add_resource(SpecificWildEnterpriseHotel, "/hotels/wildenterprise/<int:id>")

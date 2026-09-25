@@ -1,7 +1,7 @@
 from datetime import timedelta, date
 
 def calculate_deposit_date(context):
-    arrival = context.get_current_parameters()["arrival_date"]
+    arrival = context.get_current_parameters()["arrival"]
     two_weeks_before = arrival - timedelta(weeks=2)
     today = date.today()
 

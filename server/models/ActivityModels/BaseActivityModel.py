@@ -81,5 +81,14 @@ class BaseActivityModel(BaseNameImgInfomodel):
     # SERIALIZE RULES
     #=============================================================================================
     serialize_rules = (
-        PARK_RULES + ACTIVITY_BOOKING_RULES
+        # PARK_RULES + ACTIVITY_BOOKING_RULES
+        "-park.activities",
+        "-park.images",
+        "-park.events",
+        "-park.hotels",
+        "-park.partner_hotels",
+
+        "-activity_bookings.activity",
+        "-activity_bookings.hotel_booking",
+        "-activity_bookings.partner_hotel_booking",
     )

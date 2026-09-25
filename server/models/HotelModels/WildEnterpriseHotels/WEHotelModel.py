@@ -47,7 +47,7 @@ class WEHotelModel(BaseHotelModel):
     )
 
     hotel_bookings = one_to_many_back_populates(
-        "BookingModel",
+        "WEHotelBookingModel",
         "hotel",
         delete_orphan=True
     )
@@ -56,5 +56,29 @@ class WEHotelModel(BaseHotelModel):
     # SERIALIZE RULES 
     #========================================================================
     serialize_rules = (
-        ROOM_RULES + DISCOUNT_RULES + LEAD_TIME_RULES + HOTEL_BOOKINGS_ON_HOTEL_RULES + PARK_RULES
+        # ROOM_RULES + DISCOUNT_RULES + LEAD_TIME_RULES + HOTEL_BOOKINGS_ON_HOTEL_RULES + PARK_RULES
+        "-park.hotels",
+        "-park.images",
+        "-park.events",
+        "-park.activities",
+        "-park.partner_hotels",
+
+        "-rooms.hotel",
+        "-rooms.room_rates",
+        "-rooms.discounts",
+        "-rooms.lead_times",
+        "-rooms.room_bookings",
+        "-rooms.holds",
+
+        "-room_rates.hotel",
+        "-room_rates.room",
+
+        "-discounts.hotel",
+        "-discounts.room",
+
+        "-lead_times.hotel",
+        "-lead_times.room",
+
+        "-hotel_bookings.hotel",
+        "-hotel_bookings.room_bookings"
     )

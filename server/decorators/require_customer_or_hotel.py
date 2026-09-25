@@ -1,13 +1,13 @@
 from functools import wraps
 from flask import request, session
 from functions.check_instance_exists import check_instance_exists
-from models.HotelModels.WildEnterpriseHotels.BookingModel import BookingModel
+from models.HotelModels.WildEnterpriseHotels.BookingModel import WEHotelBookingModel
 
 def require_customer_or_hotel(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         booking_id = kwargs.get("id")
-        booking = check_instance_exists(BookingModel, booking_id, True)
+        booking = check_instance_exists(WEHotelBookingModel, booking_id, True)
 
         # Hotel admin for this booking's hotel
         if session.get("hotel_id") == booking.hotel_id:

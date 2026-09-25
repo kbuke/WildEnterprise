@@ -32,7 +32,13 @@ class RoomHoldModel(db.Model, SerializerMixin):
     # SERIALIZE RULESS
     #========================================================================
     serialize_rules = (
-        ROOM_RULES
+        # ROOM_RULES
+        "-room.hotel",
+        "-room.room_rates",
+        "-room.discounts",
+        "-room.lead_times",
+        "-room.room_bookings",
+        "-room.holds",
     )
 
     #========================================================================

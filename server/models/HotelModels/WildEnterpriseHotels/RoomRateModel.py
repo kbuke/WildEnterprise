@@ -43,7 +43,19 @@ class RoomRateModel(db.Model, SerializerMixin):
     # SERIALIZE RULES 
     #========================================================================
     serialize_rules = (
-        HOTEL_RULES + ROOM_RULES
+        "-hotel.discounts",
+        "-hotel.park",
+        "-hotel.rooms",
+        "-hotel.room_rates",
+        "-hotel.lead_times",
+        "-hotel.hotel_bookings",
+
+        "-room.hotel",
+        "-room.room_rates",
+        "-room.discounts",
+        "-room.lead_times",
+        "-room.room_bookings",
+        "-room.holds",
     )
 
     #========================================================================

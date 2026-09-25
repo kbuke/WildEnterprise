@@ -41,4 +41,6 @@ class ParkImgModel(db.Model, SerializerMixin):
         "-park.images",
         "-park.events",
         "-park.activities",
+        "-park.hotels",
+        "-park.partner_hotels",
     )

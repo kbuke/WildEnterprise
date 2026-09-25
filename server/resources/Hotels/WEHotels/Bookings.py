@@ -7,7 +7,7 @@ from config import db
 from resources.BaseResource import BaseResource
 
 from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
-from models.HotelModels.WildEnterpriseHotels.BookingModel import BookingModel
+from models.HotelModels.WildEnterpriseHotels.BookingModel import WEHotelBookingModel
 from models.HotelModels.WildEnterpriseHotels.RoomBookingModel import RoomBookingModel
 from models.HotelModels.WildEnterpriseHotels.RoomHoldModel import RoomHoldModel
 
@@ -24,16 +24,26 @@ from functions.check_instance_exists import check_instance_exists
 
 from flask import session
 
+from resources.Hotels.BaseHotelBooking import BaseHotelBooking
 
-class BaseBooking(BaseResource):
-    model = BookingModel
+class BaseBooking(BaseHotelBooking):
+    model = WEHotelBookingModel
 
     field_map = {
-        "name": "name",
-        "email": "email",
-        "arrival": "arrival_date",
-        "departure": "departure_date",
+        **BaseHotelBooking.field_map,
+        "hotelId": "hotel_id"
     }
+
+
+# class BaseBooking(BaseResource):
+#     model = BookingModel
+
+#     field_map = {
+#         "name": "name",
+#         "email": "email",
+#         "arrival": "arrival_date",
+#         "departure": "departure_date",
+#     }
 
 
 class AllBookings(BaseBooking):
@@ -41,7 +51,7 @@ class AllBookings(BaseBooking):
     def get(self):
         # Only this hotel's bookings — not every hotel's guest list.
         hotel_id = session.get("hotel_id")
-        bookings = BookingModel.query.filter_by(hotel_id=hotel_id).all()
+        bookings = WEHotelBookingModel.query.filter_by(hotel_id=hotel_id).all()
         return [b.to_dict() for b in bookings], 200
 
     def post(self):
@@ -112,12 +122,12 @@ class AllBookings(BaseBooking):
                 "error": f"Selected rooms only accommodate {total_capacity} guests, but {guests} guests specified"
             }, 400
 
-        booking = BookingModel(
+        booking = WEHotelBookingModel(
             name=data["name"],
             email=data["email"],
             guests=guests,
-            arrival_date=arrival,
-            departure_date=departure,
+            arrival=arrival,
+            departure=departure,
             hotel_id=hotel_id,
             room_bookings=room_bookings,
         )
@@ -141,7 +151,7 @@ class SpecificBooking(BaseBooking):
 
     @require_customer_or_hotel
     def patch(self, id):
-        booking = check_instance_exists(BookingModel, id, True)
+        booking = check_instance_exists(WEHotelBookingModel, id, True)
         result = self.patch_instance(id)
         send_guest_ammendment(booking=booking)
         send_hotel_ammendment(booking=booking)

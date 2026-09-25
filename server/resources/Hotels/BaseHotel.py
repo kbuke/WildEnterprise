@@ -10,5 +10,6 @@ class BaseHotel(BaseResource):
         "img": "img",
         "info": "info",
         "email": "email",
-        "password": "password_hash"
+        "password": "password_hash",
+        "parkId": "park_id"
     }

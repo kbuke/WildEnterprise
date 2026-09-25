@@ -11,6 +11,9 @@ from models.ActivityModels.WalkingTrailModel import WalkingTrailModel
 from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
 from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 
+from models.HotelModels.PartnerHotels.PartnerHotelBookingsModel import PartnerHotelBookingModel
+from models.HotelModels.PartnerHotels.PartnerHotelModel import PartnerHotelModel
+
 from datetime import date, time
 
 #========================================================================
@@ -110,6 +113,17 @@ ACTIVITIES = [
         "all_year_round": False,
         "available_months": [1, 2, 3, 4, 11, 12],
         "free_with_stay": True,
+        "discount_with_stay": False, 
+        "price": 230.00,
+        "park_id": 1
+    },
+
+     {
+        "name": "Swimming",
+        "img": "Later",
+        "info": "Coming soon as well, I promise",
+        "all_year_round": True,
+        "free_with_stay": False,
         "discount_with_stay": False, 
         "price": 230.00,
         "park_id": 1

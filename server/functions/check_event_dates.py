@@ -11,16 +11,7 @@ def check_event_dates(
 
     check_not_bool_or_none(start_date)
 
-    check_valid_date(start_date)
-
-    # if not isinstance(start_date, date):
-    #     try:
-    #         start_date = datetime.strptime(
-    #             start_date,
-    #             "%Y-%m-%d"
-    #         ).date()
-    #     except TypeError:
-    #         raise TypeError("Value must be of type date")
+    start_date = check_valid_date(start_date)
 
     if start_date < today:
         raise ValueError("You can not set an event for the past")
@@ -29,15 +20,7 @@ def check_event_dates(
         if isinstance(end_date, bool):
             raise ValueError("End date can not be a boolean")
 
-        check_valid_date(end_date)
-        # if not isinstance(end_date, date):
-        #     try:
-        #         end_date = datetime.strptime(
-        #             end_date,
-        #             "%Y-%m-%d"
-        #         ).date()
-        #     except ValueError:
-        #         raise ValueError("End date must be of type date")
+        end_date = check_valid_date(end_date)
             
         if end_date < start_date:
             raise ValueError("End date can not be before start date")
