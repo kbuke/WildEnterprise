@@ -3,6 +3,8 @@ from flask_restful import Resource
 
 from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
 
+from schemas.hotels.we_hotels.we_hotel_schema import WeHotelSchema
+
 class HotelLogin(Resource):
     def post(self):
         data = request.get_json()
@@ -12,7 +14,8 @@ class HotelLogin(Resource):
             return {"error": "Invalid email or password"}, 401
 
         session["hotel_id"] = hotel.id
-        return {**hotel.to_dict(), "is_hotel_admin": True}, 200
+        # return {**hotel.to_dict(), "is_hotel_admin": True}, 200
+        return {**WeHotelSchema().dump(hotel), "is_hotel_admin": True}, 200
 
 class HotelLogout(Resource):
     def delete(self):
@@ -24,4 +27,5 @@ class HotelCheckSession(Resource):
         hotel = WEHotelModel.query.get(session.get("hotel_id"))
         if not hotel:
             return {"error": "Not logged in"}, 401 
-        return {**hotel.to_dict(), "is_hotel_admin": True}, 200
+        return {**WeHotelSchema().dump(hotel), "is_hotel_admin": True}, 200
+        # return {**hotel.to_dict(), "is_hotel_admin": True}, 200

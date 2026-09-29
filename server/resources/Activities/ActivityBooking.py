@@ -13,9 +13,15 @@ from resources.BaseResource import BaseResource
 
 from functions.check_instance_exists import check_instance_exists
 
+from schemas.activity_schemas.activity_bookings import ActivityBookingSchema, ActivityBookingDetailedSchema
+
 
 class BaseActivityBooking(BaseResource):
     model = ActivityBookingModel
+
+    schema = ActivityBookingSchema
+
+    detail_schema = ActivityBookingDetailedSchema
 
     field_map = {
         "date": "date",
@@ -242,67 +248,8 @@ class AllActivityBookings(BaseActivityBooking):
         db.session.add(activity_booking)
         db.session.commit()
 
-        return activity_booking.to_dict(), 201
-
-
-        # if data.get("hotelBookingId"):
-        #     we_hotel_booking = check_hotel_booking(
-        #         we_hotel_booking, 
-        #         WEHotelBookingModel,
-        #         data.get("hotelBookingId")
-        #     )
-
-        #     if we_hotel_booking and activity.free_with_stay:
-        #         total_price = 0.00
-        #     else
-
-        # if data.get("hotelBookingId"):
-        #     pass 
-
-        # if data.get("partnerHotelBookingId"):
-        #     pass
-
-        # hotel_booking_id = data.get("hotelBookingId")
-        # hotel_booking = None
-
-        # if hotel_booking_id:
-        #     hotel_booking = check_instance_exists(model=BookingModel, id=hotel_booking_id, return_instance=True)
-        #     if not hotel_booking:
-        #         return {"error": "This is not a valid hotel booking"}, 404
-
-        #     if no_of_people > hotel_booking.guests:
-        #         return {
-        #             "error": f"This hotel booking is for {hotel_booking.guests} guests "
-        #                      f"but you are trying to book for {no_of_people} people"
-        #         }, 400
-
-        #     if not (hotel_booking.arrival_date <= activity_date <= hotel_booking.departure_date):
-        #         return {
-        #             "error": f"Hotel stay is from {hotel_booking.arrival_date} to "
-        #                      f"{hotel_booking.departure_date}. Please book within this date range"
-        #         }, 400
-
-        # # Pricing: only apply stay-based free/discount if a valid, verified
-        # # hotel booking was actually supplied. No hotel booking = full price,
-        # # even if the activity supports a stay perk.
-        # if hotel_booking and activity.free_with_stay:
-        #     total_price = 0.00
-        # elif hotel_booking and activity.discount_with_stay:
-        #     total_price = (activity.price * no_of_people) * (1 - activity.stay_discount)
-        # else:
-        #     total_price = activity.price * no_of_people
-
-        # activity_booking = ActivityBookingModel(
-        #     date=activity_date,
-        #     no_of_people=no_of_people,
-        #     activity_id=activity.id,
-        #     hotel_booking_id=hotel_booking.id if hotel_booking else None,
-        #     total_price=round(total_price, 2),
-        # )
-        # db.session.add(activity_booking)
-        # db.session.commit()
-
         # return activity_booking.to_dict(), 201
+        return self._detail().dump(activity_booking), 201
 
 
 class SpecificActivityBooking(BaseActivityBooking):
@@ -310,7 +257,7 @@ class SpecificActivityBooking(BaseActivityBooking):
         return self.get_specific(id)
 
     def patch(self, id):
-        pass
+        return self.patch_instance(id)
 
     def delete(self, id):
         return self.delete_instance(id)

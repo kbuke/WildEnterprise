@@ -4,7 +4,6 @@ from config import db
 
 from relational_functions.one_to_many import one_to_many_back_populates
 
-from serialize_rules import PARTNER_HOTEL_BOOKINGS_RULES
 
 class PartnerHotelModel(BaseHotelModel): 
     __tablename__ = "partner_hotels" 
@@ -20,14 +19,13 @@ class PartnerHotelModel(BaseHotelModel):
     #========================================================================
     # SERIALIZATION
     #========================================================================
-    serialize_rules = (
-        # PARTNER_HOTEL_BOOKINGS_RULES
-        "-partner_hotel_bookings.partner_hotel",
+    # serialize_rules = (
+    #     "-partner_hotel_bookings.partner_hotel",
 
-        "-park.partner_hotels",
-        "-park.images",
-        "-park.events",
-        "-park.activities",
-        "-park.hotels",
-        "-park.partner_hotels",
-    )
+    #     "-park.partner_hotels",
+    #     "-park.images",
+    #     "-park.events",
+    #     "-park.activities",
+    #     "-park.hotels",
+    #     "-park.partner_hotels",
+    # )

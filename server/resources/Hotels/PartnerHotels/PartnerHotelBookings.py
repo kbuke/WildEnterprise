@@ -12,20 +12,14 @@ from flask import request
 
 from resources.Hotels.BaseHotelBooking import BaseHotelBooking
 
-# class BasePartnerHotelBookings(BaseResource):
-#     model = PartnerHotelBookingModel
-
-#     field_map = {
-#         "refCode": "ref_code",
-#         "arrival": "arrival_date",
-#         "departure": "departure_date",
-#         "people": "people",
-#         "email": "email",
-#         "partnerHotelId": "partner_hotel_id"
-#     }
+from schemas.hotels.partner_hotels.partner_hotel_booking_schema import PartnerHotelBookingSchema, PartnerHotelBookingDetailedSchema
 
 class BasePartnerHotelBookings(BaseHotelBooking):
     model = PartnerHotelBookingModel
+
+    schema = PartnerHotelBookingSchema
+
+    detail_schema = PartnerHotelBookingDetailedSchema
 
     field_map = {
         **BaseHotelBooking.field_map,

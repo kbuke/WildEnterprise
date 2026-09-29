@@ -2,8 +2,14 @@ from resources.BaseResource import BaseResource
 
 from models.HotelModels.WildEnterpriseHotels.RoomBookingModel import RoomBookingModel
 
+from schemas.hotels.we_hotels.we_hotel_room_booking_schema import WeHotelRoomBookingDetailedSchema, WeHotelRoomBookingSchema
+
 class BaseRoomBooking(BaseResource):
     model = RoomBookingModel
+
+    schema = WeHotelRoomBookingSchema
+
+    detail_schema = WeHotelRoomBookingDetailedSchema
 
     field_map = {
         "quantity": "quantity",

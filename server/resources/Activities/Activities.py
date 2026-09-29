@@ -2,9 +2,15 @@ from resources.BaseResource import BaseResource
 
 from models.ActivityModels.BaseActivityModel import BaseActivityModel
 
+from schemas.activity_schemas.activity import ActivitySchema, ActivityDetailSchema
+
 class BaseActivities(BaseResource):
     model = BaseActivityModel
 
+    schema = ActivitySchema
+
+    detail_schema = ActivityDetailSchema
+    
     field_map = {
         "allYearRound": "all_year_round",
         "availableMonths": "available_months",

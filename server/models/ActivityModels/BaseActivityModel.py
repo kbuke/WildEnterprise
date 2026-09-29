@@ -9,8 +9,6 @@ from relational_functions.one_to_many import one_to_many_back_populates, one_to_
 
 from functions.check_valid_value import check_valid_value
 
-from serialize_rules import PARK_RULES, ACTIVITY_BOOKING_RULES
-
 class BaseActivityModel(BaseNameImgInfomodel):
     __tablename__ = "activities"
 
@@ -80,15 +78,14 @@ class BaseActivityModel(BaseNameImgInfomodel):
     #=============================================================================================
     # SERIALIZE RULES
     #=============================================================================================
-    serialize_rules = (
-        # PARK_RULES + ACTIVITY_BOOKING_RULES
-        "-park.activities",
-        "-park.images",
-        "-park.events",
-        "-park.hotels",
-        "-park.partner_hotels",
+    # serialize_rules = (
+    #     "-park.activities",
+    #     "-park.images",
+    #     "-park.events",
+    #     "-park.hotels",
+    #     "-park.partner_hotels",
 
-        "-activity_bookings.activity",
-        "-activity_bookings.hotel_booking",
-        "-activity_bookings.partner_hotel_booking",
-    )
+    #     "-activity_bookings.activity",
+    #     "-activity_bookings.hotel_booking",
+    #     "-activity_bookings.partner_hotel_booking",
+    # )

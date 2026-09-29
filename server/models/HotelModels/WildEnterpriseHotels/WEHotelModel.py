@@ -4,8 +4,6 @@ from sqlalchemy.orm import validates
 
 from relational_functions.one_to_many import one_to_many_back_populates
 
-from serialize_rules import PARK_RULES, ROOM_RULES, DISCOUNT_RULES, LEAD_TIME_RULES, HOTEL_BOOKINGS_ON_HOTEL_RULES
-
 from config import db
 
 class WEHotelModel(BaseHotelModel):
@@ -55,30 +53,29 @@ class WEHotelModel(BaseHotelModel):
     #========================================================================
     # SERIALIZE RULES 
     #========================================================================
-    serialize_rules = (
-        # ROOM_RULES + DISCOUNT_RULES + LEAD_TIME_RULES + HOTEL_BOOKINGS_ON_HOTEL_RULES + PARK_RULES
-        "-park.hotels",
-        "-park.images",
-        "-park.events",
-        "-park.activities",
-        "-park.partner_hotels",
+    # serialize_rules = (
+    #     "-park.hotels",
+    #     "-park.images",
+    #     "-park.events",
+    #     "-park.activities",
+    #     "-park.partner_hotels",
 
-        "-rooms.hotel",
-        "-rooms.room_rates",
-        "-rooms.discounts",
-        "-rooms.lead_times",
-        "-rooms.room_bookings",
-        "-rooms.holds",
+    #     "-rooms.hotel",
+    #     "-rooms.room_rates",
+    #     "-rooms.discounts",
+    #     "-rooms.lead_times",
+    #     "-rooms.room_bookings",
+    #     "-rooms.holds",
 
-        "-room_rates.hotel",
-        "-room_rates.room",
+    #     "-room_rates.hotel",
+    #     "-room_rates.room",
 
-        "-discounts.hotel",
-        "-discounts.room",
+    #     "-discounts.hotel",
+    #     "-discounts.room",
 
-        "-lead_times.hotel",
-        "-lead_times.room",
+    #     "-lead_times.hotel",
+    #     "-lead_times.room",
 
-        "-hotel_bookings.hotel",
-        "-hotel_bookings.room_bookings"
-    )
+    #     "-hotel_bookings.hotel",
+    #     "-hotel_bookings.room_bookings"
+    # )

@@ -1,7 +1,7 @@
 from config import db
 
 from sqlalchemy.orm import validates
-from sqlalchemy_serializer import SerializerMixin
+# from sqlalchemy_serializer import SerializerMixin
 
 from functions.check_instance_exists import check_instance_exists
 from functions.check_event_dates import check_event_dates
@@ -11,11 +11,12 @@ from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
 
-from serialize_rules import HOTEL_RULES, ROOM_RULES
-
 # Need to set up priority list, if we add a discount to a room in a hotel, that already has a discount on the whole property, we need to ensure this is accounted for 
 
-class DiscountModel(db.Model, SerializerMixin):
+class DiscountModel(
+    db.Model, 
+    # SerializerMixin
+):
     __tablename__ = "discounts"
 
     id = db.Column(db.Integer, primary_key = True)
@@ -46,22 +47,21 @@ class DiscountModel(db.Model, SerializerMixin):
     #========================================================================
     # SERIALIZE RULES 
     #========================================================================
-    serialize_rules = (
-        # HOTEL_RULES + ROOM_RULES
-        "-hotel.discounts",
-        "-hotel.park",
-        "-hotel.rooms",
-        "-hotel.room_rates",
-        "-hotel.lead_times",
-        "-hotel.hotel_bookings",
+    # serialize_rules = (
+    #     "-hotel.discounts",
+    #     "-hotel.park",
+    #     "-hotel.rooms",
+    #     "-hotel.room_rates",
+    #     "-hotel.lead_times",
+    #     "-hotel.hotel_bookings",
 
-        "-room.hotel",
-        "-room.room_rates",
-        "-room.discounts",
-        "-room.lead_times",
-        "-room.room_bookings",
-        "-room.holds",
-    )
+    #     "-room.hotel",
+    #     "-room.room_rates",
+    #     "-room.discounts",
+    #     "-room.lead_times",
+    #     "-room.room_bookings",
+    #     "-room.holds",
+    # )
 
     #========================================================================
     # VALIDATIONS 

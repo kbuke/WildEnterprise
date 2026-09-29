@@ -1,5 +1,5 @@
 from sqlalchemy.orm import validates
-from sqlalchemy_serializer import SerializerMixin
+# from sqlalchemy_serializer import SerializerMixin
 
 from config import db 
 
@@ -12,9 +12,10 @@ from models.HotelModels.WildEnterpriseHotels.BookingModel import WEHotelBookingM
 
 from functions.check_instance_exists import check_instance_exists
 
-from serialize_rules import ACTIVITY_RULES, HOTEL_BOOKING_RULES
-
-class ActivityBookingModel(db.Model, SerializerMixin):
+class ActivityBookingModel(
+    db.Model, 
+    # SerializerMixin
+):
     __tablename__ = "activity_booking"
 
     id = db.Column(db.Integer, primary_key = True)
@@ -39,18 +40,17 @@ class ActivityBookingModel(db.Model, SerializerMixin):
     #========================================================================
     # SERIALIZE RULES 
     #========================================================================
-    serialize_rules = (
-        # ACTIVITY_RULES + HOTEL_BOOKING_RULES 
-        "-activity.activity_bookings",
-        "-activity.park",
+    # serialize_rules = (
+    #     "-activity.activity_bookings",
+    #     "-activity.park",
 
-        "-hotel_booking.hotel",
-        "-hotel_booking.room_bookings",
-        "-hotel_booking.activities",
+    #     "-hotel_booking.hotel",
+    #     "-hotel_booking.room_bookings",
+    #     "-hotel_booking.activities",
 
-        "-partner_hotel_booking.activities",
-        "-partner_hotel_booking.partner_hotel",
-    )
+    #     "-partner_hotel_booking.activities",
+    #     "-partner_hotel_booking.partner_hotel",
+    # )
 
     #========================================================================
     # VALIDATIONS 

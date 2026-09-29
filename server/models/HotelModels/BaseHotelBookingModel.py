@@ -1,4 +1,4 @@
-from sqlalchemy_serializer import SerializerMixin
+# from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates, declared_attr
 
 from config import db 
@@ -7,7 +7,10 @@ from relational_functions.one_to_many import one_to_many_back_populates
 
 from functions.check_valid_email import check_validate_email
 
-class BaseHotelBookingModel(db.Model, SerializerMixin):
+class BaseHotelBookingModel(
+    db.Model, 
+    # SerializerMixin
+):
     __abstract__ = True
 
     name = db.Column(db.String, nullable = False)

@@ -12,6 +12,8 @@ from hotel_booking_functions.get_available_rooms import get_available_rooms
 
 from datetime import date
 
+from schemas.hotels.we_hotels.we_hotel_room_hold_schema import WeHotelRoomHoldSchema
+
 class CreateHold(Resource):
     def post(self):
         data = request.get_json() or {}
@@ -44,4 +46,5 @@ class CreateHold(Resource):
         db.session.add(hold)
         db.session.commit()
 
-        return {**hold.to_dict(), "sessionToken": session_token}, 201
+        # return {**hold.to_dict(), "sessionToken": session_token}, 201
+        return {**WeHotelRoomHoldSchema().dump(hold), "sessionToken": session_token}, 201

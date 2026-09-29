@@ -3,6 +3,8 @@ from flask_restful import Resource
 
 from models.HotelModels.PartnerHotels.PartnerHotelModel import PartnerHotelModel
 
+from schemas.hotels.partner_hotels.partner_hotel_schema import PartnerHotelSchema
+
 class PartnerHotelLogin(Resource):
     def post(self):
         data = request.get_json()
@@ -12,7 +14,8 @@ class PartnerHotelLogin(Resource):
             return {"error": "Invalid email or password"}, 401
 
         session["partner_hotel_id"] = hotel.id
-        return {**hotel.to_dict(), "is_partner_hotel_admin": True}, 200
+        # return {**hotel.to_dict(), "is_partner_hotel_admin": True}, 200
+        return {**PartnerHotelSchema().dump(hotel), "is_partner_hotel_admin": True}
 
 class PartnerHotelLogout(Resource):
     def delete(self):
@@ -24,4 +27,5 @@ class PartnerHotelCheckSession(Resource):
         hotel = PartnerHotelModel.query.get(session.get("partner_hotel_id"))
         if not hotel:
             return {"error": "Not logged in"}, 401 
-        return {**hotel.to_dict(), "is_partner_hotel_admin": True}, 200
+        # return {**hotel.to_dict(), "is_partner_hotel_admin": True}, 200
+        return {**PartnerHotelSchema().dump(hotel), "is_partner_hotel_admin": True}

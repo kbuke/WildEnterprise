@@ -10,8 +10,6 @@ from functions.check_valid_email import check_validate_email
 
 from models.BaseNameImgInfoModel import BaseNameImgInfomodel
 
-from serialize_rules import PARK_RULES
-
 from functions.check_validate_slug import validate_slug, make_slug_default
 
 class BaseHotelModel(BaseNameImgInfomodel):

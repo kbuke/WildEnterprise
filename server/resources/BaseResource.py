@@ -7,13 +7,20 @@ from config import db
 
 class BaseResource(Resource):
     model = None
+    schema = None
+    detail_schema = None
 
     increment_on_view = None # counts amount of views on blog post
 
+    def _detail(self):
+        return (self.detail_schema or self.schema)()
+
     # Get ALL Instances of a model
     def get_all(self):
-        records = [record.to_dict() for record in self.model.query.all()]
-        return records, 200
+        records = self.model.query.all()
+        return self.schema(many=True).dump(records), 200
+        # records = [record.to_dict() for record in self.model.query.all()]
+        # return records, 200
     
     # Get SPECIFIC Instance of a model
     def get_specific(self, id):
@@ -26,7 +33,7 @@ class BaseResource(Resource):
             setattr(record, self.increment_on_view, current + 1) # increase current view count by one ev time opened
             db.session.commit()
         
-        return make_response(record.to_dict(), 200)
+        return self._detail().dump(record), 200
     
     # Create New Instance for Model
     def post_instance(self):
@@ -44,7 +51,8 @@ class BaseResource(Resource):
             
             db.session.add(new_record)
             db.session.commit()
-            return new_record.to_dict(), 201
+            # return new_record.to_dict(), 201
+            return self._detail().dump(new_record), 201
         except(ValueError, IntegrityError) as e:
             db.session.rollback()
             return {"error": [str(e)]}, 400
@@ -68,7 +76,8 @@ class BaseResource(Resource):
                 setattr(record, attr, val)
             
             db.session.commit()
-            return make_response(record.to_dict(), 202)
+            # return make_response(record.to_dict(), 202)
+            return self._detail().dump(record), 202
         
         except (ValueError, IntegrityError) as e:
             db.session.rollback()

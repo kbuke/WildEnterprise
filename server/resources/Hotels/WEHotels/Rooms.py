@@ -9,8 +9,14 @@ from functions.check_instance_exists import check_instance_exists
 
 from flask import request
 
+from schemas.hotels.we_hotels.we_hotel_room_schema import WeHotelRoomDetailedSchema, WeHotelRoomSchema
+
 class BaseRooms(BaseResource):
     model = RoomModel
+
+    schema = WeHotelRoomSchema
+
+    detail_schema = WeHotelRoomDetailedSchema
 
     field_map = {
         "name": "name",

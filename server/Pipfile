@@ -15,6 +15,7 @@ flask-mail = "*"
 sqlalchemy-serializer = "*"
 pytest = "*"
 flask-bcrypt = "*"
+marshmallow = "*"
 
 [dev-packages]
 

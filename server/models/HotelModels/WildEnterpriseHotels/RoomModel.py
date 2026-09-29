@@ -1,5 +1,5 @@
 from sqlalchemy.orm import validates
-from sqlalchemy_serializer import SerializerMixin
+# from sqlalchemy_serializer import SerializerMixin
 
 from config import db 
 
@@ -10,9 +10,10 @@ from functions.check_instance_exists import check_instance_exists
 
 from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
 
-from serialize_rules import HOTEL_RULES, DISCOUNT_RULES, LEAD_TIME_RULES, ROOM_BOOKING_RULES, ROOM_HOLD_RULES, WE_HOTEL_RULES
-
-class RoomModel(db.Model, SerializerMixin):
+class RoomModel(
+    db.Model, 
+    # SerializerMixin
+):
     __tablename__ = "rooms"
 
     id = db.Column(db.Integer, primary_key = True)
@@ -41,29 +42,28 @@ class RoomModel(db.Model, SerializerMixin):
     #========================================================================
     # SERIALIZE RULES 
     #========================================================================
-    serialize_rules = (
-        # HOTEL_RULES + DISCOUNT_RULES + LEAD_TIME_RULES + ROOM_BOOKING_RULES + ROOM_HOLD_RULES + WE_HOTEL_RULES
-        "-hotel.discounts",
-        "-hotel.park",
-        "-hotel.rooms",
-        "-hotel.room_rates",
-        "-hotel.lead_times",
-        "-hotel.hotel_bookings",
+    # serialize_rules = (
+    #     "-hotel.discounts",
+    #     "-hotel.park",
+    #     "-hotel.rooms",
+    #     "-hotel.room_rates",
+    #     "-hotel.lead_times",
+    #     "-hotel.hotel_bookings",
 
-        "-room_rates.room",
-        "-room_rates.hotel",
+    #     "-room_rates.room",
+    #     "-room_rates.hotel",
 
-        "-discounts.room",
-        "-discounts.hotel",
+    #     "-discounts.room",
+    #     "-discounts.hotel",
 
-        "-lead_times.room",
-        "-lead_times.hotel",
+    #     "-lead_times.room",
+    #     "-lead_times.hotel",
 
-        "-room_bookings.room",
-        "-room_bookings.hotel_booking",
+    #     "-room_bookings.room",
+    #     "-room_bookings.hotel_booking",
 
-        "-holds.room",
-    )
+    #     "-holds.room",
+    # )
 
     #======================================================================== 
     # VALIDATIONS 

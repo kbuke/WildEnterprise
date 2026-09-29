@@ -1,6 +1,6 @@
 from datetime import date
 
-from flask import request
+from flask import request, current_app
 
 from config import db
 
@@ -26,24 +26,20 @@ from flask import session
 
 from resources.Hotels.BaseHotelBooking import BaseHotelBooking
 
+# from schemas.hotels.we_hotels.we_hotel_room_booking_schema import WeHotelBookingSchema, WeHotelRoomBookingDetailedSchema
+from schemas.hotels.we_hotels.we_hotel_room_booking_schema import WeHotelRoomBookingSchema, WeHotelRoomBookingDetailedSchema
+
 class BaseBooking(BaseHotelBooking):
     model = WEHotelBookingModel
+
+    schema = WeHotelRoomBookingSchema
+
+    detail_schema = WeHotelRoomBookingDetailedSchema
 
     field_map = {
         **BaseHotelBooking.field_map,
         "hotelId": "hotel_id"
     }
-
-
-# class BaseBooking(BaseResource):
-#     model = BookingModel
-
-#     field_map = {
-#         "name": "name",
-#         "email": "email",
-#         "arrival": "arrival_date",
-#         "departure": "departure_date",
-#     }
 
 
 class AllBookings(BaseBooking):
@@ -52,7 +48,9 @@ class AllBookings(BaseBooking):
         # Only this hotel's bookings — not every hotel's guest list.
         hotel_id = session.get("hotel_id")
         bookings = WEHotelBookingModel.query.filter_by(hotel_id=hotel_id).all()
-        return [b.to_dict() for b in bookings], 200
+        # return [b.to_dict() for b in bookings], 200
+        # return self.detail_schema(many = True, exclude=("hotel")).dump(bookings), 200
+        return self.detail_schema(many=True, exclude=("hotel",)).dump(bookings), 200
 
     def post(self):
         data = request.get_json() or {}
@@ -138,10 +136,18 @@ class AllBookings(BaseBooking):
 
         db.session.commit()
 
-        send_guest_confirmation(booking)
-        send_hotel_notification(booking)
+        result = self.detail_schema().dump(booking)
+        try:
+            send_guest_confirmation(booking)
+            send_hotel_notification(booking)
+        except Exception:
+            current_app.logger.exception("Booking %s saved but emails faled", booking.id)
+        return result, 201
 
-        return booking.to_dict(), 201
+        # send_guest_confirmation(booking)
+        # send_hotel_notification(booking)
+
+        # return booking.to_dict(), 201
 
 
 class SpecificBooking(BaseBooking):
@@ -153,8 +159,10 @@ class SpecificBooking(BaseBooking):
     def patch(self, id):
         booking = check_instance_exists(WEHotelBookingModel, id, True)
         result = self.patch_instance(id)
-        send_guest_ammendment(booking=booking)
-        send_hotel_ammendment(booking=booking)
+        status = result[1] if isinstance(result, tuple) else 200
+        if status < 400:
+            send_guest_ammendment(booking=booking)
+            send_hotel_ammendment(booking=booking)
         return result
 
     @require_customer_or_hotel

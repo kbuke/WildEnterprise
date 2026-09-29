@@ -9,9 +9,15 @@ from hotel_booking_functions.check_hotel_dates import check_hotel_dates
 
 from functions.check_retrieve_dates import check_retrieve_dates
 
+from schemas.hotels.we_hotels.we_hotel_discount_schema import WeHotelDiscountDetailSchema, WeHotelDiscountSchema
+
 class BaseDiscounts(BaseResource):
     model = DiscountModel
 
+    schema = WeHotelDiscountSchema
+
+    detail_schema = WeHotelDiscountDetailSchema
+    
     field_map = {
         "name": "name",
         "code": "code",

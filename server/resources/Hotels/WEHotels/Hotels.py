@@ -6,8 +6,14 @@ from hotel_booking_functions.change_hotel_credentials import change_hotel_creden
 
 from flask_restful import Resource
 
+from schemas.hotels.we_hotels.we_hotel_schema import WeHotelDetailedSchema, WeHotelSchema
+
 class BaseWildEnterpriseHotel(BaseHotel):
     model = WEHotelModel
+
+    schema = WeHotelSchema
+
+    detail_schema = WeHotelDetailedSchema
 
     field_map = {
         **BaseHotel.field_map,

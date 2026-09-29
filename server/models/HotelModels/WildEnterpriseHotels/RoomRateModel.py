@@ -9,12 +9,13 @@ from functions.check_instance_exists import check_instance_exists
 from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
 
-from sqlalchemy_serializer import SerializerMixin
+# from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 
-from serialize_rules import HOTEL_RULES, ROOM_RULES
-
-class RoomRateModel(db.Model, SerializerMixin):
+class RoomRateModel(
+    db.Model, 
+    # SerializerMixin
+):
     """
     This is for setting increases or decreases on a hotel or certain room over a period of dates 
     In summer it could see an increase of 20% on the cost of the room (1.2)
@@ -42,21 +43,21 @@ class RoomRateModel(db.Model, SerializerMixin):
     #========================================================================
     # SERIALIZE RULES 
     #========================================================================
-    serialize_rules = (
-        "-hotel.discounts",
-        "-hotel.park",
-        "-hotel.rooms",
-        "-hotel.room_rates",
-        "-hotel.lead_times",
-        "-hotel.hotel_bookings",
+    # serialize_rules = (
+    #     "-hotel.discounts",
+    #     "-hotel.park",
+    #     "-hotel.rooms",
+    #     "-hotel.room_rates",
+    #     "-hotel.lead_times",
+    #     "-hotel.hotel_bookings",
 
-        "-room.hotel",
-        "-room.room_rates",
-        "-room.discounts",
-        "-room.lead_times",
-        "-room.room_bookings",
-        "-room.holds",
-    )
+    #     "-room.hotel",
+    #     "-room.room_rates",
+    #     "-room.discounts",
+    #     "-room.lead_times",
+    #     "-room.room_bookings",
+    #     "-room.holds",
+    # )
 
     #========================================================================
     # VALIDATIONS 

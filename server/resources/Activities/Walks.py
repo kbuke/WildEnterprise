@@ -3,8 +3,14 @@ from resources.Activities.Activities import BaseActivities
 
 from models.ActivityModels.WalkingTrailModel import WalkingTrailModel
 
+from schemas.activity_schemas.activity import WalkingTrailSchema, WalkingTrailDetailedSchema
+
 class BaseWalks(BaseActivities):
     model = WalkingTrailModel
+
+    schema = WalkingTrailSchema
+
+    detail_schema = WalkingTrailDetailedSchema
 
     field_map = {
         **BaseActivities.field_map,

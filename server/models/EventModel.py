@@ -13,8 +13,6 @@ from functions.check_int import check_int
 from functions.check_event_dates import check_event_dates
 from functions.check_event_dates import check_event_dates
 
-from serialize_rules import PARK_RULES
-
 class EventModel(BaseNameImgInfomodel):
     __tablename__ = "events"
 
@@ -62,14 +60,13 @@ class EventModel(BaseNameImgInfomodel):
     #========================================================================
     # SERIALIZE RULES
     #========================================================================
-    serialize_rules = (
-        # PARK_RULES
-        "-park.events",
-        "-park.images",
-        "-park.activities",
-        "-park.hotels",
-        "-park.partner_hotels",
-    )
+    # serialize_rules = (
+    #     "-park.events",
+    #     "-park.images",
+    #     "-park.activities",
+    #     "-park.hotels",
+    #     "-park.partner_hotels",
+    # )
 
 
 @event.listens_for(EventModel, "before_insert")

@@ -10,6 +10,8 @@ from hotel_booking_functions.get_held_quantity import get_held_quantity
 from hotel_booking_functions.price_room_stay import price_room_stay
 from hotel_booking_functions.find_room_combinations import find_room_combinations
 
+from schemas.hotels.we_hotels.we_hotel_room_schema import WeHotelRoomSchema
+
 MAX_ROOMS_PER_COMBO = 4
 
 
@@ -52,7 +54,8 @@ class SearchAvailability(Resource):
         results = [
             {
                 "selections": [
-                    {"room": sel["room"].to_dict(), "quantity": sel["quantity"]}
+                    # {"room": sel["room"].to_dict(), "quantity": sel["quantity"]}
+                    {"room": WeHotelRoomSchema().dump(sel["room"]), "quantity": sel["quantity"]}
                     for sel in combo["selections"]
                 ],
                 "total_rooms": combo["total_rooms"],

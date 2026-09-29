@@ -5,22 +5,15 @@ from config import db
 
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
 
-from serialize_rules import PARTNER_HOTEL_RULES
-
 from functions.check_valid_email import check_validate_email
 
 from models.HotelModels.BaseHotelBookingModel import BaseHotelBookingModel
 
-# class PartnerHotelBookingModel(db.Model, SerializerMixin):
 class PartnerHotelBookingModel(BaseHotelBookingModel):
     __tablename__ = "partner_hotel_booking"
 
     id = db.Column(db.Integer, primary_key = True)
     ref_code = db.Column(db.String, nullable = False, unique = True)
-    # arrival_date = db.Column(db.Date, nullable = False)
-    # departure_date = db.Column(db.Date, nullable = False)
-    # guests = db.Column(db.Integer, nullable = False)
-    # email = db.Column(db.String, nullable = False)
 
     #========================================================================
     # RELATIONS
@@ -33,13 +26,12 @@ class PartnerHotelBookingModel(BaseHotelBookingModel):
     #========================================================================
     # SERIALIZATION
     #========================================================================
-    serialize_rules = (
-        # PARTNER_HOTEL_RULES
-        "-partner_hotel.partner_hotel_bookings",
+    # serialize_rules = (
+    #     "-partner_hotel.partner_hotel_bookings",
 
-        "-activities.park",
-        "-activities.activity_bookings",
-    )
+    #     "-activities.park",
+    #     "-activities.activity_bookings",
+    # )
 
     #========================================================================
     # VALIDATIONS

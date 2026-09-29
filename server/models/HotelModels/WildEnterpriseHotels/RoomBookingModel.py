@@ -1,13 +1,15 @@
 from config import db 
 
-from sqlalchemy_serializer import SerializerMixin
+# from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
 
-from serialize_rules import ROOM_RULES, HOTEL_BOOKING_RULES
 
-class RoomBookingModel(db.Model, SerializerMixin):
+class RoomBookingModel(
+    db.Model, 
+    # SerializerMixin
+):
     __tablename__ = "room_bookings"
 
     id = db.Column(db.Integer, primary_key = True)
@@ -27,22 +29,21 @@ class RoomBookingModel(db.Model, SerializerMixin):
     #========================================================================
     # SERIALIZE_RULES
     #======================================================================== 
-    serialize_rules = (
-        # ROOM_RULES + HOTEL_BOOKING_RULES
-        "-hotel.discounts",
-        "-hotel.park",
-        "-hotel.rooms",
-        "-hotel.room_rates",
-        "-hotel.lead_times",
-        "-hotel.hotel_bookings",
+    # serialize_rules = (
+    #     "-hotel.discounts",
+    #     "-hotel.park",
+    #     "-hotel.rooms",
+    #     "-hotel.room_rates",
+    #     "-hotel.lead_times",
+    #     "-hotel.hotel_bookings",
 
-        "-room.hotel",
-        "-room.room_rates",
-        "-room.discounts",
-        "-room.lead_times",
-        "-room.room_bookings",
-        "-room.holds",
-    )
+    #     "-room.hotel",
+    #     "-room.room_rates",
+    #     "-room.discounts",
+    #     "-room.lead_times",
+    #     "-room.room_bookings",
+    #     "-room.holds",
+    # )
     
     #========================================================================
     # VALIDATORS

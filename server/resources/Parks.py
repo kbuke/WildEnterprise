@@ -4,9 +4,12 @@ from resources.BaseResource import BaseResource
 
 from decorators.require_admin_login import require_admin_login
 
+from schemas.park import ParkSchema, ParkDetailSchema
+
 class BasePark(BaseResource):
     model = ParkModel
-
+    schema = ParkSchema
+    detail_schema = ParkDetailSchema
     field_map = {
         "name": "name",
         "img": "img",

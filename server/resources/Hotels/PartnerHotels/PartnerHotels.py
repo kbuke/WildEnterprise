@@ -8,8 +8,14 @@ from flask_restful import Resource
 
 from hotel_booking_functions.change_hotel_credentials import change_hotel_credentials
 
+from schemas.hotels.partner_hotels.partner_hotel_schema import PartnerHotelSchema, PartnerHotelDetailedSchema
+
 class BasePartnerHotel(BaseHotel):
     model = PartnerHotelModel
+
+    schema = PartnerHotelSchema
+
+    detail_schema = PartnerHotelDetailedSchema
 
     field_map = {
         **BaseHotel.field_map,

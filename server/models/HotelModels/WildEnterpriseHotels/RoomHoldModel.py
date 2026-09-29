@@ -1,17 +1,20 @@
 from config import db
-from sqlalchemy_serializer import SerializerMixin
+# from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 from datetime import datetime, timedelta
 
 from relational_functions.one_to_many import one_to_many_fk, one_to_many_back_populates
 
-from serialize_rules import ROOM_RULES
+# from serialize_rules import ROOM_RULES
 
 from functions.check_instance_exists import check_instance_exists
 
 from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 
-class RoomHoldModel(db.Model, SerializerMixin):
+class RoomHoldModel(
+    db.Model, 
+    # SerializerMixin
+):
     __tablename__ = "room_holds"
 
     id = db.Column(db.Integer, primary_key = True)
@@ -31,15 +34,14 @@ class RoomHoldModel(db.Model, SerializerMixin):
     #========================================================================
     # SERIALIZE RULESS
     #========================================================================
-    serialize_rules = (
-        # ROOM_RULES
-        "-room.hotel",
-        "-room.room_rates",
-        "-room.discounts",
-        "-room.lead_times",
-        "-room.room_bookings",
-        "-room.holds",
-    )
+    # serialize_rules = (
+    #     "-room.hotel",
+    #     "-room.room_rates",
+    #     "-room.discounts",
+    #     "-room.lead_times",
+    #     "-room.room_bookings",
+    #     "-room.holds",
+    # )
 
     #========================================================================
     # VALIDATIONS

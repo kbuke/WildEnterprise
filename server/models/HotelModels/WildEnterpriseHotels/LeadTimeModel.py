@@ -1,15 +1,16 @@
 from config import db 
 
-from sqlalchemy_serializer import SerializerMixin
+# from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
 
 from hotel_booking_functions.check_hotel_or_room_given import check_hotel_or_room_given
 
-from serialize_rules import HOTEL_RULES, ROOM_RULES
-
-class LeadTimeRuleModel(db.Model, SerializerMixin):
+class LeadTimeRuleModel(
+    db.Model, 
+    # SerializerMixin
+):
     __tablename__ = "lead_time_rules"
 
     id = db.Column(db.Integer, primary_key = True)
@@ -29,22 +30,21 @@ class LeadTimeRuleModel(db.Model, SerializerMixin):
     #========================================================================
     # SERIALIZE RULES 
     #========================================================================
-    serialize_rules = (
-        # HOTEL_RULES + ROOM_RULES
-        "-hotel.discounts",
-        "-hotel.park",
-        "-hotel.rooms",
-        "-hotel.room_rates",
-        "-hotel.lead_times",
-        "-hotel.hotel_bookings",
+    # serialize_rules = (
+    #     "-hotel.discounts",
+    #     "-hotel.park",
+    #     "-hotel.rooms",
+    #     "-hotel.room_rates",
+    #     "-hotel.lead_times",
+    #     "-hotel.hotel_bookings",
 
-        "-room.hotel",
-        "-room.room_rates",
-        "-room.discounts",
-        "-room.lead_times",
-        "-room.room_bookings",
-        "-room.holds",
-    )
+    #     "-room.hotel",
+    #     "-room.room_rates",
+    #     "-room.discounts",
+    #     "-room.lead_times",
+    #     "-room.room_bookings",
+    #     "-room.holds",
+    # )
 
     #========================================================================
     # VALIDATIONS 

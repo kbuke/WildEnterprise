@@ -1,4 +1,4 @@
-from sqlalchemy_serializer import SerializerMixin
+# from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates 
 
 from config import db
@@ -7,7 +7,10 @@ from relational_functions.one_to_many import one_to_many_back_populates, one_to_
 
 from functions.check_string import check_string
 
-class ParkImgModel(db.Model, SerializerMixin):
+class ParkImgModel(
+    db.Model, 
+    # SerializerMixin
+):
     __tablename__ = "park_image"
 
     id = db.Column(db.Integer, primary_key = True)
@@ -37,10 +40,10 @@ class ParkImgModel(db.Model, SerializerMixin):
     #=============================================================================================
     # SERIALIZE RULES
     #=============================================================================================
-    serialize_rules = (
-        "-park.images",
-        "-park.events",
-        "-park.activities",
-        "-park.hotels",
-        "-park.partner_hotels",
-    )
+    # serialize_rules = (
+    #     "-park.images",
+    #     "-park.events",
+    #     "-park.activities",
+    #     "-park.hotels",
+    #     "-park.partner_hotels",
+    # )

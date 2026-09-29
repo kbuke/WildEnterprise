@@ -1,9 +1,15 @@
 from models.ParkImgModel import ParkImgModel
 from resources.BaseResource import BaseResource
 
+from schemas.park_img import ParkImgSchema, ParkImgDetailedSchema
+
 class BaseParkImg(BaseResource):
     model = ParkImgModel
 
+    schema = ParkImgSchema
+
+    detail_schema = ParkImgDetailedSchema
+    
     field_map = {
         "img": "img",
         "parkId": "park_id"

@@ -6,8 +6,14 @@ from hotel_booking_functions.check_hotel_owner import post_hotel_info, patch_del
 
 from models.HotelModels.WildEnterpriseHotels.LeadTimeModel import LeadTimeRuleModel
 
+from schemas.hotels.we_hotels.we_hotel_leadtime_schema import WeHotelLeadtimesDetailSchema, WeHotelLeadtimesSchema
+
 class BaseLeadTimeRule(BaseResource):
     model = LeadTimeRuleModel
+
+    schema = WeHotelLeadtimesSchema
+
+    detail_schema = WeHotelLeadtimesDetailSchema
 
     field_map = {
         "minDays": "min_days",
