@@ -41,25 +41,6 @@ class RoomRateModel(
     room = one_to_many_back_populates("RoomModel", "room_rates", delete_orphan=False)
 
     #========================================================================
-    # SERIALIZE RULES 
-    #========================================================================
-    # serialize_rules = (
-    #     "-hotel.discounts",
-    #     "-hotel.park",
-    #     "-hotel.rooms",
-    #     "-hotel.room_rates",
-    #     "-hotel.lead_times",
-    #     "-hotel.hotel_bookings",
-
-    #     "-room.hotel",
-    #     "-room.room_rates",
-    #     "-room.discounts",
-    #     "-room.lead_times",
-    #     "-room.room_bookings",
-    #     "-room.holds",
-    # )
-
-    #========================================================================
     # VALIDATIONS 
     #========================================================================
     @validates("hotel_id", "room_id")

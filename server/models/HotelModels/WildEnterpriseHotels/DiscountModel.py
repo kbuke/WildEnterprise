@@ -1,10 +1,8 @@
 from config import db
 
 from sqlalchemy.orm import validates
-# from sqlalchemy_serializer import SerializerMixin
 
 from functions.check_instance_exists import check_instance_exists
-from functions.check_event_dates import check_event_dates
 
 from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
 from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
@@ -43,25 +41,6 @@ class DiscountModel(
 
     room_id = one_to_many_fk("rooms", True)
     room = one_to_many_back_populates("RoomModel", "discounts", delete_orphan=False)
-
-    #========================================================================
-    # SERIALIZE RULES 
-    #========================================================================
-    # serialize_rules = (
-    #     "-hotel.discounts",
-    #     "-hotel.park",
-    #     "-hotel.rooms",
-    #     "-hotel.room_rates",
-    #     "-hotel.lead_times",
-    #     "-hotel.hotel_bookings",
-
-    #     "-room.hotel",
-    #     "-room.room_rates",
-    #     "-room.discounts",
-    #     "-room.lead_times",
-    #     "-room.room_bookings",
-    #     "-room.holds",
-    # )
 
     #========================================================================
     # VALIDATIONS 

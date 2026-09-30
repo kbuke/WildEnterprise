@@ -54,7 +54,6 @@ class SearchAvailability(Resource):
         results = [
             {
                 "selections": [
-                    # {"room": sel["room"].to_dict(), "quantity": sel["quantity"]}
                     {"room": WeHotelRoomSchema().dump(sel["room"]), "quantity": sel["quantity"]}
                     for sel in combo["selections"]
                 ],

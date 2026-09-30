@@ -5,3 +5,9 @@ export type BaseHotelType = {
     slug: string,
     email: string
 } & BaseNameImgInfoType
+
+export type PostBaseHotelType = {
+    email: string,
+    password: string,
+    parkId: number
+} & BaseNameImgInfoType

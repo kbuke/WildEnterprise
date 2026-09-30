@@ -15,17 +15,3 @@ class PartnerHotelModel(BaseHotelModel):
     #========================================================================
     partner_hotel_bookings = one_to_many_back_populates("PartnerHotelBookingModel", "partner_hotel")
     park = one_to_many_back_populates("ParkModel", "partner_hotels", delete_orphan=False) 
-
-    #========================================================================
-    # SERIALIZATION
-    #========================================================================
-    # serialize_rules = (
-    #     "-partner_hotel_bookings.partner_hotel",
-
-    #     "-park.partner_hotels",
-    #     "-park.images",
-    #     "-park.events",
-    #     "-park.activities",
-    #     "-park.hotels",
-    #     "-park.partner_hotels",
-    # )

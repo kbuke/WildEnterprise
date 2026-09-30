@@ -1,11 +1,8 @@
 from sqlalchemy.orm import validates
-from sqlalchemy_serializer import SerializerMixin
 
 from config import db 
 
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
-
-from functions.check_valid_email import check_validate_email
 
 from models.HotelModels.BaseHotelBookingModel import BaseHotelBookingModel
 
@@ -22,16 +19,6 @@ class PartnerHotelBookingModel(BaseHotelBookingModel):
     partner_hotel = one_to_many_back_populates("PartnerHotelModel", "partner_hotel_bookings", delete_orphan=False)
 
     activities = one_to_many_back_populates("ActivityBookingModel", "partner_hotel_booking", delete_orphan=True)
-
-    #========================================================================
-    # SERIALIZATION
-    #========================================================================
-    # serialize_rules = (
-    #     "-partner_hotel.partner_hotel_bookings",
-
-    #     "-activities.park",
-    #     "-activities.activity_bookings",
-    # )
 
     #========================================================================
     # VALIDATIONS

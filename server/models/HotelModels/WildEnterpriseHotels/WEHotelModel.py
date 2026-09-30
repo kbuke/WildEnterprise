@@ -1,7 +1,5 @@
 from models.HotelModels.BaseHotelModel import BaseHotelModel
 
-from sqlalchemy.orm import validates
-
 from relational_functions.one_to_many import one_to_many_back_populates
 
 from config import db
@@ -49,33 +47,3 @@ class WEHotelModel(BaseHotelModel):
         "hotel",
         delete_orphan=True
     )
-
-    #========================================================================
-    # SERIALIZE RULES 
-    #========================================================================
-    # serialize_rules = (
-    #     "-park.hotels",
-    #     "-park.images",
-    #     "-park.events",
-    #     "-park.activities",
-    #     "-park.partner_hotels",
-
-    #     "-rooms.hotel",
-    #     "-rooms.room_rates",
-    #     "-rooms.discounts",
-    #     "-rooms.lead_times",
-    #     "-rooms.room_bookings",
-    #     "-rooms.holds",
-
-    #     "-room_rates.hotel",
-    #     "-room_rates.room",
-
-    #     "-discounts.hotel",
-    #     "-discounts.room",
-
-    #     "-lead_times.hotel",
-    #     "-lead_times.room",
-
-    #     "-hotel_bookings.hotel",
-    #     "-hotel_bookings.room_bookings"
-    # )

@@ -1,5 +1,4 @@
 from sqlalchemy.orm import validates
-# from sqlalchemy_serializer import SerializerMixin
 
 from config import db 
 
@@ -8,7 +7,6 @@ import uuid
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
 
 from models.ActivityModels.BaseActivityModel import BaseActivityModel
-from models.HotelModels.WildEnterpriseHotels.BookingModel import WEHotelBookingModel
 
 from functions.check_instance_exists import check_instance_exists
 
@@ -36,21 +34,6 @@ class ActivityBookingModel(
 
     partner_hotel_booking_id = one_to_many_fk("partner_hotel_booking", is_null=True)
     partner_hotel_booking = one_to_many_back_populates("PartnerHotelBookingModel", "activities", delete_orphan=False)
-
-    #========================================================================
-    # SERIALIZE RULES 
-    #========================================================================
-    # serialize_rules = (
-    #     "-activity.activity_bookings",
-    #     "-activity.park",
-
-    #     "-hotel_booking.hotel",
-    #     "-hotel_booking.room_bookings",
-    #     "-hotel_booking.activities",
-
-    #     "-partner_hotel_booking.activities",
-    #     "-partner_hotel_booking.partner_hotel",
-    # )
 
     #========================================================================
     # VALIDATIONS 

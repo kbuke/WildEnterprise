@@ -5,6 +5,4 @@ from schemas.base_schemas.base_name_img_info import BaseNameImgInfoSchema
 class BaseHotelSchema(BaseNameImgInfoSchema):
     slug = fields.Str()
     email = fields.Str()
-    # _password_hash = fields.Str()
     park_id = fields.Int()
-    

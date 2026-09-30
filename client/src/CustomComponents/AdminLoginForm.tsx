@@ -1,17 +1,23 @@
 import { useForm } from "react-hook-form"
 import { Inputs } from "./Inputs"
 
-type AdminLoginFormType = {
-    title: "WildEnterprise Hotel" | "Partner Hotel" | "WildEnterprise Admin"
-}
-
 type AdminLoginType = {
     email: string,
     password: string
 }
 
+type AdminLoginFormType = {
+    title: string,
+    onSubmit: (values: AdminLoginType) => void
+    isPending?: boolean
+    serverError?: string
+}
+
 export function AdminLoginForm({
-    title
+    title,
+    onSubmit,
+    isPending,
+    serverError
 }: AdminLoginFormType){
 
     const {
@@ -21,8 +27,14 @@ export function AdminLoginForm({
     } = useForm<AdminLoginType>()
 
     return(
-        <form>
-            <h1>
+        <form
+            className="bg-black/80 p-10 text-white"
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            <h1
+                className="font-bold text-4xl mb-8 tracking-[2px]"
+            >
                 {title} Sign in
             </h1>
 
@@ -56,10 +68,21 @@ export function AdminLoginForm({
                 }
             />
 
+            {serverError &&
+                <p
+                    className="text-red-500"
+                >
+                    {serverError}
+                </p>
+            }
+
             <button
                 type="submit"
+                className="bg-green-800 p-4 rounded-xl w-40 uppercase text-xl cursor-pointer" 
             >
-                Login
+                {
+                    isPending ? "Logging In..." : "Login"
+                }
             </button>
         </form>
     )

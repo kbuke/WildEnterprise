@@ -15,6 +15,7 @@ class ActivitySchema(Schema):
 
 class ActivityDetailSchema(ActivitySchema):
     park = fields.Nested("ParkSchema")
+    activity_bookings = fields.Nested("ActivityBookingSchema")
 
 class WalkingTrailSchema(ActivitySchema):
     id = fields.Int()
@@ -23,3 +24,4 @@ class WalkingTrailSchema(ActivitySchema):
 
 class WalkingTrailDetailedSchema(WalkingTrailSchema):
     park = fields.Nested("ParkSchema")
+    activity_bookings = fields.Nested("ActivityBookingSchema")

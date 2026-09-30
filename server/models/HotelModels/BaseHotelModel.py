@@ -1,9 +1,8 @@
 from sqlalchemy.orm import validates
-from sqlalchemy_serializer import SerializerMixin
 
 from config import db, bcrypt
 
-from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
+from relational_functions.one_to_many import one_to_many_fk
 
 from functions.check_validate_slug import validate_slug
 from functions.check_valid_email import check_validate_email

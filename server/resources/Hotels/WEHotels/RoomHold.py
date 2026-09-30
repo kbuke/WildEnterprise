@@ -46,5 +46,4 @@ class CreateHold(Resource):
         db.session.add(hold)
         db.session.commit()
 
-        # return {**hold.to_dict(), "sessionToken": session_token}, 201
         return {**WeHotelRoomHoldSchema().dump(hold), "sessionToken": session_token}, 201

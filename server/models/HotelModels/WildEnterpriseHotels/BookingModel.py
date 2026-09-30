@@ -36,23 +36,6 @@ class WEHotelBookingModel(BaseHotelBookingModel):
     activities = one_to_many_back_populates("ActivityBookingModel", "hotel_booking", delete_orphan=True)
 
     #========================================================================
-    # SERIALIZE RULES 
-    #========================================================================
-    # serialize_rules = (
-    #     "-hotel.hotel_bookings",
-    #     "-hotel.park",
-    #     "-hotel.rooms",
-    #     "-hotel.room_rates",
-    #     "-hotel.discounts",
-    #     "-hotel.lead_times",
-
-    #     "-room_bookings.room",
-    #     "-room_bookings.hotel_booking",
-
-    #     "-activities.park",
-    #     "-activities.activity_bookings",
-    # )
-    #========================================================================
     # VALIDATIONS 
     #========================================================================
     @validates("hotel_id")

@@ -4,8 +4,6 @@ from flask import request, current_app
 
 from config import db
 
-from resources.BaseResource import BaseResource
-
 from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 from models.HotelModels.WildEnterpriseHotels.BookingModel import WEHotelBookingModel
 from models.HotelModels.WildEnterpriseHotels.RoomBookingModel import RoomBookingModel
@@ -26,7 +24,6 @@ from flask import session
 
 from resources.Hotels.BaseHotelBooking import BaseHotelBooking
 
-# from schemas.hotels.we_hotels.we_hotel_room_booking_schema import WeHotelBookingSchema, WeHotelRoomBookingDetailedSchema
 from schemas.hotels.we_hotels.we_hotel_room_booking_schema import WeHotelRoomBookingSchema, WeHotelRoomBookingDetailedSchema
 
 class BaseBooking(BaseHotelBooking):
@@ -48,8 +45,6 @@ class AllBookings(BaseBooking):
         # Only this hotel's bookings — not every hotel's guest list.
         hotel_id = session.get("hotel_id")
         bookings = WEHotelBookingModel.query.filter_by(hotel_id=hotel_id).all()
-        # return [b.to_dict() for b in bookings], 200
-        # return self.detail_schema(many = True, exclude=("hotel")).dump(bookings), 200
         return self.detail_schema(many=True, exclude=("hotel",)).dump(bookings), 200
 
     def post(self):
@@ -143,11 +138,6 @@ class AllBookings(BaseBooking):
         except Exception:
             current_app.logger.exception("Booking %s saved but emails faled", booking.id)
         return result, 201
-
-        # send_guest_confirmation(booking)
-        # send_hotel_notification(booking)
-
-        # return booking.to_dict(), 201
 
 
 class SpecificBooking(BaseBooking):

@@ -1,6 +1,5 @@
 from config import db 
 
-# from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
@@ -27,24 +26,6 @@ class LeadTimeRuleModel(
 
     room_id = one_to_many_fk("rooms", True)
     room = one_to_many_back_populates("RoomModel", "lead_times", False)
-    #========================================================================
-    # SERIALIZE RULES 
-    #========================================================================
-    # serialize_rules = (
-    #     "-hotel.discounts",
-    #     "-hotel.park",
-    #     "-hotel.rooms",
-    #     "-hotel.room_rates",
-    #     "-hotel.lead_times",
-    #     "-hotel.hotel_bookings",
-
-    #     "-room.hotel",
-    #     "-room.room_rates",
-    #     "-room.discounts",
-    #     "-room.lead_times",
-    #     "-room.room_bookings",
-    #     "-room.holds",
-    # )
 
     #========================================================================
     # VALIDATIONS 

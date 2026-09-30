@@ -19,8 +19,6 @@ class BaseResource(Resource):
     def get_all(self):
         records = self.model.query.all()
         return self.schema(many=True).dump(records), 200
-        # records = [record.to_dict() for record in self.model.query.all()]
-        # return records, 200
     
     # Get SPECIFIC Instance of a model
     def get_specific(self, id):
@@ -51,7 +49,6 @@ class BaseResource(Resource):
             
             db.session.add(new_record)
             db.session.commit()
-            # return new_record.to_dict(), 201
             return self._detail().dump(new_record), 201
         except(ValueError, IntegrityError) as e:
             db.session.rollback()
@@ -76,7 +73,6 @@ class BaseResource(Resource):
                 setattr(record, attr, val)
             
             db.session.commit()
-            # return make_response(record.to_dict(), 202)
             return self._detail().dump(record), 202
         
         except (ValueError, IntegrityError) as e:

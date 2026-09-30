@@ -14,7 +14,6 @@ class PartnerHotelLogin(Resource):
             return {"error": "Invalid email or password"}, 401
 
         session["partner_hotel_id"] = hotel.id
-        # return {**hotel.to_dict(), "is_partner_hotel_admin": True}, 200
         return {**PartnerHotelSchema().dump(hotel), "is_partner_hotel_admin": True}
 
 class PartnerHotelLogout(Resource):
@@ -27,5 +26,4 @@ class PartnerHotelCheckSession(Resource):
         hotel = PartnerHotelModel.query.get(session.get("partner_hotel_id"))
         if not hotel:
             return {"error": "Not logged in"}, 401 
-        # return {**hotel.to_dict(), "is_partner_hotel_admin": True}, 200
         return {**PartnerHotelSchema().dump(hotel), "is_partner_hotel_admin": True}

@@ -1,8 +1,5 @@
 from config import db 
 
-# from sqlalchemy_serializer import SerializerMixin
-from sqlalchemy.orm import validates
-
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
 
 
@@ -25,25 +22,6 @@ class RoomBookingModel(
 
     booking_id = one_to_many_fk("we_hotel_booking")
     hotel_booking = one_to_many_back_populates("WEHotelBookingModel", "room_bookings", False)
-
-    #========================================================================
-    # SERIALIZE_RULES
-    #======================================================================== 
-    # serialize_rules = (
-    #     "-hotel.discounts",
-    #     "-hotel.park",
-    #     "-hotel.rooms",
-    #     "-hotel.room_rates",
-    #     "-hotel.lead_times",
-    #     "-hotel.hotel_bookings",
-
-    #     "-room.hotel",
-    #     "-room.room_rates",
-    #     "-room.discounts",
-    #     "-room.lead_times",
-    #     "-room.room_bookings",
-    #     "-room.holds",
-    # )
     
     #========================================================================
     # VALIDATORS

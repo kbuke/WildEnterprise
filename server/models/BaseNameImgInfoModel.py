@@ -1,10 +1,7 @@
 # from sqlalchemy_serializer import SerializerMixin
 from config import db 
 
-class BaseNameImgInfomodel(
-    db.Model, 
-    # SerializerMixin
-):
+class BaseNameImgInfomodel(db.Model):
     __abstract__ = True
     
     name = db.Column(db.String, nullable = False)

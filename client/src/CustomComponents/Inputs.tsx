@@ -17,6 +17,7 @@ type InputPropsType = {
 export function Inputs({
     props
 }: InputPropsType){
+    console.log(props)
     return(
         props.map((prop, index) => {
             const {
@@ -27,19 +28,26 @@ export function Inputs({
             return(
                 <div
                     key={index}
+                    className="mb-5"
                 >
-                    {label &&
-                        <label>
-                            {label}
-                        </label>
-                    } 
+                    <div
+                        className="flex flex-col"
+                    >
+                        {label &&
+                            <label
+                                className="font-bold mb-1"
+                            >
+                                {label}
+                            </label>
+                        } 
 
-                    <input 
-                        placeholder={placeholder && placeholder}
-                        className={`${extraClasses}`}
-                        type={textType}
-                        {...register}
-                    />
+                        <input 
+                            placeholder={placeholder && placeholder}
+                            className={`${extraClasses} border rounded p-2`}
+                            type={textType}
+                            {...register}
+                        />
+                    </div>
 
                     {error &&
                         <p

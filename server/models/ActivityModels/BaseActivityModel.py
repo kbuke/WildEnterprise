@@ -1,5 +1,4 @@
 from sqlalchemy.orm import validates
-from sqlalchemy.dialects.postgresql import ARRAY
 
 from models.BaseNameImgInfoModel import BaseNameImgInfomodel
 
@@ -74,18 +73,3 @@ class BaseActivityModel(BaseNameImgInfomodel):
         if self.discount_with_stay == True and (value is None or value < 0.01 or 0.99 < value):
             raise ValueError("If there is a discount available for staying it must be between 0.01 and 0.99")
         return value
-
-    #=============================================================================================
-    # SERIALIZE RULES
-    #=============================================================================================
-    # serialize_rules = (
-    #     "-park.activities",
-    #     "-park.images",
-    #     "-park.events",
-    #     "-park.hotels",
-    #     "-park.partner_hotels",
-
-    #     "-activity_bookings.activity",
-    #     "-activity_bookings.hotel_booking",
-    #     "-activity_bookings.partner_hotel_booking",
-    # )

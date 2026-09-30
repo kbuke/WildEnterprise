@@ -1,15 +1,11 @@
 from models.BaseNameImgInfoModel import BaseNameImgInfomodel
 
-from sqlalchemy.orm import validates
 from sqlalchemy import event
 
 from config import db
 
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
 
-from datetime import date, time
-
-from functions.check_int import check_int
 from functions.check_event_dates import check_event_dates
 from functions.check_event_dates import check_event_dates
 
@@ -56,17 +52,6 @@ class EventModel(BaseNameImgInfomodel):
     #========================================================================
     # VALIDATORS
     #========================================================================
-
-    #========================================================================
-    # SERIALIZE RULES
-    #========================================================================
-    # serialize_rules = (
-    #     "-park.events",
-    #     "-park.images",
-    #     "-park.activities",
-    #     "-park.hotels",
-    #     "-park.partner_hotels",
-    # )
 
 
 @event.listens_for(EventModel, "before_insert")

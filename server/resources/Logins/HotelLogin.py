@@ -14,7 +14,6 @@ class HotelLogin(Resource):
             return {"error": "Invalid email or password"}, 401
 
         session["hotel_id"] = hotel.id
-        # return {**hotel.to_dict(), "is_hotel_admin": True}, 200
         return {**WeHotelSchema().dump(hotel), "is_hotel_admin": True}, 200
 
 class HotelLogout(Resource):
@@ -28,4 +27,3 @@ class HotelCheckSession(Resource):
         if not hotel:
             return {"error": "Not logged in"}, 401 
         return {**WeHotelSchema().dump(hotel), "is_hotel_admin": True}, 200
-        # return {**hotel.to_dict(), "is_hotel_admin": True}, 200
