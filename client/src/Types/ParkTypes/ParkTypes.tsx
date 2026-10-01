@@ -15,3 +15,10 @@ export type FetchSpecificParkType = {
     hotels?: FetchAllWeHotelType
     partner_hotels?: FetchAllPartnerHotelType
 }& FetchAllParkType
+
+export type PostParkType = {
+    name: string,
+    img: string,
+    info: string,
+    location: string
+}

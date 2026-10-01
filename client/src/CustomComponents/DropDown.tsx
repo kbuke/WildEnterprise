@@ -1,20 +1,29 @@
 import type { FieldError, UseFormRegisterReturn } from "react-hook-form"
 
-type DropDownPropType<T extends { id: number; name: string }> = {
+type DropDownOptionType = string | { id: number; name: string }
+
+type DropDownPropType = {
     label: string
-    propArray: T[]
+    propArray: DropDownOptionType[]
     disabledOption: string
     register: UseFormRegisterReturn
     error?: FieldError
 }
 
-export function DropDown<T extends { id: number; name: string }>({
+export function DropDown({
     propArray,
     label,
     disabledOption,
     register,
     error
-}: DropDownPropType<T>) {
+}: DropDownPropType) {
+
+    const options = propArray.map((option) =>
+        typeof option === "string"
+            ? { value: option, label: option }
+            : { value: option.id, label: option.name }
+    )
+
     return (
         <div className="mb-10">
             <div className="flex gap-10">
@@ -29,9 +38,9 @@ export function DropDown<T extends { id: number; name: string }>({
                         {disabledOption}
                     </option>
 
-                    {propArray.map((instance) => (
-                        <option key={instance.id} value={instance.id}>
-                            {instance.name}
+                    {options.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
                         </option>
                     ))}
                 </select>

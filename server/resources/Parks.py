@@ -15,7 +15,7 @@ class BasePark(BaseResource):
         "img": "img",
         "info": "info",
         "location": "location",
-        "parkId": "park_id"
+        # "parkId": "park_id"
     }
 
 class AllParks(BasePark):

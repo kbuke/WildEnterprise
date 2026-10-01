@@ -4,12 +4,8 @@ import { AdminPgHeader } from "../../../../CustomComponents/AppAdminComponents/A
 import { PopUp } from "../../../../CustomComponents/Popup"
 import { HotelInfoForm } from "../../../../Forms/HotelInfoForm"
 import { useAllPartnerHotels } from "../../../../FetchInstances/FetchPartnerHotels"
-
-type HotelCardType = {
-    id: number
-    name: string
-    img: string
-}
+import { AdminHomeButton } from "../../../../CustomComponents/AppAdminComponents/AdminHomeButton"
+import { AdminCard } from "../../../../CustomComponents/AppAdminComponents/AdminCards"
 
 export function AppAdminHotels(){
     const [hotelAction, setHotelAction] = useState<null | "Post">(null)
@@ -45,32 +41,6 @@ export function AppAdminHotels(){
         )
     }
 
-    const hotelMapper = (list: HotelCardType[]) => {
-        if (list.length === 0) {
-            return <p>No {hotelType} Hotels Registered</p>
-        }
-
-        return list.map((hotel) => (
-            <div
-                key={hotel.id}
-                className="border-b w-100 pb-4"
-            >
-                <img
-                    src={hotel.img}
-                    alt={hotel.name}
-                    className="w-full rounded"
-                />
-
-                <h1 className="text-center mt-2 text-2xl font-semibold">
-                    {hotel.name}
-                </h1>
-            </div>
-        ))
-    }
-
-    console.log(hotels)
-    console.log(partnerHotels)
-
     return(
         <section>
             <AdminPgHeader 
@@ -79,6 +49,8 @@ export function AppAdminHotels(){
                 setAddInstance={() => setHotelAction("Post")}
             />
 
+            <AdminHomeButton />
+
             <div
                 className="flex gap-10 mt-4 px-6"
             >
@@ -86,27 +58,31 @@ export function AppAdminHotels(){
                 {hotelOptionButton("Partner")}
             </div>
 
-            <div
-                className="px-6 py-4 grid grid-cols-3 justify-center mt-4"
-            >
-                {
-                    hotelType === "WildEnterprise"
-                        ? hotelMapper(hotels ?? [])
-                        : hotelMapper(partnerHotels ?? [])
-                }
-
-                {hotelAction === "Post" &&
-                    <PopUp 
-                        children={
-                            <HotelInfoForm 
-                                onClose={() => setHotelAction(null)}
-                                action={hotelAction}
-                                hotelType={hotelType}
-                            />
-                        }
+            {
+                hotelType === "WildEnterprise"
+                    ? <AdminCard 
+                        editOption={false}
+                        infoButton={true}
+                        cardArray={hotels ?? []}
                     />
-                }
-            </div>
+                    : <AdminCard 
+                        editOption={false}
+                        infoButton={true}
+                        cardArray={partnerHotels ?? []}
+                    />
+            }
+
+            {hotelAction === "Post" &&
+                <PopUp 
+                    children={
+                        <HotelInfoForm 
+                            onClose={() => setHotelAction(null)}
+                            action={hotelAction}
+                            hotelType={hotelType}
+                        />
+                    }
+                />
+            }
         </section>
     )
 }

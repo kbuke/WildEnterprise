@@ -1,11 +1,9 @@
-import { useForm } from "react-hook-form";
 import { Inputs } from "../CustomComponents/Inputs";
-import { FormHeadings } from "./FormHeadings";
-import type { PostBaseHotelType } from "../Types/HotelTypes/BaseHotelType";
 import { TextArea } from "../CustomComponents/TextArea";
-import { useAllParks } from "../FetchInstances/FetchParks";
 import { DropDown } from "../CustomComponents/DropDown";
-import { usePostInsatnce } from "../CustomHooks/usePostInstance";
+import { BaseForm } from "../CustomComponents/BaseForm";
+import { useAllParks } from "../FetchInstances/FetchParks";
+import type { PostBaseHotelType } from "../Types/HotelTypes/BaseHotelType";
 
 type HotelFormType = {
     action: "Post" | "Patch"
@@ -25,62 +23,23 @@ export function HotelInfoForm({
         error
     } = useAllParks()
 
-    console.log(parks)
-
-    const {
-        register,
-        handleSubmit,
-        reset,
-        formState: {errors}
-    } = useForm<PostBaseHotelType>()
-
-    const postHotel = usePostInsatnce<PostBaseHotelType>()
-
     if (isLoading) return <div>Loading Parks...</div>
     if (error) return <div>{error.message}</div>
 
-     const endpoint = hotelType === "Partner"
-        ? "hotels/partner"
-        : "hotels/wildenterprise"
-    
-    const queryKey = hotelType === "Partner"
-        ? ["hotels", "partner"]
-        : ["hotels", "wildenterprise"]
-
-    const onSubmit = (values: PostBaseHotelType) => {
-        postHotel.mutate(
-            {
-                endpoint,
-                values,
-                queryKeys: [queryKey]
-            },
-            {
-                onSuccess: () => {
-                    reset()
-                    onClose()
-                }
-            }
-        )
-    }
+    const isPartner = hotelType === "Partner"
 
     return(
-        <form
-            className="bg-white w-[95%] h-[80%] self-center rounded overflow-y-auto"
-            noValidate
-            onSubmit={handleSubmit(onSubmit)}
+        <BaseForm<PostBaseHotelType>
+            action={action === "Post" ? "Add" : "Edit"}
+            title={isPartner ? "Partner Hotel" : "WildEnterprise Hotel"}
+            onClose={onClose}
+            endpoint={isPartner ? "hotels/partner" : "hotels/wildenterprise"}
+            queryKeys={[isPartner ? ["hotels", "partner"] : ["hotels", "wildenterprise"]]}
         >
-            <FormHeadings 
-                action={action === "Post" ? "Add" : "Edit"}
-                title={hotelType === "Partner" ? "Partner Hotel" : "WildEnterprise Hotel"}
-                onClose={onClose}
-            />
-
-            <div
-                className="py-4 px-80"
-            >
-                <Inputs 
-                    props={
-                        [
+            {({ register, formState: { errors } }) => (
+                <>
+                    <Inputs
+                        props={[
                             {
                                 textType: "text",
                                 label: "Hotel Name",
@@ -90,7 +49,6 @@ export function HotelInfoForm({
                                 }),
                                 error: errors.name
                             },
-
                             {
                                 textType: "text",
                                 label: "Hotel Image",
@@ -100,7 +58,6 @@ export function HotelInfoForm({
                                 }),
                                 error: errors.img
                             },
-
                             {
                                 textType: "email",
                                 label: "Hotel Email Address",
@@ -114,7 +71,6 @@ export function HotelInfoForm({
                                 }),
                                 error: errors.email
                             },
-
                             {
                                 textType: "password",
                                 label: "Hotel Password",
@@ -124,36 +80,31 @@ export function HotelInfoForm({
                                 }),
                                 error: errors.password
                             }
-                        ]
-                    }
-                />
+                        ]}
+                    />
 
-                <TextArea 
-                    placeholder="Enter Hotel Intro"
-                    label="Hotel Intro"
-                    extraClasses="h-30"
-                    register={register("info", {
-                        required: "Please enter hotel info"
-                    })}
-                    error={errors.info}
-                />
+                    <TextArea
+                        placeholder="Enter Hotel Intro"
+                        label="Hotel Intro"
+                        extraClasses="h-30"
+                        register={register("info", {
+                            required: "Please enter hotel info"
+                        })}
+                        error={errors.info}
+                    />
 
-                <DropDown 
-                    propArray={parks ?? []}
-                    label="Select Park"
-                    disabledOption="Select a park"
-                    register={register("parkId", {
-                        required: "Please select a park"
-                    })}
-                />
-
-                <button
-                    className="bg-green-800 text-white px-4 rounded h-12 w-30 cursor-pointer"
-                    type="submit"
-                >
-                    {action === "Post" ? "Add Hotel" : "Edit Hotel"}
-                </button>
-            </div>
-        </form>
+                    <DropDown
+                        propArray={parks ?? []}
+                        label="Select Park"
+                        disabledOption="Select a park"
+                        register={register("parkId", {
+                            required: "Please select a park",
+                            valueAsNumber: true
+                        })}
+                        error={errors.parkId}
+                    />
+                </>
+            )}
+        </BaseForm>
     )
 }

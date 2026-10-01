@@ -7,6 +7,7 @@ import { WeHotelAdminDashboard } from "./Pages/WeHotelAdmin/LoggedWeHotelAdmin/W
 import { AppAdminSignInPg } from "./Pages/AppAdmin/AppAdminSignIn/AppAdminSignIn";
 import { AppAdminDashboard } from "./Pages/AppAdmin/LoggedAppAdmin/AppAdminDashboard";
 import { AppAdminHotels } from "./Pages/AppAdmin/LoggedAppAdmin/AppAdminHotels/AppAdminHotels";
+import { AppAdminAllParks } from "./Pages/AppAdmin/LoggedAppAdmin/AppAdminParks/AppAdminAllParks";
 
 export const router = createBrowserRouter(
     [
@@ -41,6 +42,10 @@ export const router = createBrowserRouter(
                         {
                             path: "admin/hotels",
                             element: <AppAdminHotels />
+                        },
+                        {
+                            path: "admin/parks",
+                            element: <AppAdminAllParks />
                         }
                     ]
                 }
