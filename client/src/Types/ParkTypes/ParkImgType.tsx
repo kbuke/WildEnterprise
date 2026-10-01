@@ -9,3 +9,8 @@ export type FetchAllParkImgType = {
 export type FetchSpecificParkImgType = {
     park: FetchAllParkType
 }& FetchAllParkImgType
+
+export type PostParkImgType = {
+    img: string,
+    parkId: number
+}

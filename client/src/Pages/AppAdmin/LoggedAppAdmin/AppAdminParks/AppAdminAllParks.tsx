@@ -1,49 +1,85 @@
-import { useState } from "react";
-import { AdminPgHeader } from "../../../../CustomComponents/AppAdminComponents/AdminPgHeader";
-import { AdminHomeButton } from "../../../../CustomComponents/AppAdminComponents/AdminHomeButton";
-import { useAllParks } from "../../../../FetchInstances/FetchParks";
-import { AdminCard } from "../../../../CustomComponents/AppAdminComponents/AdminCards";
-import { PopUp } from "../../../../CustomComponents/Popup";
-import { ParkInfoForm } from "../../../../Forms/ParkInfoForm";
+import { useState } from "react"
+import { AdminPgHeader } from "../../../../CustomComponents/AppAdminComponents/AdminPgHeader"
+import { AdminHomeButton } from "../../../../CustomComponents/AppAdminComponents/AdminHomeButton"
+import { useAllParks } from "../../../../FetchInstances/FetchParks"
+import { AdminCard } from "../../../../CustomComponents/AppAdminComponents/AdminCards"
+import { PopUp } from "../../../../CustomComponents/Popup"
+import { ParkInfoForm } from "../../../../Forms/ParkInfoForm"
+import { AdminPopUpInfo } from "../../../../CustomComponents/AppAdminComponents/AdminInfoPopUpInfo"
+import { SpecificParkInfoPopUp } from "./AdminSpecificPark/SpecificParkInfoPopUp"
+import { RenderIcon } from "../../../../CustomComponents/Icons"
 
-export function AppAdminAllParks(){
-    const [parkAction, setParkAction] = useState<null | "Post" | "Patch" | "Delete">()
+const parkCats = ["Info", "Img", "Activities", "Events", "Hotels", "Finance"] as const
+type ParkCatType = typeof parkCats[number]
 
-    const {
-        data: parks,
-        isLoading,
-        error
-    } = useAllParks()
+export function AppAdminAllParks() {
+  const [parkAction, setParkAction] = useState<
+    null | "Post" | "Patch" | "Delete" | "Info"
+  >()
+  const [selectedParkId, setSelectedParkId] = useState<number>()
+  const [selectedParkName, setSelctedParkName] = useState<string>()
+  const [selectedInfoCat, setSelectedInfoCat] = useState<ParkCatType>("Info")
 
-    if(isLoading) return <p>Fetching Parks...</p>
-    if(error) return <p>Error fetching Parks</p>
+  const { data: parks, isLoading, error } = useAllParks()
 
-    return(
-        <section>
-            <AdminPgHeader 
-                header="Parks"
-                addButtonHeader="Parks"
-                setAddInstance={() => setParkAction("Post")}
-            />
+  if (isLoading) return <p>Fetching Parks...</p>
+  if (error) return <p>Error fetching Parks</p>
 
-            <AdminHomeButton />
+  return (
+    <section>
+      <AdminPgHeader
+        header="Parks"
+        addButtonHeader="Parks"
+        setAddInstance={() => setParkAction("Post")}
+      />
 
-            <AdminCard 
-                editOption={true}
-                infoButton={true}
-                cardArray={parks ?? []}
-            />
+      <AdminHomeButton />
 
-            {parkAction === "Post" &&
-                <PopUp 
-                    children={
-                        <ParkInfoForm 
-                            onClose={() => setParkAction(null)}
-                            action="Post"
-                        />
-                    }
-                />
-            }
-        </section>
-    )
+      {parks && (
+        <AdminCard
+          cardArray={parks}
+          onEdit={(id, name) => {
+            setSelectedParkId(id)
+            setParkAction("Patch")
+            setSelctedParkName(name)
+          }}
+          onDelete={(id, name) => {
+            setSelectedParkId(id)
+            setParkAction("Delete")
+            setSelctedParkName(name)
+          }}
+          onInfo={(id, name) => {
+            setSelectedParkId(id)
+            setParkAction("Info")
+            setSelctedParkName(name)
+          }}
+        />
+      )}
+
+      {parkAction === "Post" && (
+        <PopUp
+          children={
+            <ParkInfoForm onClose={() => setParkAction(null)} action="Post" />
+          }
+        />
+      )}
+
+      {parkAction === "Info" && selectedParkId && selectedParkName && (
+        <PopUp>
+          children=
+          {
+            <AdminPopUpInfo<ParkCatType>
+              navs={parkCats.map((cat) => RenderIcon(cat))}
+              title={selectedParkName}
+              onClose={() => setParkAction(null)}
+              onNavSelect={setSelectedInfoCat}
+              navSelect={selectedInfoCat}
+          >
+              <SpecificParkInfoPopUp id={selectedParkId} cat={selectedInfoCat} />
+          </AdminPopUpInfo>
+          }
+        </PopUp>
+      )}
+    </section>
+  )
 }

@@ -1,27 +1,32 @@
 type AdminCardItem = {
     name: string,
-    img: string
+    img: string,
+    id: number
 }
 
 type AdminCardType = {
-    editOption: boolean
-    infoButton: boolean
     cardArray: AdminCardItem[]
+    onDelete: (id: number, name: string) => void
+    onEdit?: (id: number, name: string) => void
+    onInfo?: (id: number, name: string) => void
 }
 
 export function AdminCard({
-    editOption,
-    infoButton,
     cardArray,
+    onDelete,
+    onEdit,
+    onInfo
 }: AdminCardType){
 
     const cardButtons = (
         option:string,
-        extraClass: string
+        extraClass: string,
+        onClick: () => void
     ) => {
         return(
             <button
                 className={`${extraClass} rounded cursor-pointer text-white h-10`}
+                onClick={onClick}
             >
                 {option}
             </button>
@@ -33,7 +38,7 @@ export function AdminCard({
             className="px-6 py-4 grid grid-cols-3 justify-center mt-4 gap-10 w-full"
         >
             {cardArray.map((card, index) => {
-                const {name, img} = card
+                const {name, img, id} = card
                 return(
                     <div
                         key={index}
@@ -52,16 +57,16 @@ export function AdminCard({
                         <div
                             className="grid grid-cols-2 gap-14 mt-6"
                         >
-                            {cardButtons("Delete", "bg-red-600 text-white")}
+                            {cardButtons("Delete", "bg-red-600 text-white", () => onDelete(id, name))}
 
                             {
-                                editOption &&
-                                    cardButtons("Edit", "bg-blue-600")
+                                onEdit &&
+                                    cardButtons("Edit", "bg-blue-600", () => onEdit(id, name))
                             }
 
                             {
-                                infoButton && 
-                                    cardButtons("Info", "bg-purple-600")
+                                onInfo && 
+                                    cardButtons("Info", "bg-purple-600", () => onInfo(id, name))
                             }
                         </div>
                     </div>
