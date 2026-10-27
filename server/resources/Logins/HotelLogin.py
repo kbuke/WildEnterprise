@@ -1,29 +1,29 @@
-from flask import session, request
-from flask_restful import Resource
+# from flask import session, request
+# from flask_restful import Resource
 
-from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
+# from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
 
-from schemas.hotels.we_hotels.we_hotel_schema import WeHotelSchema
+# from schemas.hotels.we_hotels.we_hotel_schema import WeHotelSchema
 
-class HotelLogin(Resource):
-    def post(self):
-        data = request.get_json()
-        hotel = WEHotelModel.query.filter_by(email=data.get("email")).first()
+# class HotelLogin(Resource):
+#     def post(self):
+#         data = request.get_json()
+#         hotel = WEHotelModel.query.filter_by(email=data.get("email")).first()
 
-        if not hotel or not hotel.authenticate(data.get("password", "")):
-            return {"error": "Invalid email or password"}, 401
+#         if not hotel or not hotel.authenticate(data.get("password", "")):
+#             return {"error": "Invalid email or password"}, 401
 
-        session["hotel_id"] = hotel.id
-        return {**WeHotelSchema().dump(hotel), "is_hotel_admin": True}, 200
+#         session["hotel_id"] = hotel.id
+#         return {**WeHotelSchema().dump(hotel), "is_hotel_admin": True}, 200
 
-class HotelLogout(Resource):
-    def delete(self):
-        session.pop("hotel_id", None)
-        return {}, 204 
+# class HotelLogout(Resource):
+#     def delete(self):
+#         session.pop("hotel_id", None)
+#         return {}, 204 
 
-class HotelCheckSession(Resource):
-    def get(self):
-        hotel = WEHotelModel.query.get(session.get("hotel_id"))
-        if not hotel:
-            return {"error": "Not logged in"}, 401 
-        return {**WeHotelSchema().dump(hotel), "is_hotel_admin": True}, 200
+# class HotelCheckSession(Resource):
+#     def get(self):
+#         hotel = WEHotelModel.query.get(session.get("hotel_id"))
+#         if not hotel:
+#             return {"error": "Not logged in"}, 401 
+#         return {**WeHotelSchema().dump(hotel), "is_hotel_admin": True}, 200

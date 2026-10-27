@@ -25,7 +25,13 @@ class BaseEvents(BaseResource):
         "endTime": "end_time",
         "noOfTickets": "no_of_tickets",
         "ticketPrice": "ticket_price",
-        "parkId": "park_id"
+        "parkId": "park_id",
+        "cardInfo": "card_info",
+        "pI1": "primary_img_1",
+        "pI2": "primary_img_2",
+        "pI3": "primary_img_3",
+        "pI4": "primary_img_4",
+        "pI5": "primary_img_5"
     }
 
 class AllEvents(BaseEvents):

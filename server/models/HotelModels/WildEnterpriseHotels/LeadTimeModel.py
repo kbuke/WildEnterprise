@@ -21,8 +21,11 @@ class LeadTimeRuleModel(
     #========================================================================
     # RELATIONS 
     #========================================================================
-    hotel_id = one_to_many_fk("wildenterprise_hotels", True)
-    hotel = one_to_many_back_populates("WEHotelModel", "lead_times", False)
+    # hotel_id = one_to_many_fk("wildenterprise_hotels", True)
+    # hotel = one_to_many_back_populates("WEHotelModel", "lead_times", False)
+
+    park_id = one_to_many_fk("parks", True)
+    park = one_to_many_back_populates("ParkModel", "lead_times", False)
 
     room_id = one_to_many_fk("rooms", True)
     room = one_to_many_back_populates("RoomModel", "lead_times", False)

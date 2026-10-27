@@ -4,7 +4,8 @@ from sqlalchemy.orm import validates
 
 from functions.check_instance_exists import check_instance_exists
 
-from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
+# from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
+from models.ParkModels import ParkModel
 from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
@@ -36,8 +37,10 @@ class DiscountModel(
     #========================================================================
     # RELATIONS 
     #========================================================================
-    hotel_id = one_to_many_fk("wildenterprise_hotels", True)
-    hotel = one_to_many_back_populates("WEHotelModel", "discounts", delete_orphan=False)
+    # hotel_id = one_to_many_fk("wildenterprise_hotels", True)
+    # hotel = one_to_many_back_populates("WEHotelModel", "discounts", delete_orphan=False)
+    park_id = one_to_many_fk("parks", True)
+    park = one_to_many_back_populates("ParkModel", "discounts", delete_orphan=False)
 
     room_id = one_to_many_fk("rooms", True)
     room = one_to_many_back_populates("RoomModel", "discounts", delete_orphan=False)
@@ -56,19 +59,34 @@ class DiscountModel(
         if value < 1 or value > 3:
             raise ValueError("Priority level can not be less than one, or greater than 3")
         return value
-    
-    @validates("hotel_id", "room_id")
+
+    @validates("park_id", "room_id")
     def validate_discount_type(self, key, value):
-        if key == "hotel_id":
+        if key == "park_id":
             if self.is_hotel_wide_discount == True and value is None:
                 raise ValueError("If this is a hotel wide discount, please state which hotel")
             elif self.is_hotel_wide_discount == False and value:
                 raise ValueError("This is a room-specific discount, not for an entire hotel")
-            return check_instance_exists(WEHotelModel, value)
+            return check_instance_exists(ParkModel, value)
         else:
             if self.is_hotel_wide_discount == True and value:
                 raise ValueError("This is a hotel-wide discount, not room-specific")
             elif self.is_hotel_wide_discount == False and value is None:
                 raise ValueError("This is a room-specific discount, please select a room")
             return check_instance_exists(RoomModel, value)
+    
+    # @validates("hotel_id", "room_id")
+    # def validate_discount_type(self, key, value):
+    #     if key == "hotel_id":
+    #         if self.is_hotel_wide_discount == True and value is None:
+    #             raise ValueError("If this is a hotel wide discount, please state which hotel")
+    #         elif self.is_hotel_wide_discount == False and value:
+    #             raise ValueError("This is a room-specific discount, not for an entire hotel")
+    #         return check_instance_exists(WEHotelModel, value)
+    #     else:
+    #         if self.is_hotel_wide_discount == True and value:
+    #             raise ValueError("This is a hotel-wide discount, not room-specific")
+    #         elif self.is_hotel_wide_discount == False and value is None:
+    #             raise ValueError("This is a room-specific discount, please select a room")
+    #         return check_instance_exists(RoomModel, value)
             

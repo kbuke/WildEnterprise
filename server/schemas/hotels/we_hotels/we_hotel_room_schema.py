@@ -16,3 +16,4 @@ class WeHotelRoomDetailedSchema(Schema):
     lead_times = fields.Nested("WeHotelLeadtimesSchema", many=True)
     room_bookings = fields.Nested("WeHotelRoomBookingSchema", many=True)
     holds = fields.Nested("WeHotelRoomHoldSchema", many=True)
+    park = fields.Nested("ParkSchema")

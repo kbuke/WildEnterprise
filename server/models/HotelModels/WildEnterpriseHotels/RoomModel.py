@@ -7,7 +7,8 @@ from relational_functions.one_to_many import one_to_many_back_populates, one_to_
 from functions.check_int import check_int
 from functions.check_instance_exists import check_instance_exists
 
-from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
+# from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
+from models.ParkModels import ParkModel
 
 class RoomModel(
     db.Model, 
@@ -25,8 +26,8 @@ class RoomModel(
     #========================================================================
     # RELATIONS 
     #========================================================================
-    hotel_id = one_to_many_fk("wildenterprise_hotels")
-    hotel = one_to_many_back_populates("WEHotelModel", "rooms", delete_orphan=False)
+    # hotel_id = one_to_many_fk("wildenterprise_hotels")
+    # hotel = one_to_many_back_populates("WEHotelModel", "rooms", delete_orphan=False)
 
     room_rates = one_to_many_back_populates("RoomRateModel", "room", delete_orphan=True)
 
@@ -38,6 +39,9 @@ class RoomModel(
 
     holds = one_to_many_back_populates("RoomHoldModel", "room", delete_orphan=True)
 
+    park_id = one_to_many_fk("parks", is_null=True)
+    park = one_to_many_back_populates("ParkModel", "rooms", delete_orphan=False)
+
     #======================================================================== 
     # VALIDATIONS 
     #========================================================================
@@ -45,7 +49,15 @@ class RoomModel(
     def validate_number_of_rooms(self, key, value):
         return check_int(value)
 
-    @validates("hotel_id")
-    def validate_hotel_exists(self, key, value):
+    # @validates("hotel_id")
+    # def validate_hotel_exists(self, key, value):
+    #     check_int(value)
+    #     return check_instance_exists(WEHotelModel, value)
+
+    @validates("park_id")
+    def validate_park_accomodation_exists(self, key, value):
         check_int(value)
-        return check_instance_exists(WEHotelModel, value)
+        selected_park = check_instance_exists(ParkModel, value, return_instance=True)
+        if selected_park.accomodation != True:
+            raise ValueError(f"Park: {value} does not have accomodation")
+        return value

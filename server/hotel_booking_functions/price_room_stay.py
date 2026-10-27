@@ -13,7 +13,7 @@ def _nightly_rate(room, night):
     candidates = RoomRateModel.query.filter(
         or_(
             RoomRateModel.room_id == room.id,
-            and_(RoomRateModel.hotel_id == room.hotel_id, RoomRateModel.room_id.is_(None))
+            and_(RoomRateModel.park_id == room.park_id, RoomRateModel.room_id.is_(None))
         ),
         RoomRateModel.start_date <= night,
         RoomRateModel.end_date >= night,
@@ -39,7 +39,7 @@ def _best_discount(room, arrival, departure, booking_date):
     candidates = DiscountModel.query.filter(
         or_(
             DiscountModel.room_id == room.id,
-            and_(DiscountModel.hotel_id == room.hotel_id, DiscountModel.is_hotel_wide_discount.is_(True))
+            and_(DiscountModel.park_id == room.park_id, DiscountModel.is_hotel_wide_discount.is_(True))
         )
     ).all()
 

@@ -2,13 +2,18 @@ from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 from hotel_booking_functions.get_available_rooms import get_available_rooms
 
 def get_hotel_available_capacity(
-    hotel_id,
+    # hotel_id,
+    park_id,
     arrival_date,
     departure_date,
     exclude_booking_id = None
 ):
+    # rooms = RoomModel.query.filter_by(
+    #     hotel_id = hotel_id
+    # ).all()
+
     rooms = RoomModel.query.filter_by(
-        hotel_id = hotel_id
+        park_id = park_id
     ).all()
 
     total_capacity = 0

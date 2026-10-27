@@ -1,6 +1,5 @@
 from itertools import product
 
-
 def find_room_combinations(room_options, party_size, max_rooms=4):
     """
     room_options: list of {"room": RoomModel, "available": int, "unit_price": float, "contested": bool}

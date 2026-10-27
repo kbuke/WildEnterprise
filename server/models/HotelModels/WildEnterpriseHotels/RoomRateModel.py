@@ -7,7 +7,7 @@ from relational_functions.one_to_many import one_to_many_fk, one_to_many_back_po
 from functions.check_instance_exists import check_instance_exists
 
 from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
-from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
+# from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
 
 # from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
@@ -34,8 +34,10 @@ class RoomRateModel(
     #========================================================================
     # RELATIONS 
     #========================================================================
-    hotel_id = one_to_many_fk("wildenterprise_hotels", True)
-    hotel = one_to_many_back_populates("WEHotelModel", "room_rates", delete_orphan=False)
+    # hotel_id = one_to_many_fk("wildenterprise_hotels", True)
+    # hotel = one_to_many_back_populates("WEHotelModel", "room_rates", delete_orphan=False)
+    park_id = one_to_many_fk("parks", True)
+    park = one_to_many_back_populates("ParkModel", "room_rates", delete_orphan=False)
 
     room_id = one_to_many_fk("rooms", True)
     room = one_to_many_back_populates("RoomModel", "room_rates", delete_orphan=False)

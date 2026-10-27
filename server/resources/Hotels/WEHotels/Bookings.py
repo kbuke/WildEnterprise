@@ -24,14 +24,18 @@ from flask import session
 
 from resources.Hotels.BaseHotelBooking import BaseHotelBooking
 
-from schemas.hotels.we_hotels.we_hotel_room_booking_schema import WeHotelRoomBookingSchema, WeHotelRoomBookingDetailedSchema
+from schemas.hotels.we_hotels.we_hotel_booking_schema import (
+    WeHotelBookingSchema, WeHotelBookingDetailedSchema
+)
+
+# from schemas.hotels.we_hotels.we_hotel_room_booking_schema import WeHotelRoomBookingSchema, WeHotelRoomBookingDetailedSchema
 
 class BaseBooking(BaseHotelBooking):
     model = WEHotelBookingModel
 
-    schema = WeHotelRoomBookingSchema
+    schema = WeHotelBookingSchema
 
-    detail_schema = WeHotelRoomBookingDetailedSchema
+    detail_schema = WeHotelBookingDetailedSchema
 
     field_map = {
         **BaseHotelBooking.field_map,
@@ -43,15 +47,18 @@ class AllBookings(BaseBooking):
     @require_hotel_login
     def get(self):
         # Only this hotel's bookings — not every hotel's guest list.
-        hotel_id = session.get("hotel_id")
-        bookings = WEHotelBookingModel.query.filter_by(hotel_id=hotel_id).all()
-        return self.detail_schema(many=True, exclude=("hotel",)).dump(bookings), 200
+        # hotel_id = session.get("hotel_id")
+        park_id = session.get("park_id")
+        bookings = WEHotelBookingModel.query.filter_by(park_id=park_id).all()
+
+        return self.detail_schema(many=True).dump(bookings), 200
 
     def post(self):
         data = request.get_json() or {}
 
         try:
-            hotel_id = int(data["hotelId"])
+            # hotel_id = int(data["hotelId"])
+            park_id = int(data["parkId"])
             arrival = date.fromisoformat(data["arrival"])
             departure = date.fromisoformat(data["departure"])
             guests = int(data["guests"])
@@ -87,7 +94,7 @@ class AllBookings(BaseBooking):
                 db.session.rollback()
                 return {"error": f"Room {room_id} not found"}, 404
 
-            if room.hotel_id != hotel_id:
+            if room.park_id != park_id:
                 db.session.rollback()
                 return {"error": f"Room '{room.name}' does not belong to the selected hotel"}, 400
 
@@ -121,7 +128,7 @@ class AllBookings(BaseBooking):
             guests=guests,
             arrival=arrival,
             departure=departure,
-            hotel_id=hotel_id,
+            park_id=park_id,
             room_bookings=room_bookings,
         )
         db.session.add(booking)

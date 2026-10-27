@@ -15,6 +15,7 @@ class EventSchema(Schema):
     tickets_remainig = fields.Int(dump_only = True)
     ticket_price = fields.Int()
     park_id = fields.Int()
+    slug = fields.Str()
 
 class EventDescriptionSchema(EventSchema):
     park = fields.Nested("ParkSchema")

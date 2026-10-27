@@ -12,24 +12,27 @@ from hotel_booking_functions.find_room_combinations import find_room_combination
 
 from schemas.hotels.we_hotels.we_hotel_room_schema import WeHotelRoomSchema
 
-MAX_ROOMS_PER_COMBO = 4
+# MAX_ROOMS_PER_COMBO = 4
 
 
 class SearchAvailability(Resource):
     def get(self):
+        # breakpoint()
         try:
-            hotel_id = int(request.args["hotelId"])
+            park_id = int(request.args["parkId"])
+            # hotel_id = int(request.args["hotelId"])
             arrival = date.fromisoformat(request.args["arrivalDate"])
             departure = date.fromisoformat(request.args["departureDate"])
             party_size = int(request.args.get("partySize", 1))
             session_token = request.args.get("sessionToken")
         except (KeyError, ValueError):
-            return {"error": "hotelId, arrivalDate, departureDate required"}, 400
+            return {"error": "parkId, arrivalDate, departureDate required"}, 400
 
         if departure <= arrival:
             return {"error": "departureDate must be after arrivalDate"}, 400
 
-        rooms = RoomModel.query.filter_by(hotel_id=hotel_id).all()
+        # rooms = RoomModel.query.filter_by(hotel_id=hotel_id).all()
+        rooms = RoomModel.query.filter_by(park_id=park_id).all()
 
         room_options = []
         for room in rooms:
@@ -49,7 +52,15 @@ class SearchAvailability(Resource):
                 "unit_price": price_room_stay(room, arrival, departure),
             })
 
-        combos = find_room_combinations(room_options, party_size, max_rooms=MAX_ROOMS_PER_COMBO)
+        total_rooms_available = sum(opt["available"] for opt in room_options)
+
+        combos = find_room_combinations(
+            room_options,
+            party_size,
+            max_rooms=total_rooms_available
+        )
+
+        # combos = find_room_combinations(room_options, party_size, max_rooms=MAX_ROOMS_PER_COMBO)
 
         results = [
             {

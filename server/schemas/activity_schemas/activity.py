@@ -11,6 +11,7 @@ class ActivitySchema(Schema):
     discount_with_stay = fields.Bool()
     stay_discount = fields.Float(allow_none = True)
     park_id = fields.Int()
+    price = fields.Int()
 
 
 class ActivityDetailSchema(ActivitySchema):

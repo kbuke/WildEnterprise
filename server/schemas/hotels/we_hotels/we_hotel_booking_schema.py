@@ -11,5 +11,9 @@ class WeHotelBookingSchema(BaseHotelBookingSchema):
 
 class WeHotelBookingDetailedSchema(WeHotelBookingSchema):
     hotel = fields.Nested("WeHotelSchema")
-    room_bookings = fields.Nested("WeHotelRoomBookingSchema", many=True, exclude=("hotel_booking",))
+    room_bookings = fields.Nested(
+        "WeHotelRoomBookingDetailedSchema",
+        many=True,
+        exclude=("hotel_booking",)
+    )
     activities = fields.Nested("ActivityBookingSchema", many=True)

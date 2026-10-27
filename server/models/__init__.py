@@ -8,7 +8,7 @@ from models.ActivityModels.ActivityBookingModel import ActivityBookingModel
 from models.ActivityModels.WalkingTrailModel import WalkingTrailModel
 
 
-from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
+# from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
 from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 from models.HotelModels.WildEnterpriseHotels.RoomRateModel import RoomRateModel
 from models.HotelModels.WildEnterpriseHotels.DiscountModel import DiscountModel

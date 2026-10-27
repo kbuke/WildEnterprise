@@ -10,9 +10,9 @@ from relational_functions.one_to_many import one_to_many_back_populates, one_to_
 from config import db 
 
 from sqlalchemy.orm import validates
-from sqlalchemy_serializer import SerializerMixin
 
-from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
+# from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
+from models.ParkModels import ParkModel
 
 from models.HotelModels.BaseHotelBookingModel import BaseHotelBookingModel
 
@@ -28,8 +28,8 @@ class WEHotelBookingModel(BaseHotelBookingModel):
     #========================================================================
     # RELATIONS 
     #========================================================================
-    hotel_id = one_to_many_fk("wildenterprise_hotels")
-    hotel = one_to_many_back_populates("WEHotelModel", "hotel_bookings", False)
+    park_id = one_to_many_fk("parks")
+    park = one_to_many_back_populates("ParkModel", "park_bookings", False)
 
     room_bookings = one_to_many_back_populates("RoomBookingModel", "hotel_booking", delete_orphan=True)
 
@@ -38,9 +38,9 @@ class WEHotelBookingModel(BaseHotelBookingModel):
     #========================================================================
     # VALIDATIONS 
     #========================================================================
-    @validates("hotel_id")
-    def validate_hotel(self, key, value):
-        return check_instance_exists(WEHotelModel, value)
+    @validates("park_id")
+    def validate_park(self, key, value):
+        return check_instance_exists(ParkModel, value)
 
     @validates("guests")
     def validate_guests(self, key, value):

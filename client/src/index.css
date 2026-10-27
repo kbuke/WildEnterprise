@@ -1,1 +1,50 @@
-@import "tailwindcss"
+@font-face {
+  font-family: "Meta Pro";
+  src: url("/fonts/MetaPro-Medium.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Meta Pro";
+  src: url("/fonts/MetaPro-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@import "tailwindcss";
+
+@theme {
+    --color-coal: rgb(55 50 50);
+    --color-sunset: rgb(248 152 40);
+    --color-cloud: rgb(247 247 247);
+    --color-white: rgb(255 255 255);
+
+    --font-meta: "Meta Pro", sans-serif;
+    --text-primary-header: 3rem;
+    --text-sub-header: 2rem;
+
+    --text-card-primary-header: 2rem;
+    --text-card-sub-header: 1.5rem
+}
+
+@layer components{
+    .primary-header {
+        @apply font-meta text-primary-header font-bold;
+    }
+
+    .secondary-header {
+        @apply font-meta text-sub-header font-medium;
+    }
+
+    .primary-card-header {
+        @apply font-meta text-card-primary-header font-bold;
+    }
+
+    .primary-card-sub-header{
+        @apply font-meta text-card-sub-header
+    }
+}
+

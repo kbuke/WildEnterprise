@@ -15,7 +15,15 @@ class BasePark(BaseResource):
         "img": "img",
         "info": "info",
         "location": "location",
-        # "parkId": "park_id"
+        "cardInfo": "card_info",
+        "pI1": "primary_img_1",
+        "pI2": "primary_img_2",
+        "pI3": "primary_img_3",
+        "pI4": "primary_img_4",
+        "pI5": "primary_img_5",
+        "accomodation": "accomodation",
+        "email": "email",
+        "password": "password_hash"
     }
 
 class AllParks(BasePark):

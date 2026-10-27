@@ -18,9 +18,11 @@ def post_hotel_info():
 def patch_delete_hotel_info(model, id):
     specific_instance = check_instance_exists(model, id, True)
 
-    hotel_id = specific_instance.hotel_id
+    # hotel_id = specific_instance.hotel_id
+    park_id = specific_instance.park_id
 
-    if not hotel_id:
+    # if not hotel_id:
+    if not park_id:
         room_id = specific_instance.room_id
         selected_room = check_instance_exists(RoomModel, room_id, True)
 
@@ -31,7 +33,8 @@ def patch_delete_hotel_info(model, id):
 
         return None
 
-    result = check_hotel_id_session(hotel_id)
+    # result = check_hotel_id_session(hotel_id)
+    result = check_hotel_id_session(park_id)
 
     if result:
         return result
