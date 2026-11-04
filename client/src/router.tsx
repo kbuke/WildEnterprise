@@ -15,6 +15,10 @@ import { ParkSignIn } from "./Pages/ParksSignIn/ParksSignIn";
 import { ParkAdminDashboard } from "./Pages/ParkAdmin/ParkAdminDashboard";
 import { RequireParkAdmin } from "./Pages/ParkAdmin/RequireParkAdmin";
 import { ConfirmHotelBooking } from "./Pages/SuccessHotelBooking/ConfirmHotelBooked";
+import { AdminArticles } from "./Pages/AdminArticles/AdminArticles";
+import { SpecificArticle } from "./Pages/SpecificArticle.tsx/SpecificArticle";
+import { AdminProjects } from "./Pages/AdminProjects/AdminProjects";
+import { SpecificEvent } from "./Pages/SpecificEvent/SpecificEvent";
 
 export const router = createBrowserRouter(
     [
@@ -37,6 +41,14 @@ export const router = createBrowserRouter(
                         {
                             path: "/successfulhotelbooking",
                             element: <ConfirmHotelBooking />
+                        },
+                        {
+                            path: "/articles/:id/:slug",
+                            element: <SpecificArticle />
+                        },
+                        {
+                            path: "/events/:id/:slug",
+                            element: <SpecificEvent />
                         }
                     ]
                 },
@@ -85,6 +97,16 @@ export const router = createBrowserRouter(
                         {
                             path: "/adminevents",
                             element: <AdminEvents />
+                        },
+
+                        {
+                            path: "/adminarticles",
+                            element: <AdminArticles />
+                        },
+
+                        {
+                            path: "/adminprojects",
+                            element: <AdminProjects />
                         }
                     ]
                 },

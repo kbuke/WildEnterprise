@@ -6,15 +6,16 @@ import { addDays, formatShort, MAX_ADVANCE_DAYS, today } from "../dates/dates"
 type Props = {
   value: DateRange | undefined
   onChange: (range: DateRange | undefined) => void
+  placeholder?: string
 }
 
-export function DateRangePicker({ value, onChange }: Props) {
+export function DateRangePicker({ value, onChange, placeholder }: Props) {
   const [open, setOpen] = useState(false)
   const start = today()
 
   const label = value?.from
     ? `${formatShort(value.from)} → ${value.to ? formatShort(value.to) : "…"}`
-    : "Select dates"
+    : placeholder ?? "Select dates"
 
   return (
     <div className="relative">

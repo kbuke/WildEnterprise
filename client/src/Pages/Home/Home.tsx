@@ -1,5 +1,7 @@
+import { ArticleSection } from "./ArticleSection";
 import { HeroSection } from "./HeroSection";
 import { ParkSection } from "./ParkSection";
+import { UpcomingEvents } from "./UpcomingEvents";
 
 export function Home(){
     return(
@@ -8,6 +10,8 @@ export function Home(){
         >
             <HeroSection />
             <ParkSection />
+            <UpcomingEvents />
+            <ArticleSection />
         </section>
     )
 }

@@ -1,12 +1,13 @@
 import type { NameImgInfo } from "../../GlobalTypes"
+import type { AllParks } from "../Parks/types"
 
 export type AllEvents = {
     id: number,
-    start_date: Date,
+    start_date: string,
     multi_day_event: boolean,
-    end_date?: Date,
-    start_time: Date,
-    end_time: Date,
+    end_date?: string,
+    start_time: string,
+    end_time: string,
     no_of_tickets: number,
     tickets_sold: number,
     tickets_remaining: number,
@@ -16,7 +17,7 @@ export type AllEvents = {
 }& NameImgInfo
 
 export type SpecificEvent = {
-    park: []
+    park: AllParks
 }& AllEvents
 
 export type PostEvent = {

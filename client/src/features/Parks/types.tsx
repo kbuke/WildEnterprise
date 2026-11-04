@@ -1,5 +1,6 @@
 import type { CardImgInfo, NameImgInfo, PostCardImginfo } from "../../GlobalTypes"
 import type { AllActivities } from "../Activities/types"
+import type { AllArtciles } from "../Articles/types"
 import type { AllEvents } from "../Events/types"
 import type { AllPartnerHotels, AllWeHotels } from "../Hotels/types"
 import type { AllParkImgs } from "../ParkImages/types"
@@ -9,7 +10,7 @@ export type AllParks = {
     id: number,
     slug: string,
     location: string,
-}&NameImgInfo &CardImgInfo
+}& NameImgInfo &CardImgInfo
 
 export type SpecificPark = {
     images: AllParkImgs[],
@@ -18,7 +19,8 @@ export type SpecificPark = {
     hotels: AllWeHotels[],
     partner_hotels: AllPartnerHotels[]
     accomodation: boolean,
-    rooms: AllRooms[]
+    rooms: AllRooms[],
+    articles: AllArtciles[]
 }& AllParks
 
 export type PostPark = {

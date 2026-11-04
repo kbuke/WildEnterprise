@@ -1,14 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
 import { fetchSpecificPark } from "../../features/Parks/api"
-import { AssociatedMapper } from "../../components/layout/associatedLinks"
 import { FourImgHeroSection } from "../../components/ui/FourImgHeroSection"
 import { ParkRelations } from "./ParkRelations"
 import { useState } from "react"
 import { PopUp } from "../../components/ui/Popup"
 import { ActivityBooking } from "./ActivityBooking"
 
-export type ParkRelationType = "Activities" | "Hotels" | "Partner Hotels"
+export type ParkRelationType = "Activities" | "Hotels" | "Partner Hotels" | "Articles"
 
 type Booking = {type: ParkRelationType, id: number}
 
@@ -51,7 +50,8 @@ export function Park(){
         primary_img_4,
         primary_img_5,
         accomodation,
-        rooms
+        rooms,
+        articles
     } = data
 
     console.log(rooms)
@@ -102,12 +102,20 @@ export function Park(){
                 // parkId={parkId}
             />
 
+            <ParkRelations 
+                text="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, dolorem doloribus odio doloremque fuga vero, amet nisi totam sapiente, fugiat eveniet ipsa dolor asperiores molestiae? Voluptatum blanditiis officiis reiciendis facere. Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae soluta nostrum eius quod omnis repellat ipsam, impedit harum cum quas maiores voluptas id iste architecto sapiente libero ea in quis."
+                subheading="Articles"
+                heading={`Read the latest news on ${name}`}
+                relationalArray={articles}
+            />
+
             {booking?.type === "Activities" && (
                 <PopUp 
                     child={
                         <ActivityBooking 
                             activityId={booking.id}
                             onClose={() => setBooking(null)}
+                            parkId={parkId}
                         />
                     }
                 />

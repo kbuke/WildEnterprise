@@ -4,17 +4,19 @@ import models
 
 from models.ParkModels import ParkModel
 from models.ParkImgModel import ParkImgModel
-from models.EventModel import EventModel
+from models.EventModels.EventModel import EventModel
 from models.ActivityModels.BaseActivityModel import BaseActivityModel
 from models.ActivityModels.ActivityBookingModel import ActivityBookingModel
 from models.ActivityModels.WalkingTrailModel import WalkingTrailModel
-# from models.HotelModels.WildEnterpriseHotels.WEHotelModel import WEHotelModel
 from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 
 from models.HotelModels.PartnerHotels.PartnerHotelBookingsModel import PartnerHotelBookingModel
 from models.HotelModels.PartnerHotels.PartnerHotelModel import PartnerHotelModel
 
-from datetime import date, time
+from models.HotelModels.WildEnterpriseHotels.BookingModel import WEHotelBookingModel
+from models.HotelModels.WildEnterpriseHotels.RoomBookingModel import RoomBookingModel
+
+from datetime import date, time, timedelta
 
 #========================================================================
 # PARKS
@@ -178,35 +180,6 @@ def seed_walks():
     print(f"Seeded {len(walks)} Walks")
 
 #========================================================================
-# HOTELS 
-#========================================================================
-# HOTELS = [
-#     {
-#         "name": "Test Hotel",
-#         "img": "later mate",
-#         "info": "It's coming",
-#         "email": "test@gmail.com",
-#         "password_hash": "tester123",
-#         "park_id": 1
-#     },
-
-#     {
-#         "name": "Newer Hotel",
-#         "img": "nerwer mate",
-#         "info": "It's coming soon",
-#         "email": "tester@gmail.com",
-#         "password_hash": "tester123",
-#         "park_id": 1
-#     }
-# ]
-
-# def seed_hotels():
-#     hotels = [WEHotelModel(**data) for data in HOTELS]
-#     db.session.add_all(hotels)
-#     db.session.commit()
-#     print(f"Seeded {len(hotels)} Hotels")
-
-#========================================================================
 # SEED ROOMS 
 #========================================================================
 ROOMS = [
@@ -227,6 +200,74 @@ def seed_rooms():
     print(f"Seeded {len(rooms)} Rooms")
 
 #========================================================================
+# SEED BOOKINGS
+#========================================================================
+# Dates are relative to today, so the past booking stays "past" and the
+# future one stays "future" whenever you re-seed.
+TODAY = date.today()
+ROOM_PRICE = 220.80   # Single Room base_price
+NIGHTS = 3
+
+def make_booking(**overrides):
+    arrival = overrides.pop("arrival")
+    departure = arrival + timedelta(days=NIGHTS)
+    return WEHotelBookingModel(
+        name=overrides.pop("name"),
+        email=overrides.pop("email"),
+        guests=1,
+        arrival=arrival,
+        departure=departure,
+        park_id=1,
+        # Set explicitly so we don't depend on how the default calculators
+        # behave for dates in the past
+        date_of_deposit_charge=arrival - timedelta(days=30),
+        date_of_remainder_charge=arrival - timedelta(days=7),
+        room_bookings=[
+            RoomBookingModel(
+                room_id=1,
+                quantity=1,
+                unit_price=ROOM_PRICE * NIGHTS,
+                price_locked=ROOM_PRICE * NIGHTS,
+            )
+        ],
+        **overrides,
+    )
+
+BOOKINGS = [
+    # 1. Stay finished 7 days ago, no review yet -> can be reviewed
+    {
+        "booking_ref": "WE-PASTSTAY",
+        "name": "Test Guest",
+        "email": "guest@example.com",
+        "arrival": TODAY - timedelta(days=10),
+    },
+    # 2. Stay hasn't happened yet -> review should be blocked
+    {
+        "booking_ref": "WE-FUTURE01",
+        "name": "Future Guest",
+        "email": "future@example.com",
+        "arrival": TODAY + timedelta(days=20),
+    },
+    # 3. Stay finished and already reviewed -> second review should 409
+    {
+        "booking_ref": "WE-REVIEWED",
+        "name": "Happy Guest",
+        "email": "happy@example.com",
+        "arrival": TODAY - timedelta(days=30),
+        "reviewer_name": "Happy",
+        "rating": 5,
+        "review": "Beautiful stay, the staff were wonderful and the views were stunning.",
+        "review_date": TODAY - timedelta(days=24),
+    },
+]
+
+def seed_bookings():
+    bookings = [make_booking(**data) for data in BOOKINGS]
+    db.session.add_all(bookings)
+    db.session.commit()
+    print(f"Seeded {len(bookings)} Bookings")
+
+#========================================================================
 # SEED MODELS
 #========================================================================
 if __name__ == "__main__":
@@ -238,5 +279,5 @@ if __name__ == "__main__":
         seed_events()
         seed_activities()
         seed_walks()
-        # seed_hotels()
         seed_rooms()
+        seed_bookings()

@@ -10,6 +10,7 @@ from functions.check_unique import check_unique
 from functions.check_valid_value import check_valid_value
 
 from relational_functions.one_to_many import one_to_many_back_populates
+from relational_functions.many_to_many import many_to_many_relationship
 
 from functions.check_validate_slug import validate_slug, make_slug_default
 
@@ -48,11 +49,6 @@ class ParkModel(BaseCardModel):
         "park"
     )
 
-    # hotels = one_to_many_back_populates(
-    #     "WEHotelModel",
-    #     "park"
-    # )
-
     partner_hotels = one_to_many_back_populates( 
         "PartnerHotelModel", 
         "park"
@@ -88,6 +84,8 @@ class ParkModel(BaseCardModel):
         "park", 
         delete_orphan=True
     )
+
+    articles = many_to_many_relationship("ArticleModel", "article_parks", "parks")
 
     #=============================================================================================
     # VALIDATORS

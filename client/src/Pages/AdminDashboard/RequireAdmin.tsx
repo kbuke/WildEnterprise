@@ -8,6 +8,8 @@ const navs: NavItem[] = [
     { url: "/admindashboard", title: "Home" },
     { url: "/adminparks", title: "Parks" },
     { url: "/adminevents", title: "Events" },
+    { url: "/adminarticles", title: "Articles"},
+    { url: "/adminprojects", title: "Projects"}
 ]
 
 export function RequireAdmin() {

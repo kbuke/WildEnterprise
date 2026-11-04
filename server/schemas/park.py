@@ -22,3 +22,5 @@ class ParkDetailSchema(ParkSchema):
     hotels = fields.Nested("WeHotelSchema", many=True)
     partner_hotels = fields.Nested("PartnerHotelSchema", many=True)
     rooms = fields.Nested("WeHotelRoomSchema", many=True)
+    events = fields.Nested("EventSchema", many=True)
+    articles = fields.Nested("ArticleSchema", many=True)

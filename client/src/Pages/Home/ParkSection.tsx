@@ -1,17 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
 import { fetchAllParks } from "../../features/Parks/api"
-import { Link } from "react-router-dom"
-import { useState } from "react"
+import { ImgNameInfo } from "../../components/ui/ImgNameInfo"
 
 export function ParkSection(){
-    const [hoverPark, setHoverPark] = useState<number>()
 
     const {data: allParks} = useQuery({
         queryKey: ["parks"],
         queryFn: fetchAllParks
     })
-
-    console.log(allParks)
 
 
     return(
@@ -48,46 +44,15 @@ export function ParkSection(){
                         } = park
 
                         return(
-                            <div
+                            <ImgNameInfo 
                                 key={index}
-                                className={`border-b border-sunset py-4 lg:border-b-0 lg:${id % 2 == 1 && "border-r"} lg:grid lg:grid-cols-2`}
-                            >
-                                <div
-                                    className="bg-sunset rounded h-30 lg:h-80 w-70 flex items-center justify-center justify-self-center"
-                                >
-                                    <img 
-                                        src={img}
-                                        className="h-29 lg:h-79 w-69 rounded"
-                                    />
-                                </div>
-
-                                <div>
-                                    <h1
-                                        className="uppercase primary-card-header mb-0"
-                                    >
-                                        {name}
-                                    </h1>
-
-                                    <h2
-                                        className="mb-6 text-card-sub-header"
-                                    >
-                                        {location}
-                                    </h2>
-
-                                    <p
-                                        className="hidden lg:block mb-6"
-                                    >
-                                        {card_info}
-                                    </p>
-
-                                    <Link
-                                        to={`/parks/${slug}/${id}`}
-                                        className="bg-sunset px-4 py-2 rounded-lg"
-                                    >
-                                        Find Out More
-                                    </Link>
-                                </div>
-                            </div>
+                                img={img}
+                                name={name}
+                                subheading={location}
+                                info={info}
+                                id={id}
+                                link={`/parks/${slug}/${id}`}
+                            />
                         )
                     })
                 }

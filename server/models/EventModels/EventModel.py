@@ -8,6 +8,7 @@ from sqlalchemy.orm import validates
 from config import db
 
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
+from relational_functions.many_to_many import many_to_many_relationship
 
 from functions.check_event_dates import check_event_dates
 from functions.check_validate_slug import validate_slug, make_slug_default
@@ -42,6 +43,11 @@ class EventModel(BaseCardModel):
         "events",
         delete_orphan=False
     )
+
+    articles = many_to_many_relationship("ArticleModel", "article_events", "events")
+
+    # EventModel: add
+    bookings = one_to_many_back_populates("EventBookingModel", "event", delete_orphan=False)
 
     # VALIDATORS (these go INSIDE the class)
     @validates("slug")

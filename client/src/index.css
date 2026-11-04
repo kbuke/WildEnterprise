@@ -30,7 +30,17 @@
     --text-card-sub-header: 1.5rem
 }
 
+@layer base {
+    button {
+        @apply px-10 py-2 cursor-pointer rounded
+    }
+}
+
 @layer components{
+    .associate-bg{
+        @apply bg-coal w-full text-white flex flex-col text-center lg:text-start lg:grid lg:grid-cols-2 py-4 px-10 gap-4
+    }
+
     .primary-header {
         @apply font-meta text-primary-header font-bold;
     }
@@ -45,6 +55,22 @@
 
     .primary-card-sub-header{
         @apply font-meta text-card-sub-header
+    }
+
+    .card-img-bg{
+        @apply bg-sunset rounded h-30 lg:h-80 w-70 flex items-center justify-center justify-self-center
+    }
+
+    .card-img{
+        @apply h-29 lg:h-79 w-69 rounded
+    }
+
+    .more-info-btn{
+        @apply bg-sunset mt-4
+    }
+
+    .green-button{
+        @apply bg-green-800 mt-4 text-white
     }
 }
 

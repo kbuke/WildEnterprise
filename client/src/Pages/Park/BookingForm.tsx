@@ -5,14 +5,19 @@ import { useNavigate } from "react-router-dom"
 import { GenericForm } from "../../components/form/GenericForm"
 import { postHotelBooking } from "../../features/HotelBookings/api"
 import { ApiError } from "../../api/client"
-import type { AvailabilityQuery, RoomOption } from "../../features/Availability/types"
-import { formatZAR } from "../../components/dates/dates"
+import type { AvailabilityQuery, RoomChoice } from "../../features/Availability/types"
+import { formatShort, formatZAR } from "../../components/dates/dates"
 import { Inputs } from "../../components/ui/Inputs"
 
-type Props = { option: RoomOption; query: AvailabilityQuery; onClose: () => void }
+type Props = {
+  choices: RoomChoice[]
+  total: number
+  query: AvailabilityQuery
+  onClose: () => void
+}
 type FormValues = { name: string; email: string }
 
-export function BookingForm({ option, query, onClose }: Props) {
+export function BookingForm({ choices, total, query, onClose }: Props) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [serverError, setServerError] = useState<string>()
@@ -26,7 +31,7 @@ export function BookingForm({ option, query, onClose }: Props) {
     },
     onError: (err) => {
       setServerError(err.message)
-      // e.g. someone else took the room: refresh the options behind the popup
+      // e.g. someone else took the room: refresh availability behind the popup
       if (err instanceof ApiError && err.status === 400) {
         queryClient.invalidateQueries({ queryKey: ["availability"] })
       }
@@ -42,7 +47,7 @@ export function BookingForm({ option, query, onClose }: Props) {
       guests: query.partySize,
       name: values.name,
       email: values.email,
-      rooms: option.selections.map(s => ({ roomId: s.room.id, quantity: s.quantity })),
+      rooms: choices.map(c => ({ roomId: c.room.id, quantity: c.quantity })),
     })
   }
 
@@ -59,31 +64,32 @@ export function BookingForm({ option, query, onClose }: Props) {
       inputs={
         <div className="flex flex-col gap-4 mb-4 text-black">
           <div className="bg-gray-400 rounded p-4 text-white">
-            {option.selections.map(({ room, quantity }) => (
-              <p key={room.id}>{quantity} × {room.name}</p>
+            {choices.map(({ room, quantity, stay_price }) => (
+              <p key={room.id} className="flex justify-between">
+                <span>{quantity} × {room.name}</span>
+                <span>{formatZAR(quantity * stay_price)}</span>
+              </p>
             ))}
-            <p>{query.arrival} → {query.departure} · {query.partySize} guests</p>
-            <p className="font-bold text-xl mt-2">Total: {formatZAR(option.total_price)}</p>
+            <p className="mt-2">
+              {formatShort(query.arrival)} → {formatShort(query.departure)} · {query.partySize} guest{query.partySize > 1 && "s"}
+            </p>
+            <p className="font-bold text-xl mt-2">Total: {formatZAR(total)}</p>
           </div>
 
-          <Inputs 
+          <Inputs
             label="Full Name"
             placeholder="Primary Guests Name"
             type="text"
             error={errors.name?.message}
-            {...register("name", {
-                required: "Name is required"
-            })}
+            {...register("name", { required: "Name is required" })}
           />
 
-          <Inputs 
+          <Inputs
             label="Email Address"
             placeholder="Primary Guests Email"
             type="email"
             error={errors.email?.message}
-            {...register("email", {
-                required: "Email is required"
-            })}
+            {...register("email", { required: "Email is required" })}
           />
         </div>
       }

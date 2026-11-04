@@ -1,4 +1,4 @@
-from models.EventModel import EventModel
+from models.EventModels.EventModel import EventModel
 from resources.BaseResource import BaseResource
 
 from flask import request

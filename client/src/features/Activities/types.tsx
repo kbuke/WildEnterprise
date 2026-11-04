@@ -3,10 +3,10 @@ import type { NameImgInfo } from "../../GlobalTypes"
 export type AllActivities = {
     id: number
     all_year_round: boolean,
-    available_months: number[],
+    available_months: number[] | null,
     free_with_stay: boolean,
     discount_with_stay: boolean,
-    stay_discount?: number,
+    stay_discount?: number | null,
     price: number,
     park_id: number,
 }& NameImgInfo

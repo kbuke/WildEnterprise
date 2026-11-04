@@ -18,7 +18,8 @@ export function AdminSectionHeader({
             </h1>
 
             <button
-                className="bg-green-800 text-white w-40 h-12 rounded-lg cursor-pointer self-center mt-4"
+                // className="bg-green-800 text-white w-40 h-12 rounded-lg cursor-pointer self-center mt-4"
+                className="green-button w-[15%] self-center"
                 onClick={setAddInstance}
             >
                 Add {header}

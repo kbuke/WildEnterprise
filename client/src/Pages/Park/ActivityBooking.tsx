@@ -1,45 +1,78 @@
-import { useQuery } from "@tanstack/react-query";
-import { GenericForm } from "../../components/form/GenericForm";
-import { fetchSpecificActivity } from "../../features/Activities/api";
-import { useState } from "react";
-import { AvailableActivityDiscount } from "./AvailableActivityDiscount";
+import { useState, type ReactNode } from "react"
+import { useQuery } from "@tanstack/react-query"
+import { fetchSpecificActivity } from "../../features/Activities/api"
+import type { VerifiedStay } from "../../features/HotelBookings/types"
+import { VerifyStayForm } from "./VerifyStayForm"
+import { ActivityBookingForm } from "./ActivityBookingForm"
 
-type ActivityFormProps = {
-    activityId: number,
-    onClose: (() => void)
-}
+type Props = { activityId: number; onClose: () => void; parkId: number }
+type Step = "choose" | "verify" | "form"
 
-export function ActivityBooking({
-    activityId,
-    onClose
-}: ActivityFormProps){
+const Panel = ({ children }: { children: ReactNode }) => (
+    <div className="bg-white rounded p-10 w-[40%] text-center">{children}</div>
+)
 
-    const [checkExistingBooking, setCheckExsitingBooking] = useState<boolean>(true)
-    const [existingBooking, setExistingBooking] = useState<string>()
-    
-    const {data: specificActivity, isLoading, isError} = useQuery({
+export function ActivityBooking({ activityId, onClose, parkId }: Props) {
+    const [step, setStep] = useState<Step | null>(null)   // null = decide from the activity
+    const [stay, setStay] = useState<VerifiedStay | null>(null)
+
+    const { data: activity, isPending, isError } = useQuery({
         queryKey: ["activities", activityId],
-        queryFn: () => fetchSpecificActivity(activityId)
+        queryFn: () => fetchSpecificActivity(activityId),
     })
-    console.log(specificActivity)
 
-    if(isError || !specificActivity) return <p>Error</p>
+    if (isPending) return <Panel>Loading...</Panel>
 
-    const {
-        free_with_stay,
-        discount_with_stay
-    } = specificActivity
+    if (isError || !activity) {
+        return (
+            <Panel>
+                <p>Could not load this activity.</p>
+                <button onClick={onClose} className="mt-4 underline cursor-pointer">Close</button>
+            </Panel>
+        )
+    }
+
+    const hasStayPerk = activity.free_with_stay || activity.discount_with_stay
+    const current = step ?? (hasStayPerk ? "choose" : "form")
+
+    if (current === "verify") {
+        return (
+            <VerifyStayForm
+                parkId={parkId}
+                onBack={() => setStep("choose")}
+                onVerified={(s) => { setStay(s); setStep("form") }}
+            />
+        )
+    }
+
+    if (current === "form") {
+        return <ActivityBookingForm activity={activity} stay={stay} onClose={onClose} />
+    }
 
     return (
-        (free_with_stay || discount_with_stay) && checkExistingBooking ?
-            <AvailableActivityDiscount 
-                setCheckExsitingBooking={setCheckExsitingBooking}
-                onClose={() => setCheckExsitingBooking(false)}
-            /> :
-            <GenericForm 
-                onClose={onClose}
-            />
-
+        <Panel>
+            <h1 className="font-bold text-3xl mb-2">{activity.name}</h1>
+            <p className="mb-6">
+                {activity.free_with_stay
+                    ? "Free for guests staying with us."
+                    : `${Math.round((activity.stay_discount ?? 0) * 100)}% off for guests staying with us.`}
+            </p>
+            <div className="flex flex-col gap-3">
+                <button
+                    onClick={() => setStep("verify")}
+                    className="bg-green-800 text-white px-10 py-2 rounded cursor-pointer"
+                >
+                    I'm staying with you
+                </button>
+                <button
+                    onClick={() => { setStay(null); setStep("form") }}
+                    className="border px-10 py-2 rounded cursor-pointer"
+                >
+                    I don't have a booking (full price)
+                </button>
+                <button onClick={onClose} className="underline cursor-pointer mt-2">Cancel</button>
+            </div>
+        </Panel>
     )
 }
 

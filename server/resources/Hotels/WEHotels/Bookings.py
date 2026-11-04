@@ -39,7 +39,11 @@ class BaseBooking(BaseHotelBooking):
 
     field_map = {
         **BaseHotelBooking.field_map,
-        "hotelId": "hotel_id"
+        "reviewerName": "reviewer_name",
+        "reviewerImg": "review_img",
+        "rating": "rating",
+        "review": "review",
+        "parkId": "park_id"
     }
 
 
@@ -121,6 +125,11 @@ class AllBookings(BaseBooking):
             return {
                 "error": f"Selected rooms only accommodate {total_capacity} guests, but {guests} guests specified"
             }, 400
+
+        total_rooms = sum(rb.quantity for rb in room_bookings)
+        if total_rooms > guests:
+            db.session.rollback()
+            return {"error": f"You can't book {total_rooms} rooms for {guests} guest(s)"}, 400
 
         booking = WEHotelBookingModel(
             name=data["name"],

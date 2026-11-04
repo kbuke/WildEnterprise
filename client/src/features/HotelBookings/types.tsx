@@ -1,5 +1,6 @@
 import type { AllActivities } from "../Activities/types"
 import type { AllWeHotels } from "../Hotels/types"
+import type { AllParks } from "../Parks/types"
 
 export type BasicWeHotelBookings = {
     id: number,
@@ -8,7 +9,11 @@ export type BasicWeHotelBookings = {
     guests: string,
     email: string,
     arrival: string,
-    departure: string
+    departure: string,
+    reviewer_name: string,
+    reviewer_img: string,
+    rating: number,
+    review: string
 }
 
 export type AllWeHotelBookings = {
@@ -18,17 +23,35 @@ export type AllWeHotelBookings = {
 
 export type SpecificWeHotelBooking = {
     activities: AllActivities[],
-    hotel: AllWeHotels,
+    park: AllParks,
     room_bookings: []
 }& AllWeHotelBookings
 
-export type HotelStay = {
-    id: number
+export type StayType = "we" | "partner"
+
+export type StayLookup = {
+    parkId: number
+    bookingRef: string
+    email: string
+    stayType?: StayType
+}
+
+export type StayDetails = {
+    bookingName: string
     arrival: string
     departure: string
     guests: number
-    parkId: number
 }
+
+export type VerifiedStay = StayLookup & StayDetails
+
+// export type HotelStay = {
+//     id: number
+//     arrival: string
+//     departure: string
+//     guests: number
+//     parkId: number
+// }
 
 export type PostHotelBooking = {
   parkId: number

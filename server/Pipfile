@@ -16,6 +16,8 @@ sqlalchemy-serializer = "*"
 pytest = "*"
 flask-bcrypt = "*"
 marshmallow = "*"
+"backports.zoneinfo" = "*"
+qrcode = {extras = ["pil"], version = "*"}
 
 [dev-packages]
 

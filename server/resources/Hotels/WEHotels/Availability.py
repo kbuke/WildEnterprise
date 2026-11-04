@@ -2,25 +2,19 @@ from flask import request
 from flask_restful import Resource
 from datetime import date
 
-# from models.HotelModels.RoomModel import RoomModel
 from models.HotelModels.WildEnterpriseHotels.RoomModel import RoomModel
 
 from hotel_booking_functions.get_available_rooms import get_available_rooms
-from hotel_booking_functions.get_held_quantity import get_held_quantity
 from hotel_booking_functions.price_room_stay import price_room_stay
-from hotel_booking_functions.find_room_combinations import find_room_combinations
+# from hotel_booking_functions.validate_stay_dates import validate_stay_dates  # if you added it earlier
 
 from schemas.hotels.we_hotels.we_hotel_room_schema import WeHotelRoomSchema
-
-# MAX_ROOMS_PER_COMBO = 4
 
 
 class SearchAvailability(Resource):
     def get(self):
-        # breakpoint()
         try:
             park_id = int(request.args["parkId"])
-            # hotel_id = int(request.args["hotelId"])
             arrival = date.fromisoformat(request.args["arrivalDate"])
             departure = date.fromisoformat(request.args["departureDate"])
             party_size = int(request.args.get("partySize", 1))
@@ -28,13 +22,20 @@ class SearchAvailability(Resource):
         except (KeyError, ValueError):
             return {"error": "parkId, arrivalDate, departureDate required"}, 400
 
+        # error = validate_stay_dates(arrival, departure)
+        # if error:
+        #     return {"error": error}, 400
         if departure <= arrival:
             return {"error": "departureDate must be after arrivalDate"}, 400
+        if party_size < 1:
+            return {"error": "partySize must be at least 1"}, 400
 
-        # rooms = RoomModel.query.filter_by(hotel_id=hotel_id).all()
+        nights = (departure - arrival).days
         rooms = RoomModel.query.filter_by(park_id=park_id).all()
 
-        room_options = []
+        room_results = []
+        max_capacity = 0
+
         for room in rooms:
             available = get_available_rooms(
                 room_id=room.id, arrival_date=arrival, departure_date=departure,
@@ -43,36 +44,22 @@ class SearchAvailability(Resource):
             if available <= 0:
                 continue
 
-            held = get_held_quantity(room.id, arrival, departure, exclude_session_token=session_token)
+            stay_price = price_room_stay(room, arrival, departure)   # one room, whole stay
+            max_capacity += room.max_people * available
 
-            room_options.append({
-                "room": room,
+            room_results.append({
+                "room": WeHotelRoomSchema().dump(room),
                 "available": available,
-                "contested": held > 0,
-                "unit_price": price_room_stay(room, arrival, departure),
+                "price_per_night": round(stay_price / nights, 2),    # average, rates can vary by night
+                "stay_price": stay_price,
             })
 
-        total_rooms_available = sum(opt["available"] for opt in room_options)
+        can_accommodate = max_capacity >= party_size
 
-        combos = find_room_combinations(
-            room_options,
-            party_size,
-            max_rooms=total_rooms_available
-        )
-
-        # combos = find_room_combinations(room_options, party_size, max_rooms=MAX_ROOMS_PER_COMBO)
-
-        results = [
-            {
-                "selections": [
-                    {"room": WeHotelRoomSchema().dump(sel["room"]), "quantity": sel["quantity"]}
-                    for sel in combo["selections"]
-                ],
-                "total_rooms": combo["total_rooms"],
-                "total_capacity": combo["total_capacity"],
-                "total_price": combo["total_price"],
-            }
-            for combo in combos
-        ]
-
-        return {"options": results}, 200
+        return {
+            "nights": nights,
+            "max_capacity": max_capacity,
+            "can_accommodate": can_accommodate,
+            # only show rooms if the party actually fits
+            "rooms": room_results if can_accommodate else [],
+        }, 200

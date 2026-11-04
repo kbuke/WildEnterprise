@@ -1,6 +1,6 @@
 from sqlalchemy.orm import validates
 
-from config import db 
+from config import db
 
 import uuid
 
@@ -10,23 +10,21 @@ from models.ActivityModels.BaseActivityModel import BaseActivityModel
 
 from functions.check_instance_exists import check_instance_exists
 
-class ActivityBookingModel(
-    db.Model, 
-    # SerializerMixin
-):
+
+class ActivityBookingModel(db.Model):
     __tablename__ = "activity_booking"
 
-    id = db.Column(db.Integer, primary_key = True)
-    booking_reference = db.Column(db.String, unique=True, nullable = False,
+    id = db.Column(db.Integer, primary_key=True)
+    booking_reference = db.Column(db.String, unique=True, nullable=False,
                                   default=lambda: f"ACT-{uuid.uuid4().hex[:8].upper()}")
     date = db.Column(db.Date, nullable=False)
-    no_of_people = db.Column(db.Integer, nullable = False)
-    total_price = db.Column(db.Float, nullable = True)
+    no_of_people = db.Column(db.Integer, nullable=False)
+    total_price = db.Column(db.Float, nullable=True)
 
     #========================================================================
-    # RELATIONS 
+    # RELATIONS
     #========================================================================
-    activity_id = one_to_many_fk("activities") 
+    activity_id = one_to_many_fk("activities")
     activity = one_to_many_back_populates("BaseActivityModel", "activity_bookings", delete_orphan=False)
 
     hotel_booking_id = one_to_many_fk("we_hotel_booking", is_null=True)
@@ -36,8 +34,17 @@ class ActivityBookingModel(
     partner_hotel_booking = one_to_many_back_populates("PartnerHotelBookingModel", "activities", delete_orphan=False)
 
     #========================================================================
-    # VALIDATIONS 
+    # VALIDATIONS
     #========================================================================
     @validates("activity_id")
     def validate_activity(self, key, value):
         return check_instance_exists(model=BaseActivityModel, id=value)
+
+    # One booking per activity, per stay, per day.
+    # Rows with a NULL stay id (people who aren't staying) are never blocked by these.
+    __table_args__ = (
+        db.UniqueConstraint("activity_id", "hotel_booking_id", "date",
+                            name="uq_activity_stay_day"),
+        db.UniqueConstraint("activity_id", "partner_hotel_booking_id", "date",
+                            name="uq_activity_partner_stay_day"),
+    )

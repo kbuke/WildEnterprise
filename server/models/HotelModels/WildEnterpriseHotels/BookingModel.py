@@ -4,6 +4,8 @@ from hotel_booking_functions.calculate_deposit_date import calculate_deposit_dat
 from hotel_booking_functions.calculate_remainder_date import calculate_remainder_date
 
 from functions.check_instance_exists import check_instance_exists
+from functions.check_not_bool_or_none import check_not_bool_or_none
+from functions.check_int import check_int
 
 from relational_functions.one_to_many import one_to_many_back_populates, one_to_many_fk
 
@@ -16,6 +18,8 @@ from models.ParkModels import ParkModel
 
 from models.HotelModels.BaseHotelBookingModel import BaseHotelBookingModel
 
+from functions.check_string import check_string
+
 class WEHotelBookingModel(BaseHotelBookingModel):
     __tablename__ = "we_hotel_booking"
 
@@ -24,6 +28,15 @@ class WEHotelBookingModel(BaseHotelBookingModel):
                             default = lambda: f"WE-{uuid.uuid4().hex[:8].upper()}")
     date_of_deposit_charge = db.Column(db.Date, nullable = False, default = calculate_deposit_date)
     date_of_remainder_charge = db.Column(db.Date, nullable = False, default = calculate_remainder_date)
+    
+    #========================================================================
+    # Set up review section. Each booking has only one review, and the review must be given after the exit date. This will be done via a patch request
+    #========================================================================
+    reviewer_name = db.Column(db.String, nullable = True)
+    review_img = db.Column(db.String, nullable = True, default = "https://cdn-icons-png.flaticon.com/512/266/266033.png")
+    rating = db.Column(db.Integer, nullable = True)
+    review = db.Column(db.String, nullable = True)
+    review_date = db.Column(db.Date, nullable = True)
 
     #========================================================================
     # RELATIONS 
@@ -58,3 +71,26 @@ class WEHotelBookingModel(BaseHotelBookingModel):
                     f"Selected rooms only accommodate {capacity} guests, but {value} guests specified"
                 )
         return value    
+
+    @validates("rating")
+    def validate_rating(self, key, value):
+        check_not_bool_or_none(value)
+        check_int(value)
+        if not 1 <= value <= 5:
+            raise ValueError("Rating must be between 1 and 5")
+        return value
+
+    @validates("review")
+    def validate_review(self, key, value):
+        check_not_bool_or_none(value)
+        check_string(value)
+        value = value.strip()
+        if not 10 <= len(value) <= 1_000:
+            raise ValueError("Review must be between 10 and 1,000 characters")
+        return value
+
+    @validates("reviewer_name")
+    def validate_reviewer_name(self, key, value):
+        check_not_bool_or_none(value)
+        check_string(value)
+        return value

@@ -33,7 +33,7 @@ export function AdminNav({ navs, logout, extra }: AdminNavProps) {
             </div>
 
             <button
-                className="bg-red-600 h-12 w-24 self-center rounded-lg cursor-pointer uppercase"
+                className="bg-red-600 h-12 w-34 self-center rounded-lg cursor-pointer uppercase"
                 onClick={() => setShowLogout(true)}
             >
                 Logout

@@ -1,5 +1,6 @@
 import type { DateRange } from "react-day-picker"
 import { DateRangePicker } from "../../components/ui/DateRangePicker"
+import { PartySizeSelector } from "../../components/ui/PartySizeSelector"
 
 type RoomBookingProps = {
   range: DateRange | undefined
@@ -23,14 +24,20 @@ export function RoomBooking({
           <DateRangePicker value={range} onChange={setRange} />
         </div>
 
-        <div className="flex flex-col gap-2 w-[33%]">
+        <PartySizeSelector 
+          setDecreasePartySize={setDecreaseSize}
+          setIncreasePartySize={setIncreaseSize}
+          partySize={partySize}
+        />
+
+        {/* <div className="flex flex-col gap-2 w-[33%]">
           <label className="font-bold uppercase text-lg">Party Size</label>
-          <div className="bg-white text-black grid grid-cols-[1fr_4fr_1fr] text-center rounded">
+          <div className="bg-white text-black grid grid-cols-[1fr_4fr_1fr] text-center rounded items-center">
             <button type="button" className="cursor-pointer" onClick={setDecreaseSize}>-</button>
             <span>{partySize}</span>
             <button type="button" className="cursor-pointer" onClick={setIncreaseSize}>+</button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {error && <p className="text-red-400 mt-2">{error}</p>}

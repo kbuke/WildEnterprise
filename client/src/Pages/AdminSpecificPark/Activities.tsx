@@ -1,5 +1,6 @@
 import type { AllActivities } from "../../features/Activities/types"
 import { MONTHS } from "../../components/dates/Months"
+import { RelationHeaderAndAdd } from "../../components/admin/RelationHeaderAndAdd"
 
 type AdminActivitiesProps = {
     activities: AllActivities[]
@@ -12,22 +13,10 @@ export function AdminParkActivities({
 }: AdminActivitiesProps){
     return(
         <>
-            <div
-                className="flex gap-4 items-center"
-            >
-                <h1
-                    className="text-sunset uppercase text-xl"
-                >
-                    Activities
-                </h1>
-
-                <button
-                    className="bg-green-800 px-10 py-2 cursor-pointer rounded"
-                    onClick={setAddActivity}
-                >
-                    Add Activity
-                </button>
-            </div>
+            <RelationHeaderAndAdd 
+                title="Activities"
+                addRelation={setAddActivity}
+            />
 
             <div
                 className="grid grid-cols-2 py-4 gap-4"
@@ -74,7 +63,6 @@ export function AdminParkActivities({
                                 ) : (
                                     <div className="flex flex-wrap gap-2 mt-2">
                                         {MONTHS.map((month, index) => {
-                                            console.log(available_months)
                                             const isAvailable = available_months.includes(index + 1)
 
                                             return (

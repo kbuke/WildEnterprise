@@ -8,10 +8,13 @@ import { AddParkActivity } from "./AddParkActivity"
 import { GenericForm } from "../../components/form/GenericForm"
 import { useForm } from "react-hook-form"
 import { AdminParkActivities } from "./Activities"
+import { AdminParkEvents } from "./Events"
+import { AddParkEvent } from "./AddParkEvent"
 
 export function AdminSpecificPark(){
     const [overview, setOverview] = useState<boolean>(true)
     const [addActivity, setAddActivity] = useState<boolean>(false)
+    const [addEvent, setAddEvent] = useState<boolean>(false)
 
     const {id} = useParams()
 
@@ -51,8 +54,6 @@ export function AdminSpecificPark(){
             />
         )
     }
-
-    console.log(specificPark)
 
     return(
         <section>
@@ -156,6 +157,11 @@ export function AdminSpecificPark(){
                     activities={activities}
                     setAddActivity={() => setAddActivity(!addActivity)}
                 />
+
+                <AdminParkEvents 
+                    events={events}
+                    addEvent={() => setAddEvent(true)}
+                />
             </div>
 
             {addActivity &&
@@ -164,6 +170,17 @@ export function AdminSpecificPark(){
                         <AddParkActivity 
                             parkId={parkId}
                             onClose={() => setAddActivity(!addActivity)}
+                        />
+                    }
+                />
+            }
+
+            {addEvent &&
+                <PopUp 
+                    child={
+                        <AddParkEvent 
+                            parkId={parkId}
+                            onClose={() => setAddEvent(!addEvent)}
                         />
                     }
                 />
