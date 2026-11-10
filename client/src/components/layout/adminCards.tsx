@@ -5,7 +5,8 @@ type AdminCard = {
     name: string, 
     img: string,
     slug: string,
-    edit: boolean
+    edit: boolean,
+    patchInstance: () => void
 }
 
 export function AdminCards({
@@ -13,7 +14,8 @@ export function AdminCards({
     name, 
     img,
     slug,
-    edit
+    edit,
+    patchInstance
 }: AdminCard){
     return(
         <div
@@ -41,6 +43,7 @@ export function AdminCards({
                 {edit &&
                     <button
                         className="bg-blue-800 text-white rounded cursor-pointer px-4 py-2"
+                        onClick={patchInstance}
                     >
                         Edit {name}
                     </button>

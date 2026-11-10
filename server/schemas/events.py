@@ -19,3 +19,9 @@ class EventSchema(Schema):
 
 class EventDescriptionSchema(EventSchema):
     park = fields.Nested("ParkSchema")
+    card_info = fields.Str()
+    primary_img_1 = fields.Str()
+    primary_img_2 = fields.Str()
+    primary_img_3 = fields.Str(allow_none=True)
+    primary_img_4 = fields.Str(allow_none=True)
+    primary_img_5 = fields.Str(allow_none=True)

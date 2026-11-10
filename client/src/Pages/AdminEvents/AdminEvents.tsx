@@ -9,9 +9,13 @@ import { AddEvent } from "./AddEvent"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import type { PostEvent } from "../../features/Events/types"
 import { queryClient } from "../../ReactQuery/queryClient"
+import { PatchEvent } from "./PatchEvent"
 
 export function AdminEvents(){
     const [addEvent, setAddEvent] = useState<boolean>(false)
+    const [patchEvent, setPatchEvent] = useState<number|null>()
+
+    console.log("patching event: ", patchEvent)
 
     const {data: allEvents} = useQuery({
         queryKey: ["events"],
@@ -69,6 +73,7 @@ export function AdminEvents(){
                                 img={img}
                                 slug={slug}
                                 edit={true}
+                                patchInstance={() => setPatchEvent(id)}
                             />
                         )
                     })
@@ -95,6 +100,14 @@ export function AdminEvents(){
                                 errorMessage={createEvent.error?.message}
                             />
                         }
+                    />
+            }
+
+            {
+                patchEvent &&
+                    <PatchEvent 
+                        id={patchEvent}
+                        onClose={() => setPatchEvent(null)}
                     />
             }
         </section>

@@ -17,7 +17,13 @@ export type AllEvents = {
 }& NameImgInfo
 
 export type SpecificEvent = {
-    park: AllParks
+    park: AllParks,
+    card_info: string,
+    primary_img_1: string,
+    primary_img_2: string,
+    primary_img_3?: string | null,
+    primary_img_4?: string | null,
+    primary_img_5?: string | null,
 }& AllEvents
 
 export type PostEvent = {
@@ -29,8 +35,8 @@ export type PostEvent = {
     endDate?: string,
     startTime: string,
     endTime: string,
-    noOfTickets: string,
-    ticketPrice: string,
+    noOfTickets: number,
+    ticketPrice: number,
     parkId: number,
     cardInfo: string,
     pI1: string,
@@ -39,3 +45,4 @@ export type PostEvent = {
     pI4?: string,
     pI5?: string
 }
+
