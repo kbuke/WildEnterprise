@@ -1,13 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { fetchAllParks, postPark } from "../../features/Parks/api"
 import { AdminSectionHeader } from "../../components/layout/adminSectionHeader"
-import { AdminCards } from "../../components/layout/adminCards"
 import { useState } from "react"
 import { PopUp } from "../../components/ui/Popup"
 import { GenericForm } from "../../components/form/GenericForm"
 import { AddPark } from "./AddPark"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import type { PostPark } from "../../features/Parks/types"
+import { AdminCard } from "../../components/admin/AdminCard"
 
 export function AdminParks(){
     const [addPark, setAddPark] = useState<boolean>(false)
@@ -55,13 +55,12 @@ export function AdminParks(){
                     allParks.map((park, index) => {
                         const {img, name, id, slug} = park
                         return(
-                            <AdminCards 
+                            <AdminCard 
                                 key={index}
-                                id={id}
                                 name={name}
                                 img={img}
-                                slug={slug}
-                                edit={true}
+                                id={id}
+                                url={`/adminparks/${slug}/${id}`}
                             />
                         )
                     })

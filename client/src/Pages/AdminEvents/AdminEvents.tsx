@@ -2,20 +2,16 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { fetchAllEvents, postEvent } from "../../features/Events/api"
 import { AdminSectionHeader } from "../../components/layout/adminSectionHeader"
 import { useState } from "react"
-import { AdminCards } from "../../components/layout/adminCards"
 import { PopUp } from "../../components/ui/Popup"
 import { GenericForm } from "../../components/form/GenericForm"
 import { AddEvent } from "./AddEvent"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import type { PostEvent } from "../../features/Events/types"
 import { queryClient } from "../../ReactQuery/queryClient"
-import { PatchEvent } from "./PatchEvent"
+import { AdminCard } from "../../components/admin/AdminCard"
 
 export function AdminEvents(){
     const [addEvent, setAddEvent] = useState<boolean>(false)
-    const [patchEvent, setPatchEvent] = useState<number|null>()
-
-    console.log("patching event: ", patchEvent)
 
     const {data: allEvents} = useQuery({
         queryKey: ["events"],
@@ -60,20 +56,18 @@ export function AdminEvents(){
             />
 
             <div
-                className="bg-cloud h-screen w-full grid grid-cols-3 px-10"
+                className="bg-cloud h-screen w-full grid grid-cols-4 px-10"
             >
                 {allEvents&&
                     allEvents.map((event, index) => {
                         const {img, name, id, slug} = event
                         return(
-                            <AdminCards 
+                            <AdminCard 
                                 key={index}
-                                id={id}
                                 name={name}
                                 img={img}
-                                slug={slug}
-                                edit={true}
-                                patchInstance={() => setPatchEvent(id)}
+                                id={id}
+                                url={`/adminevents/${slug}/${id}`}
                             />
                         )
                     })
@@ -103,13 +97,13 @@ export function AdminEvents(){
                     />
             }
 
-            {
+            {/* {
                 patchEvent &&
                     <PatchEvent 
                         id={patchEvent}
                         onClose={() => setPatchEvent(null)}
                     />
-            }
+            } */}
         </section>
     )
 }

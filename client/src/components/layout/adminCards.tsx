@@ -7,6 +7,7 @@ type AdminCard = {
     slug: string,
     edit: boolean,
     patchInstance: () => void
+    url: string
 }
 
 export function AdminCards({
@@ -15,6 +16,7 @@ export function AdminCards({
     img,
     slug,
     edit,
+    url,
     patchInstance
 }: AdminCard){
     return(
@@ -57,7 +59,7 @@ export function AdminCards({
 
                 <Link
                     className="bg-purple-800 text-white rounded cursor-pointer px-4 py-2"
-                    to={`/adminparks/${slug}/${id}`}
+                    // to={`/adminparks/${slug}/${id}`}
                 >
                     {name} Info
                 </Link>

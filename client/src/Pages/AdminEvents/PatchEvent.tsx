@@ -1,16 +1,18 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { fetchSpecificEvent, patchEvent } from "../../features/Events/api";
-import type { PostEvent } from "../../features/Events/types";
+import { useMutation } from "@tanstack/react-query";
+import { patchEvent } from "../../features/Events/api";
+import type { PostEvent, SpecificEvent } from "../../features/Events/types";
 import { queryClient } from "../../ReactQuery/queryClient";
 import { PopUp } from "../../components/ui/Popup";
 import { EventForm } from "./EventForm";
 import { eventToFormValues } from "../../features/Events/helpers";
 
-export function PatchEvent({ id, onClose }: { id: number; onClose: () => void }) {
-  const { data: event } = useQuery({
-    queryKey: ["events", id],
-    queryFn: () => fetchSpecificEvent(id),
-  })
+type PatchEventProps = {
+  event: SpecificEvent,
+  onClose: () => void
+}
+
+export function PatchEvent({event, onClose}: PatchEventProps){
+  const {id} = event
 
   const update = useMutation({
     mutationFn: (changes: Partial<PostEvent>) => patchEvent(id, changes),

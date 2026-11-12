@@ -10,11 +10,15 @@ import { useForm } from "react-hook-form"
 import { AdminParkActivities } from "./Activities"
 import { AdminParkEvents } from "./Events"
 import { AddParkEvent } from "./AddParkEvent"
+import { AdminHeader } from "../../components/admin/AdminHeader"
+import { PatchPark } from "./PatchPark"
 
 export function AdminSpecificPark(){
     const [overview, setOverview] = useState<boolean>(true)
     const [addActivity, setAddActivity] = useState<boolean>(false)
     const [addEvent, setAddEvent] = useState<boolean>(false)
+    const [patchPark, setPatchPark] = useState<boolean>(false)
+    const [deletePark, setDeletePark] = useState<boolean>(false)
 
     const {id} = useParams()
 
@@ -57,62 +61,13 @@ export function AdminSpecificPark(){
 
     return(
         <section>
-            <div
-                className="mt-4 flex flex-col items-center"
-            >
-                <div
-                    className="h-50 w-50 rounded-full bg-sunset flex items-center justify-center"
-                >
-                    <img 
-                        src={img}
-                        className="h-48 w-48 rounded-full"
-                    />
-                </div>
-
-                <h1
-                    className="uppercase font-bold text-4xl"
-                >
-                    {name}
-                </h1>
-
-                <p
-                    className="text-2xl"
-                >
-                    {location}
-                </p>
-            </div>
-
-            <div
-                className="grid grid-cols-2 text-white bg-coal text-center px-8 mt-4"
-            >
-                <div
-                    className="border-r border-sunset"
-                >
-                    <h2
-                        className="pt-10"
-                    >
-                        Card Info
-                    </h2>
-                    <p
-                        className="pb-10"
-                    >
-                        {card_info}
-                    </p>
-                </div>
-
-                <div>
-                    <h2
-                        className="pt-10"
-                    >
-                        Page Info
-                    </h2>
-                    <p
-                        className="pb-10"
-                    >
-                        {info}
-                    </p>
-                </div>
-            </div>
+            <AdminHeader 
+                img={img}
+                name={name}
+                info={info}
+                setPatch={()=>setPatchPark(true)}
+                setDelete={()=>setDeletePark(true)}
+            />
 
             <div
                 className="p-10"
@@ -183,6 +138,13 @@ export function AdminSpecificPark(){
                             onClose={() => setAddEvent(!addEvent)}
                         />
                     }
+                />
+            }
+
+            {patchPark &&
+                <PatchPark 
+                    park={specificPark}
+                    onClose={() => setPatchPark(false)}
                 />
             }
         </section>

@@ -19,6 +19,7 @@ import { AdminArticles } from "./Pages/AdminArticles/AdminArticles";
 import { SpecificArticle } from "./Pages/SpecificArticle.tsx/SpecificArticle";
 import { AdminProjects } from "./Pages/AdminProjects/AdminProjects";
 import { SpecificEvent } from "./Pages/SpecificEvent/SpecificEvent";
+import { AdminSpecificEvent } from "./Pages/AdminEvents/AdminSpecificEvent";
 
 export const router = createBrowserRouter(
     [
@@ -97,6 +98,11 @@ export const router = createBrowserRouter(
                         {
                             path: "/adminevents",
                             element: <AdminEvents />
+                        },
+
+                        {
+                            path: "/adminevents/:slug/:id",
+                            element: <AdminSpecificEvent />
                         },
 
                         {

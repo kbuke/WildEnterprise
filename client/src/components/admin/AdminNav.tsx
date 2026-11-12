@@ -16,7 +16,7 @@ export function AdminNav({ navs, logout, extra }: AdminNavProps) {
     const [showLogout, setShowLogout] = useState(false)
 
     return (
-        <div className="bg-coal text-white flex flex-row justify-between h-30 pr-14 uppercase z-30 sticky top-0">
+        <div className="bg-coal text-white flex flex-row justify-between h-30 pr-14 uppercase z-30 sticky top-0 border-white border-b">
             <img src="/HeroLogo.png" />
 
             <div className="self-center flex gap-4">
