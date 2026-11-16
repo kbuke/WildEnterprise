@@ -20,6 +20,10 @@ import { SpecificArticle } from "./Pages/SpecificArticle.tsx/SpecificArticle";
 import { AdminProjects } from "./Pages/AdminProjects/AdminProjects";
 import { SpecificEvent } from "./Pages/SpecificEvent/SpecificEvent";
 import { AdminSpecificEvent } from "./Pages/AdminEvents/AdminSpecificEvent";
+import { ScannerSignIn } from "./Pages/ScannerSignIn/ScannerSignIn";
+import { RequireScannerLogin } from "./Pages/EventScanner/RequireScannerLogin";
+import { EventScannerDashboard } from "./Pages/EventScanner/EventScannerDashboard";
+import { SpecificEventScanner } from "./Pages/EventScanner/SpecificEventScanner";
 
 export const router = createBrowserRouter(
     [
@@ -44,11 +48,11 @@ export const router = createBrowserRouter(
                             element: <ConfirmHotelBooking />
                         },
                         {
-                            path: "/articles/:id/:slug",
+                            path: "/articles/:slug/:id",
                             element: <SpecificArticle />
                         },
                         {
-                            path: "/events/:id/:slug",
+                            path: "/events/:slug/:id",
                             element: <SpecificEvent />
                         }
                     ]
@@ -72,6 +76,17 @@ export const router = createBrowserRouter(
                         {
                             path: "/parkadminsignin",
                             element: <ParkSignIn />
+                        }
+                    ]
+                },
+
+                {
+                    path: "/scannersignin",
+                    element: <AdminSignInLayout />,
+                    children: [
+                        {
+                            path: "/scannersignin",
+                            element: <ScannerSignIn />
                         }
                     ]
                 },
@@ -123,6 +138,21 @@ export const router = createBrowserRouter(
                         {
                             element: <ParkAdminDashboard />,
                             path: "/dashboard/:slug/:id"
+                        }
+                    ]
+                },
+
+                {
+                    element: <RequireScannerLogin />,
+                    children: [
+                        {
+                            element: <EventScannerDashboard />,
+                            path: "/scannerlogin"
+                        },
+
+                        {
+                            element: <SpecificEventScanner />,
+                            path: "/scanevent/:slug/:id"
                         }
                     ]
                 }

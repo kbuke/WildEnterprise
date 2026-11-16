@@ -45,13 +45,6 @@ export type StayDetails = {
 
 export type VerifiedStay = StayLookup & StayDetails
 
-// export type HotelStay = {
-//     id: number
-//     arrival: string
-//     departure: string
-//     guests: number
-//     parkId: number
-// }
 
 export type PostHotelBooking = {
   parkId: number

@@ -5,6 +5,7 @@ import { AdminHeader } from "../../components/admin/AdminHeader"
 import { useState } from "react"
 import { PatchEvent } from "./PatchEvent"
 import { AdminEventTicketing } from "./AdminEventTicketing"
+import { EventFinances } from "./EventFinances"
 
 export function AdminSpecificEvent(){
     const [patchEvent, setPatchEvent] = useState<boolean>(false)
@@ -58,6 +59,10 @@ export function AdminSpecificEvent(){
                 noOfTickets={no_of_tickets}
                 ticketPrice={ticket_price}
                 ticketSold={tickets_sold}
+            />
+
+            <EventFinances 
+                event={specificEvent}
             />
 
             {patchEvent &&

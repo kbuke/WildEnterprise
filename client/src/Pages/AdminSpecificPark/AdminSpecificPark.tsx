@@ -12,6 +12,7 @@ import { AdminParkEvents } from "./Events"
 import { AddParkEvent } from "./AddParkEvent"
 import { AdminHeader } from "../../components/admin/AdminHeader"
 import { PatchPark } from "./PatchPark"
+import { ParkFinancials } from "./ParkFinancials"
 
 export function AdminSpecificPark(){
     const [overview, setOverview] = useState<boolean>(true)
@@ -49,6 +50,8 @@ export function AdminSpecificPark(){
         primary_img_4,
         primary_img_5
     } = specificPark
+
+    console.log(events)
 
     const primaryImages = (img: string, imgNumber: string) => {
         return(
@@ -105,19 +108,25 @@ export function AdminSpecificPark(){
                 </h1>
             </div>
 
-            <div
-                className="bg-coal text-white py-10 px-20"
-            >
-                <AdminParkActivities 
-                    activities={activities}
-                    setAddActivity={() => setAddActivity(!addActivity)}
-                />
+            {overview ?
+                <div
+                    className="bg-coal text-white py-10 px-20"
+                >
+                    <AdminParkActivities 
+                        activities={activities}
+                        setAddActivity={() => setAddActivity(!addActivity)}
+                    />
 
-                <AdminParkEvents 
-                    events={events}
-                    addEvent={() => setAddEvent(true)}
+                    <AdminParkEvents 
+                        events={events}
+                        addEvent={() => setAddEvent(true)}
+                    />
+                </div>
+            :
+                <ParkFinancials 
+                    parkId={Number(id)}
                 />
-            </div>
+            }
 
             {addActivity &&
                 <PopUp 

@@ -24,7 +24,12 @@ from resources.Hotels.WEHotels.StayVerify import VerifyStay
 from resources.Articles import AllArticles, SpecificArticle, AdminArticles, AdminSpecificArticle
 from resources.Projects import AllProjects, SpecificProject, AdminProjects, AdminSpecificProject
 from resources.Events.EventBooking import AllEventBookings, PostEventBooking, LookupEventBooking, CancelEventBooking
-from resources.Events.EventTicket import CheckInTicket, AllEventTickets, SpecificEventTicket
+# from resources.Events.EventTicket import CheckInTicket, AllEventTickets, SpecificEventTicket
+from resources.Events.EventTicket import AllEventTickets, SpecificEventTicket
+from resources.ParkFinance import ParkFinance
+from resources.Events.EventFinances import EventFinance
+from resources.Logins.ScannerLogin import ScannerLogin, ScannerLogout, ScannerCheckSession
+from resources.Events.EvenScanner import CheckInTicket, CheckInError, EventScanStats
 
 api.add_resource(AllParks, "/parks")
 api.add_resource(SpecificPark, "/parks/<int:id>")
@@ -96,6 +101,15 @@ api.add_resource(CancelEventBooking, "/eventbookings/cancel")
 api.add_resource(AllEventTickets, "/eventtickets")
 api.add_resource(SpecificEventTicket, "/eventtickets/<int:id>")
 api.add_resource(CheckInTicket, "/eventtickets/checkin")
+api.add_resource(EventScanStats, "/eventtickets/stats/<int:event_id>")
+
+api.add_resource(ParkFinance, "/parks/<int:id>/finance")
+
+api.add_resource(EventFinance, "/events/<int:id>/finance")
+
+api.add_resource(ScannerLogin, "/scanner/login")
+api.add_resource(ScannerLogout, "/scanner/logout")
+api.add_resource(ScannerCheckSession, "/scanner/checksession")
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)

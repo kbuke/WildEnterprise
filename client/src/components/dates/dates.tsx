@@ -51,3 +51,13 @@ export const formatTime = (t: string): string => {
     ? `${formattedHours}${period}`
     : `${formattedHours}:${String(minutes).padStart(2, "0")}${period}`
 }
+
+export const addMonths = (d: Date, n: number) => {
+  const x = new Date(d)
+  const day = x.getDate()
+  x.setDate(1)
+  x.setMonth(x.getMonth() + n)
+  const lastDay = new Date(x.getFullYear(), x.getMonth() + 1, 0).getDate()
+  x.setDate(Math.min(day, lastDay))
+  return x
+}

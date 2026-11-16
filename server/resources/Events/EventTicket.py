@@ -11,6 +11,7 @@ from event_functions.check_in_ticket import check_in_ticket
 from email_functions.send_event_ticket import send_event_ticket
 
 from decorators.require_admin_login import require_admin_login
+from decorators.require_scanner_admin_login import require_scanner_admin_login
 
 from schemas.event_bookings import EventTicketAdminSchema
 
@@ -96,7 +97,8 @@ class SpecificEventTicket(Resource):
 class CheckInTicket(Resource):
 
     # Staff scan tickets while logged in, so strangers can't check tickets in
-    @require_admin_login
+    # @require_admin_login
+    @require_scanner_admin_login
     def post(self):
         data = request.get_json()
 

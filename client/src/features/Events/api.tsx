@@ -1,4 +1,5 @@
 import { fetchAllInstances, patchInstance, postInstance } from "../../api/client";
+import type { EventFinanceData } from "./finance";
 import type { SpecificEvent, AllEvents, PostEvent } from "./types";
 
 export const fetchAllEvents = () => fetchAllInstances<AllEvents[]>("/api/events")
@@ -9,3 +10,6 @@ export const postEvent = (newInfo: PostEvent) =>
 
 export const patchEvent = (id: number, changes: Partial<PostEvent>) => 
     patchInstance<PostEvent, AllEvents>(`/api/events/${id}`, changes, "Event Updated")
+
+export const fetchEventFinance = (id: number) => 
+    fetchAllInstances<EventFinanceData>(`/api/events/${id}/finance`)

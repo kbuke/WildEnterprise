@@ -19,6 +19,7 @@ class EventModel(BaseCardModel):
 
     id = db.Column(db.Integer, primary_key = True)
     slug = db.Column(db.String, nullable = False, unique = True, default = make_slug_default("name"))
+    created_at = db.Column(db.Date, nullable=True, default=date.today)
 
     # DATE ATTRIBUTES
     start_date = db.Column(db.Date, nullable = False)
